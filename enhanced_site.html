@@ -71,15 +71,19 @@
     .trust-desc,.step-desc,.product-description{color:var(--muted);font-size:14px;line-height:1.6}
 
     /* Products Header */
-    .products-header{display:flex;align-items:end;justify-content:space-between;gap:20px;flex-wrap:wrap}
-    .filter-bar,.currency-bar{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-    .filter-label,.cur-label{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;font-weight:800;color:var(--primary)}
-    .filter-btn,.cur-btn{border:2px solid #cbd5e1;background:#fff;border-radius:8px;padding:9px 16px;font-size:12px;font-weight:700;cursor:pointer;transition:.2s ease;color:var(--text)}
+    .products-header{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:20px}
+    .products-header-title{flex:1;min-width:300px}
+    .products-header-controls{display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start}
+    .filter-section{display:flex;flex-direction:column;gap:12px}
+    .currency-section{display:flex;flex-direction:column;gap:12px}
+    .compare-section{display:flex;flex-direction:column;gap:12px}
+    .filter-bar,.currency-bar,.compare-bar{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+    .filter-label,.cur-label{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;font-weight:800;color:var(--primary);white-space:nowrap}
+    .filter-btn,.cur-btn{border:2px solid #cbd5e1;background:#fff;border-radius:8px;padding:9px 16px;font-size:12px;font-weight:700;cursor:pointer;transition:.2s ease;color:var(--text);white-space:nowrap}
     .filter-btn.active,.filter-btn:hover,.cur-btn.active,.cur-btn:hover{background:var(--primary);color:#fff;border-color:var(--primary)}
 
     /* Compare Button */
-    .compare-section{display:flex;gap:12px;align-items:center}
-    .compare-btn{background:var(--accent);color:#fff;border:none;padding:9px 18px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;transition:.2s ease;box-shadow:0 4px 12px rgba(217,87,47,.25)}
+    .compare-btn{background:var(--accent);color:#fff;border:none;padding:9px 18px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;transition:.2s ease;box-shadow:0 4px 12px rgba(217,87,47,.25);white-space:nowrap}
     .compare-btn:hover{background:#c24620;transform:translateY(-2px)}
     .compare-count{display:inline-block;background:var(--green);color:#fff;padding:3px 10px;border-radius:999px;font-size:10px;font-weight:800;margin-left:6px}
 
@@ -106,7 +110,7 @@
 
     .discount-tag{font-size:14px;font-weight:800;color:#991b1b}
 
-    .stock-indicator{position:absolute;bottom:12px;right:12px;padding:6px 11px;border-radius:6px;background:#fff;font-size:11px;font-weight:700;border:2px solid #e2e8f0;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+    .stock-indicator{position:absolute;bottom:12px;right:12px;padding:6px 11px;border-radius:6px;background:#fff;font-size:11px;font-weight:700;border:2px solid #e2e8f0;box-shadow:0 2px 8px rgba(0,0,0,.04)}
     .stock-indicator.available{background:#dcfce7;color:#166534;border-color:#86efac}
     .stock-indicator.low{background:#fee2e2;color:#7f1d1d;border-color:#fca5a5}
 
@@ -114,7 +118,7 @@
     .product-name{font-size:18px;font-weight:800;margin-bottom:4px;color:var(--primary)}
     .product-origin{font-size:12px;color:var(--muted);margin-bottom:12px;font-weight:600}
     
-    .rating-badge{display:inline-flex;align-items:center;gap:6px;background:#fef3c7;padding:7px 11px;border-radius:6px;font-size:11px;font-weight:800;color:#92400e;width:fit-content;margin-bottom:12px;box-shadow:0 2px 6px rgba(0,0,0,.06)}
+    .rating-badge{display:inline-flex;align-items:center;gap:6px;background:#fef3c7;padding:7px 11px;border-radius:6px;font-size:11px;font-weight:800;color:#92400e;width:fit-content;margin-bottom:12px}
     .price-container{margin-bottom:14px}
     .product-price{font-size:26px;font-weight:800;color:var(--accent)}
     .product-price-old{text-decoration:line-through;color:#9ca3af;font-size:14px;margin-right:8px;font-weight:600}
@@ -135,7 +139,7 @@
     .quick-buy-modal.show{display:flex}
     .quick-buy-wrapper{position:relative;width:90%;max-width:520px;max-height:90vh;overflow-y:auto}
     .quick-buy-content{background:#fff;border-radius:16px;padding:36px;box-shadow:var(--shadow-lg);position:relative}
-    .quick-buy-close{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.95);border:2px solid #cbd5e1;width:44px;height:44px;border-radius:50%;font-size:28px;cursor:pointer;color:var(--primary);transition:.2s ease;display:flex;align-items:center;justify-content:center;font-weight:700;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+    .quick-buy-close{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.95);border:2px solid #cbd5e1;width:44px;height:44px;border-radius:50%;font-size:28px;cursor:pointer;color:var(--primary);transition:.2s ease;display:flex;align-items:center;justify-content:center}
     .quick-buy-close:hover{background:#fff;border-color:var(--accent);color:var(--accent);transform:scale(1.1)}
     .qb-header{text-align:center;margin-bottom:24px;padding-right:20px}
     .qb-header h2{font-size:26px;font-weight:800;color:var(--primary);margin-bottom:8px}
@@ -182,7 +186,7 @@
     .compare-content{background:#fff;max-width:1200px;margin:40px auto;border-radius:16px;padding:36px;animation:slideUp .3s ease;box-shadow:var(--shadow-lg);position:relative}
     .compare-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
     .compare-header h2{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--primary)}
-    .compare-close{background:rgba(255,255,255,.95);border:2px solid #cbd5e1;width:44px;height:44px;border-radius:50%;font-size:28px;cursor:pointer;color:var(--primary);transition:.2s ease;display:flex;align-items:center;justify-content:center;font-weight:700;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+    .compare-close{background:rgba(255,255,255,.95);border:2px solid #cbd5e1;width:44px;height:44px;border-radius:50%;font-size:28px;cursor:pointer;color:var(--primary);transition:.2s ease;display:flex;align-items:center;justify-content:center}
     .compare-close:hover{background:#fff;border-color:var(--accent);color:var(--accent);transform:scale(1.1)}
     .compare-table{width:100%;border-collapse:collapse;overflow-x:auto}
     .compare-table th,.compare-table td{padding:16px;text-align:center;border:2px solid #e2e8f0;color:var(--text)}
@@ -196,7 +200,7 @@
     .tracker-input-row{display:flex;gap:12px;flex-wrap:wrap}
     .tracker-input-row input{flex:1;min-width:220px;padding:12px 14px;border:2px solid #cbd5e1;border-radius:8px;color:var(--text);transition:.2s ease}
     .tracker-input-row input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(217,87,47,.1)}
-    .tracker-input-row button{padding:12px 22px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-weight:800;cursor:pointer;transition:.2s ease;box-shadow:0 4px 12px rgba(217,87,47,.25)}
+    .tracker-input-row button{padding:12px 22px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-weight:800;cursor:pointer;transition:.2s ease;box-shadow:0 4px 12px rgba(217,87,47,.25);white-space:nowrap}
     .tracker-input-row button:hover{background:#c24620;transform:translateY(-2px)}
     .tr-courier-row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:24px 0;padding:16px;background:var(--bg2);border-radius:10px}
     .tr-step{display:flex;gap:14px;padding:16px 0;border-bottom:2px solid #e2e8f0}
@@ -225,7 +229,7 @@
     .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:18px}
     .form-field{display:flex;flex-direction:column;gap:8px}
     .form-field label{font-size:12px;letter-spacing:1px;text-transform:uppercase;font-weight:800;color:#ffb347}
-    .form-field input,.form-field select,.form-field textarea{background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.25);border-radius:8px;padding:12px 14px;color:#fff;outline:none;transition:.2s ease;font-family:inherit}
+    .form-field input,.form-field select,.form-field textarea{background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.25);border-radius:8px;padding:12px 14px;color:#fff;outline:none;transition:.2s ease}
     .form-field input::placeholder,.form-field textarea::placeholder{color:rgba(255,255,255,.5)}
     .form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:rgba(255,255,255,.5);box-shadow:0 0 0 3px rgba(255,255,255,.1)}
     .form-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
@@ -243,19 +247,26 @@
     .footer-bottom{max-width:1400px;margin:28px auto 0;padding-top:20px;border-top:2px solid #1a3a52;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:#9ca3af;font-size:13px}
 
     .wa-float{position:fixed;bottom:20px;right:20px;z-index:999;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
-    .wa-bubble{width:60px;height:60px;border-radius:50%;border:none;background:var(--green);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(34,139,34,.35);transition:.2s ease}
+    .wa-bubble{width:60px;height:60px;border-radius:50%;border:none;background:var(--green);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(34,139,34,.25);transition:.2s ease}
     .wa-bubble:hover{transform:scale(1.12)}
     .wa-bubble svg{width:30px;height:30px;fill:#fff}
-    .wa-tooltip{background:#fff;border:2px solid #cbd5e1;border-radius:10px;padding:16px 18px;width:280px;box-shadow:0 6px 20px rgba(0,0,0,.12);font-size:13px;opacity:0;visibility:hidden;transition:.2s ease;color:var(--text);line-height:1.6}
+    .wa-tooltip{background:#fff;border:2px solid #cbd5e1;border-radius:10px;padding:16px 18px;width:280px;box-shadow:0 6px 20px rgba(0,0,0,.12);font-size:13px;opacity:0;visibility:hidden;transition:.2s ease;color:var(--text)}
     .wa-float:hover .wa-tooltip{opacity:1;visibility:visible}
 
+    @media (max-width: 1200px){
+      .products-header{flex-direction:column;align-items:flex-start}
+      .products-header-controls{flex-direction:column;width:100%;gap:16px}
+      .filter-section,.currency-section,.compare-section{width:100%}
+      .filter-bar,.currency-bar,.compare-bar{width:100%}
+    }
     @media (max-width: 900px){
       .hero-container{grid-template-columns:1fr}
       .nav{flex-wrap:wrap;padding:12px 16px}
       .nav-links{order:3;width:100%;justify-content:center;gap:16px}
       .hero-image img{width:min(340px,100%)}
       .checkout-container{flex-direction:column;align-items:flex-start}
-      .products-header{flex-direction:column;align-items:flex-start}
+      .filter-bar,.currency-bar,.compare-bar{flex-wrap:wrap}
+      .filter-btn,.cur-btn{font-size:11px;padding:8px 12px}
     }
     @media (max-width: 640px){
       .section,.quote-content{padding:56px 16px}
@@ -271,6 +282,9 @@
       .checkout-actions button{width:100%}
       .qb-buttons{flex-direction:column}
       .quick-buy-close{width:40px;height:40px;font-size:24px}
+      .filter-label,.cur-label{font-size:10px}
+      .filter-btn,.cur-btn{font-size:10px;padding:8px 10px}
+      .compare-btn{font-size:11px;padding:8px 14px}
     }
   </style>
 </head>
@@ -321,37 +335,44 @@
   <!-- Products Section -->
   <section id="products" class="section products-section">
     <div class="products-header">
-      <div>
+      <div class="products-header-title">
         <h2 class="section-title">Our Premium Products</h2>
         <p class="section-subtitle">Premium quality spices with zoom preview, instant comparison, and direct checkout in your preferred currency.</p>
       </div>
-      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+      <div class="products-header-controls">
         <div class="compare-section">
-          <button class="compare-btn" onclick="toggleCompareModal()">🔄 Compare (<span id="compareCount">0</span>)</button>
+          <span class="filter-label">Compare</span>
+          <div class="compare-bar">
+            <button class="compare-btn" onclick="toggleCompareModal()">🔄 Compare (<span id="compareCount">0</span>)</button>
+          </div>
         </div>
-        <div class="currency-bar">
+        <div class="currency-section">
           <span class="cur-label">Currency</span>
-          <button class="cur-btn active" onclick="setCurrency('INR')">INR ₹</button>
-          <button class="cur-btn" onclick="setCurrency('USD')">USD $</button>
-          <button class="cur-btn" onclick="setCurrency('EUR')">EUR €</button>
-          <button class="cur-btn" onclick="setCurrency('GBP')">GBP £</button>
-          <button class="cur-btn" onclick="setCurrency('JPY')">JPY ¥</button>
-          <button class="cur-btn" onclick="setCurrency('CNY')">CNY ¥</button>
-          <button class="cur-btn" onclick="setCurrency('AED')">AED د.إ</button>
-          <button class="cur-btn" onclick="setCurrency('SGD')">SGD $</button>
-          <button class="cur-btn" onclick="setCurrency('AUD')">AUD $</button>
-          <button class="cur-btn" onclick="setCurrency('CAD')">CAD $</button>
-          <button class="cur-btn" onclick="setCurrency('NZD')">NZD $</button>
-          <button class="cur-btn" onclick="setCurrency('CHF')">CHF CHF</button>
+          <div class="currency-bar">
+            <button class="cur-btn active" onclick="setCurrency('INR')">INR ₹</button>
+            <button class="cur-btn" onclick="setCurrency('USD')">USD $</button>
+            <button class="cur-btn" onclick="setCurrency('EUR')">EUR €</button>
+            <button class="cur-btn" onclick="setCurrency('GBP')">GBP £</button>
+            <button class="cur-btn" onclick="setCurrency('JPY')">JPY ¥</button>
+            <button class="cur-btn" onclick="setCurrency('CNY')">CNY ¥</button>
+            <button class="cur-btn" onclick="setCurrency('AED')">AED د.إ</button>
+            <button class="cur-btn" onclick="setCurrency('SGD')">SGD $</button>
+            <button class="cur-btn" onclick="setCurrency('AUD')">AUD $</button>
+            <button class="cur-btn" onclick="setCurrency('CAD')">CAD $</button>
+            <button class="cur-btn" onclick="setCurrency('NZD')">NZD $</button>
+            <button class="cur-btn" onclick="setCurrency('CHF')">CHF CHF</button>
+          </div>
         </div>
       </div>
     </div>
-    <div class="filter-bar">
+    <div class="filter-section">
       <span class="filter-label">Filter</span>
-      <button class="filter-btn active" onclick="filterProducts('all', this)">All Products</button>
-      <button class="filter-btn" onclick="filterProducts('popular', this)">Popular</button>
-      <button class="filter-btn" onclick="filterProducts('organic', this)">Organic</button>
-      <button class="filter-btn" onclick="filterProducts('premium', this)">Premium</button>
+      <div class="filter-bar">
+        <button class="filter-btn active" onclick="filterProducts('all', this)">All Products</button>
+        <button class="filter-btn" onclick="filterProducts('popular', this)">Popular</button>
+        <button class="filter-btn" onclick="filterProducts('organic', this)">Organic</button>
+        <button class="filter-btn" onclick="filterProducts('premium', this)">Premium</button>
+      </div>
     </div>
     <div class="products-grid" id="productsGrid"></div>
   </section>
@@ -374,11 +395,11 @@
     <p class="section-subtitle">Enter your tracking ID to get real-time updates on your order status.</p>
     <div class="tracker-box">
       <div class="tracker-input-row"><input type="text" placeholder="Enter Tracking ID (e.g., TEH-2024-001234)"><button>🔍 Track</button></div>
-      <div class="tr-courier-row"><div><div class="trust-title">Express Courier</div><div class="product-origin">Tracking ID: TEH-2024-001234</div></div><div style="background:#fef3c7;color:#92400e;padding:8px 16px;border-radius:6px;font-weight:700;font-size:12px;">Processing</div></div>
-      <div class="tr-step"><div><div class="tr-dot done"></div><div class="tr-line done"></div></div><div><div class="trust-title" style="font-size:14px">Order Confirmed</div><div class="product-origin">May 7, 2024 - 10:30 AM</div></div></div>
-      <div class="tr-step"><div><div class="tr-dot done"></div><div class="tr-line done"></div></div><div><div class="trust-title" style="font-size:14px">Processing & Packaging</div><div class="product-origin">May 7, 2024 - 02:15 PM</div></div></div>
-      <div class="tr-step"><div><div class="tr-dot active"></div><div class="tr-line"></div></div><div><div class="trust-title" style="font-size:14px">Shipped</div><div class="product-origin">In transit to your location</div></div></div>
-      <div class="tr-step"><div><div class="tr-dot pending"></div></div><div><div class="trust-title" style="font-size:14px;color:var(--muted)">Out for Delivery</div><div class="product-origin">Expected by May 10, 2024</div></div></div>
+      <div class="tr-courier-row"><div><div class="trust-title">Express Courier</div><div class="product-origin">Tracking ID: TEH-2024-001234</div></div><div style="background:#fef3c7;color:#92400e;padding:8px 14px;border-radius:6px;font-weight:700;font-size:11px">📍 In Transit</div></div>
+      <div class="tr-step"><div><div class="tr-dot done"></div><div class="tr-line done"></div></div><div><div class="trust-title" style="font-size:14px">Order Confirmed</div><div class="product-origin">2 hours ago</div></div></div>
+      <div class="tr-step"><div><div class="tr-dot done"></div><div class="tr-line done"></div></div><div><div class="trust-title" style="font-size:14px">Processing & Packaging</div><div class="product-origin">1 hour ago</div></div></div>
+      <div class="tr-step"><div><div class="tr-dot active"></div><div class="tr-line"></div></div><div><div class="trust-title" style="font-size:14px">Shipped</div><div class="product-origin">In transit to your city</div></div></div>
+      <div class="tr-step"><div><div class="tr-dot pending"></div></div><div><div class="trust-title" style="font-size:14px;color:var(--muted)">Out for Delivery</div><div class="product-origin">Expected tomorrow</div></div></div>
     </div>
   </section>
 
@@ -417,8 +438,8 @@
           <div class="form-field"><label>Full Name *</label><input type="text" placeholder="John Doe" required></div>
           <div class="form-field"><label>Email Address *</label><input type="email" placeholder="john@example.com" required></div>
           <div class="form-field"><label>Company Name</label><input type="text" placeholder="Your Company"></div>
-          <div class="form-field"><label>Country *</label><select required><option value="">Select Country</option><option>United States</option><option>United Kingdom</option><option>Canada</option><option>Australia</option><option>India</option><option>Singapore</option><option>Japan</option><option>China</option><option>UAE</option></select></div>
-          <div class="form-field"><label>Product Type *</label><select required><option value="">Select Product</option><option>Black Pepper</option><option>Turmeric</option><option>Red Chilli</option><option>Cardamom</option><option>Cumin</option></select></div>
+          <div class="form-field"><label>Country *</label><select required><option value="">Select Country</option><option>United States</option><option>United Kingdom</option><option>Canada</option><option>Australia</option><option>Germany</option><option>France</option><option>India</option><option>China</option><option>Japan</option><option>Singapore</option></select></div>
+          <div class="form-field"><label>Product Type *</label><select required><option value="">Select Product</option><option>Black Pepper</option><option>Turmeric</option><option>Red Chilli</option><option>Cumin</option><option>Coriander</option><option>Cardamom</option><option>Cinnamon</option><option>Cloves</option><option>Mixed Spices</option></select></div>
           <div class="form-field"><label>Required Quantity (kg) *</label><input type="number" placeholder="e.g., 100" min="1" required></div>
         </div>
         <div class="form-field"><label>Additional Details</label><textarea placeholder="Tell us about your requirements..." style="height:120px;resize:vertical"></textarea></div>
@@ -490,7 +511,7 @@
       <strong>Need help?</strong><br>Chat with our team on WhatsApp for instant support and orders.
     </div>
     <button class="wa-bubble" onclick="alert('Opening WhatsApp...')">
-      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.272-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.272-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.172.198-.295.297-.492.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421-7.403h-.004a9.87 9.87 0 00-4.255.949l-.305.15L2.967 3.975l.857 3.235.151.482a9.9 9.9 0 003.682 5.223l.528.438a9.863 9.863 0 005.049 1.382h.004c5.444 0 9.868-4.424 9.868-9.867C21.632 5.555 17.208 1.128 11.766 1.128"/></svg>
     </button>
   </div>
 
@@ -550,7 +571,7 @@
             ${p.discount > 0 ? `<div class="product-badge discount">${p.discount}% OFF</div>` : ''}
           </div>
           <div class="product-image-container">
-            <img alt="${p.name}" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23ede4dd'/%3E%3Ctext x='50' y='60' font-size='50' text-anchor='middle' dominant-baseline='middle'%3E${p.img}%3C/text%3E%3C/svg%3E">
+            <img alt="${p.name}" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23ede4dd'/%3E%3Ctext x='50' y='60' text-anchor='middle' font-size='50'%3E${p.img}%3C/text%3E%3C/svg%3E" style="width:120px;height:120px">
             <div class="stock-indicator available">✓ In Stock</div>
           </div>
           <div class="product-info">
