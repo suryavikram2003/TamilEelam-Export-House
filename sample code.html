@@ -45,6 +45,41 @@
       overflow-x: hidden;
     }
 
+    /* LEAF BACKGROUND DECORATION */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(ellipse 800px 300px at 20% 30%, rgba(198, 124, 78, 0.03) 0%, transparent 50%),
+        radial-gradient(ellipse 600px 400px at 80% 70%, rgba(26, 58, 82, 0.02) 0%, transparent 50%),
+        radial-gradient(ellipse 700px 250px at 50% 10%, rgba(212, 165, 116, 0.02) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* LEAF SVG BACKGROUND ELEMENTS */
+    .leaf-decoration {
+      position: fixed;
+      opacity: 0.08;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .leaf-1 { top: 5%; left: 5%; width: 150px; height: 150px; animation: float 6s ease-in-out infinite; }
+    .leaf-2 { top: 20%; right: 10%; width: 200px; height: 200px; animation: float 8s ease-in-out infinite 1s; }
+    .leaf-3 { bottom: 20%; left: 15%; width: 180px; height: 180px; animation: float 7s ease-in-out infinite 2s; }
+    .leaf-4 { bottom: 5%; right: 5%; width: 160px; height: 160px; animation: float 9s ease-in-out infinite 0.5s; }
+    .leaf-5 { top: 50%; right: 5%; width: 140px; height: 140px; animation: float 7.5s ease-in-out infinite 1.5s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-30px) rotate(5deg); }
+    }
+
     /* HEADER & NAV */
     header {
       position: sticky;
@@ -149,6 +184,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      z-index: 2;
     }
 
     .hero::before {
@@ -259,7 +295,26 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 120px;
+      position: relative;
+    }
+
+    .hero-image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--border-radius-lg);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      animation: slideIn 0.8s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
     }
 
     /* SECTIONS */
@@ -267,6 +322,8 @@
       max-width: 1400px;
       margin: 0 auto;
       padding: 80px 32px;
+      position: relative;
+      z-index: 3;
     }
 
     .section-title {
@@ -893,6 +950,8 @@
       background: var(--color-bg-secondary);
       border-top: 1px solid var(--color-border);
       padding: 40px 32px;
+      position: relative;
+      z-index: 3;
     }
 
     .footer-content {
@@ -1001,341 +1060,459 @@
       }
     }
 
-    .wa-header {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 12px;
-      align-items: flex-start;
-    }
-
-    .wa-avatar {
-      width: 36px;
-      height: 36px;
-      background: var(--color-secondary);
-      border-radius: 50%;
-      display: flex;
+    /* FEATURE: Rating/Reviews Card */
+    .rating-badge {
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .wa-avatar svg {
-      width: 20px;
-      height: 20px;
-      fill: white;
-    }
-
-    .wa-info h3 {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--color-text-primary);
-      margin: 0;
-    }
-
-    .wa-status {
-      font-size: 11px;
-      color: var(--color-secondary);
-    }
-
-    .wa-msg {
-      background: var(--color-bg-secondary);
-      border-radius: var(--border-radius-sm);
-      padding: 10px;
+      gap: 8px;
+      background: #FEF3C7;
+      padding: 8px 12px;
+      border-radius: 20px;
       font-size: 12px;
-      color: var(--color-text-primary);
-      margin-bottom: 12px;
-      line-height: 1.5;
+      font-weight: 600;
+      color: #92400E;
+      margin-bottom: 16px;
     }
 
-    .wa-quick-btns {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-bottom: 12px;
+    .star {
+      color: #FBBF24;
     }
 
-    .wa-qbtn {
-      border: 1px solid var(--color-border);
-      background: white;
-      color: var(--color-text-primary);
-      padding: 8px 10px;
-      border-radius: var(--border-radius-sm);
-      font-size: 11px;
-      cursor: pointer;
-      text-align: left;
-      transition: all 0.3s ease;
-      font-family: 'DM Sans', sans-serif;
-    }
-
-    .wa-qbtn:hover {
-      background: var(--color-bg-secondary);
-    }
-
-    .wa-start-btn {
-      width: 100%;
-      background: var(--color-secondary);
+    /* FEATURE: Quick Add to Cart */
+    .quick-add-btn {
+      background: var(--color-accent);
       color: white;
       border: none;
-      padding: 10px;
+      padding: 8px 16px;
       border-radius: var(--border-radius-sm);
       font-size: 12px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
-      font-family: 'DM Sans', sans-serif;
     }
 
-    .wa-start-btn:hover {
-      background: #1FA752;
+    .quick-add-btn:hover {
+      background: var(--color-primary);
+      transform: scale(1.05);
     }
 
-    /* RESPONSIVE */
+    /* FEATURE: Certification Badge */
+    .cert-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      background: #D1FAE5;
+      color: #065F46;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
     @media (max-width: 768px) {
-      .nav {
-        padding: 12px 20px;
-        gap: 20px;
-      }
-
-      .nav-links {
-        display: none;
-      }
-
       .hero-container {
         grid-template-columns: 1fr;
-        padding: 40px 20px;
         gap: 40px;
       }
 
       .hero-title {
-        font-size: 36px;
-      }
-
-      .section {
-        padding: 60px 20px;
+        font-size: 40px;
       }
 
       .section-title {
-        font-size: 28px;
+        font-size: 32px;
       }
 
-      .trust-grid, .steps-grid, .products-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .quote-content {
-        padding: 60px 20px;
-      }
-
-      .footer-content {
-        grid-template-columns: 1fr;
-        gap: 30px;
-      }
-
-      .wa-float {
-        bottom: 16px;
-        right: 16px;
-      }
-
-      .wa-tooltip {
-        width: 240px;
+      .leaf-1, .leaf-2, .leaf-3, .leaf-4, .leaf-5 {
+        opacity: 0.04;
       }
     }
   </style>
 </head>
 <body>
 
+  <!-- Leaf Background Decorations -->
+  <svg class="leaf-decoration leaf-1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <path d="M50 10 Q70 30 60 50 Q70 70 50 90 Q30 70 40 50 Q30 30 50 10" fill="currentColor" opacity="0.6"/>
+  </svg>
+  
+  <svg class="leaf-decoration leaf-2" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <path d="M50 10 Q70 30 60 50 Q70 70 50 90 Q30 70 40 50 Q30 30 50 10" fill="currentColor" opacity="0.5"/>
+  </svg>
+  
+  <svg class="leaf-decoration leaf-3" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <path d="M50 10 Q70 30 60 50 Q70 70 50 90 Q30 70 40 50 Q30 30 50 10" fill="currentColor" opacity="0.55"/>
+  </svg>
+  
+  <svg class="leaf-decoration leaf-4" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <path d="M50 10 Q70 30 60 50 Q70 70 50 90 Q30 70 40 50 Q30 30 50 10" fill="currentColor" opacity="0.6"/>
+  </svg>
+  
+  <svg class="leaf-decoration leaf-5" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <path d="M50 10 Q70 30 60 50 Q70 70 50 90 Q30 70 40 50 Q30 30 50 10" fill="currentColor" opacity="0.5"/>
+  </svg>
+
   <!-- HEADER -->
   <header>
-    <nav class="nav">
+    <div class="nav">
       <a href="#" class="logo">
-        <div class="logo-mark">🐯</div>
+        <div class="logo-mark">🌶️</div>
         <div>
           <div class="logo-text">TamilEelam</div>
           <div class="logo-sub">Export House</div>
         </div>
       </a>
-      <div class="nav-links">
+      <nav class="nav-links">
+        <a href="#why">Why Us</a>
         <a href="#products">Products</a>
-        <a href="#tracker">Track Order</a>
-        <a href="#how">How It Works</a>
-        <a href="#partners">Shipping</a>
-      </div>
-      <button class="nav-cta" onclick="scrollTo('quote')">Get a Quote</button>
-    </nav>
+        <a href="#tracker">Tracker</a>
+        <a href="#how">How it Works</a>
+      </nav>
+      <button class="nav-cta" onclick="document.getElementById('quote').scrollIntoView({behavior: 'smooth'})">Get Quote</button>
+    </div>
   </header>
 
   <!-- HERO -->
   <section class="hero">
     <div class="hero-container">
       <div class="hero-left">
-        <div class="eyebrow">Global Connect, Tamil Heritage</div>
-        <h1 class="hero-title">Premium <span class="highlight">Spices</span> & Herbs<br>From South India</h1>
-        <p class="hero-desc">Authentic, hand-selected spices from Tamil Nadu & Kerala — FSSAI certified and delivered fresh to 50+ countries worldwide.</p>
+        <div class="eyebrow">🌍 Global Spice Exporters</div>
+        <h1 class="hero-title">Premium Spices & <span class="highlight">Herbs</span> Worldwide</h1>
+        <p class="hero-desc">Authentic Tamil Nadu spices delivered to your doorstep. Trusted by chefs and food businesses globally since 2010.</p>
         <div class="hero-btns">
-          <button class="btn-primary" onclick="scrollTo('products')">Browse All Spices</button>
-          <button class="btn-secondary" onclick="openWA()">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.918-1.42A9.956 9.956 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.031-1.094l-.29-.172-2.918.843.872-2.844-.19-.3A7.96 7.96 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
-            Chat on WhatsApp
+          <button class="btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})">Browse Products</button>
+          <button class="btn-secondary">
+            <span>💬</span> Chat with us
           </button>
         </div>
       </div>
-      <div class="hero-image">🐯</div>
+      <div class="hero-image">
+        <img src="Pic.jpeg" alt="Premium Spices Collection">
+      </div>
     </div>
   </section>
 
   <!-- WHY TAMILEELAM -->
-  <section class="why-section section" id="why">
-    <h2 class="section-title">Why Choose TamilEelam?</h2>
-    <p class="section-subtitle">We're committed to delivering authentic, premium spices with unmatched quality and service.</p>
+  <section id="why" class="section why-section">
+    <h2 class="section-title">Why TamilEelam Export House?</h2>
+    <p class="section-subtitle">We pride ourselves on quality, authenticity, and customer satisfaction. Here's what sets us apart.</p>
+    
     <div class="trust-grid">
       <div class="trust-card">
-        <div class="trust-icon">✓</div>
-        <div class="trust-title">FSSAI Certified</div>
-        <div class="trust-desc">All spices certified by Food Safety and Standards Authority of India for highest quality standards.</div>
+        <div class="trust-icon">🏆</div>
+        <h3 class="trust-title">ISO Certified Quality</h3>
+        <p class="trust-desc">All products meet international quality standards with proper certifications and testing.</p>
       </div>
       <div class="trust-card">
-        <div class="trust-icon">🌍</div>
-        <div class="trust-title">Global Reach</div>
-        <div class="trust-desc">Shipping to 50+ countries with live tracking and express delivery via trusted partners.</div>
+        <div class="trust-icon">📦</div>
+        <h3 class="trust-title">Fast Shipping</h3>
+        <p class="trust-desc">Express delivery to 150+ countries with real-time tracking and hassle-free returns.</p>
       </div>
       <div class="trust-card">
-        <div class="trust-icon">💰</div>
-        <div class="trust-title">Competitive Pricing</div>
-        <div class="trust-desc">Direct from farmers. No middlemen. Save 35-45% compared to retail market prices.</div>
+        <div class="trust-icon">💎</div>
+        <h3 class="trust-title">Premium Selection</h3>
+        <p class="trust-desc">Handpicked spices from the best farms in Tamil Nadu, ensuring superior taste and aroma.</p>
       </div>
       <div class="trust-card">
-        <div class="trust-icon">🚀</div>
-        <div class="trust-title">Fresh & Fast</div>
-        <div class="trust-desc">Vacuum-sealed, temperature-controlled storage. Shipped within 24 hours of order confirmation.</div>
+        <div class="trust-icon">🤝</div>
+        <h3 class="trust-title">Expert Support</h3>
+        <p class="trust-desc">24/7 customer support in multiple languages to assist with your orders and inquiries.</p>
       </div>
     </div>
   </section>
 
   <!-- PRODUCTS -->
-  <section class="products-section section" id="products">
-    <h2 class="section-title">Complete Spice Collection</h2>
-    <p class="section-subtitle">35+ authentic spices & herbs from Tamil Nadu, Kerala & across India.</p>
-    
+  <section id="products" class="section products-section">
+    <h2 class="section-title">Our Premium Products</h2>
+    <p class="section-subtitle">Explore our carefully curated selection of authentic spices.</p>
+
     <div class="currency-bar">
-      <div class="cur-label">Select Currency:</div>
+      <span class="cur-label">💱 Select Currency:</span>
       <div class="cur-buttons">
-        <button class="cur-btn active" onclick="setCurrency(this, 'INR')">₹ INR</button>
-        <button class="cur-btn" onclick="setCurrency(this, 'AED')">AED</button>
-        <button class="cur-btn" onclick="setCurrency(this, 'SGD')">S$ SGD</button>
-        <button class="cur-btn" onclick="setCurrency(this, 'MYR')">RM MYR</button>
-        <button class="cur-btn" onclick="setCurrency(this, 'SAR')">SAR</button>
-        <button class="cur-btn" onclick="setCurrency(this, 'USD')">$ USD</button>
-        <button class="cur-btn" onclick="setCurrency(this, 'EUR')">€ EUR</button>
-        <button class="cur-btn" onclick="setCurrency(this, 'GBP')">£ GBP</button>
-        <button class="cur-btn" onclick="setCurrency(this, 'AUD')">A$ AUD</button>
-        <button class="cur-btn" onclick="setCurrency(this, 'CAD')">C$ CAD</button>
+        <button class="cur-btn active">USD $</button>
+        <button class="cur-btn">EUR €</button>
+        <button class="cur-btn">GBP £</button>
+        <button class="cur-btn">INR ₹</button>
       </div>
     </div>
 
-    <div class="products-grid" id="productsGrid"></div>
-  </section>
+    <div class="products-grid">
+      <!-- Product Card 1 -->
+      <div class="product-card">
+        <div class="product-image">🌶️</div>
+        <div class="product-info">
+          <div class="cert-badge">Organic Certified</div>
+          <h3 class="product-name">Kashmiri Chilli</h3>
+          <p class="product-origin">From Kashmir Valley</p>
+          <div class="rating-badge">
+            <span class="star">⭐⭐⭐⭐⭐</span> 4.8
+          </div>
+          <div class="product-price">$12.99</div>
+          <p class="product-price-unit">Per 100g</p>
+          <div class="qty-control">
+            <label class="qty-label">Qty:</label>
+            <input type="number" class="qty-input" value="1" min="1">
+            <span class="qty-total">$12.99</span>
+          </div>
+          <button class="product-wa-btn">📦 Add to Cart</button>
+          <button class="product-wa-btn" style="background: var(--color-secondary);">💬 WhatsApp</button>
+        </div>
+      </div>
 
-  <!-- HOW IT WORKS -->
-  <section class="how-section section" id="how">
-    <h2 class="section-title">How It Works</h2>
-    <p class="section-subtitle">Simple, transparent process — from browse to doorstep.</p>
-    <div class="steps-grid">
-      <div class="step-card">
-        <div class="step-num">1</div>
-        <div class="step-title">Browse & Select</div>
-        <div class="step-desc">Explore 35+ premium spices with live pricing in your local currency.</div>
+      <!-- Product Card 2 -->
+      <div class="product-card">
+        <div class="product-image">🧂</div>
+        <div class="product-info">
+          <div class="cert-badge">Fair Trade</div>
+          <h3 class="product-name">Black Cardamom</h3>
+          <p class="product-origin">From Idukki, Kerala</p>
+          <div class="rating-badge">
+            <span class="star">⭐⭐⭐⭐⭐</span> 4.9
+          </div>
+          <div class="product-price">$18.50</div>
+          <p class="product-price-unit">Per 100g</p>
+          <div class="qty-control">
+            <label class="qty-label">Qty:</label>
+            <input type="number" class="qty-input" value="1" min="1">
+            <span class="qty-total">$18.50</span>
+          </div>
+          <button class="product-wa-btn">📦 Add to Cart</button>
+          <button class="product-wa-btn" style="background: var(--color-secondary);">💬 WhatsApp</button>
+        </div>
       </div>
-      <div class="step-card">
-        <div class="step-num">2</div>
-        <div class="step-title">Instant Quote</div>
-        <div class="step-desc">Message us on WhatsApp with quantity — get pricing within 1 hour.</div>
+
+      <!-- Product Card 3 -->
+      <div class="product-card">
+        <div class="product-image">💛</div>
+        <div class="product-info">
+          <div class="cert-badge">Organic Certified</div>
+          <h3 class="product-name">Turmeric Powder</h3>
+          <p class="product-origin">From Telangana</p>
+          <div class="rating-badge">
+            <span class="star">⭐⭐⭐⭐⭐</span> 4.7
+          </div>
+          <div class="product-price">$8.99</div>
+          <p class="product-price-unit">Per 200g</p>
+          <div class="qty-control">
+            <label class="qty-label">Qty:</label>
+            <input type="number" class="qty-input" value="1" min="1">
+            <span class="qty-total">$8.99</span>
+          </div>
+          <button class="product-wa-btn">📦 Add to Cart</button>
+          <button class="product-wa-btn" style="background: var(--color-secondary);">💬 WhatsApp</button>
+        </div>
       </div>
-      <div class="step-card">
-        <div class="step-num">3</div>
-        <div class="step-title">Quick Dispatch</div>
-        <div class="step-desc">Order confirmed. Packed fresh same day. Shipped within 24 hours.</div>
-      </div>
-      <div class="step-card">
-        <div class="step-num">4</div>
-        <div class="step-title">Track & Enjoy</div>
-        <div class="step-desc">Real-time tracking from warehouse to your kitchen. World-class delivery.</div>
+
+      <!-- Product Card 4 -->
+      <div class="product-card">
+        <div class="product-image">⚫</div>
+        <div class="product-info">
+          <div class="cert-badge">Premium Grade</div>
+          <h3 class="product-name">Black Pepper</h3>
+          <p class="product-origin">From Kerala</p>
+          <div class="rating-badge">
+            <span class="star">⭐⭐⭐⭐⭐</span> 4.9
+          </div>
+          <div class="product-price">$15.99</div>
+          <p class="product-price-unit">Per 100g</p>
+          <div class="qty-control">
+            <label class="qty-label">Qty:</label>
+            <input type="number" class="qty-input" value="1" min="1">
+            <span class="qty-total">$15.99</span>
+          </div>
+          <button class="product-wa-btn">📦 Add to Cart</button>
+          <button class="product-wa-btn" style="background: var(--color-secondary);">💬 WhatsApp</button>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- SHIPMENT TRACKER -->
-  <section class="tracker-section section" id="tracker">
+  <section id="tracker" class="section tracker-section">
     <h2 class="section-title">Track Your Shipment</h2>
-    <p class="section-subtitle">Enter your tracking ID to see live status updates.</p>
+    <p class="section-subtitle">Enter your tracking ID to get real-time updates on your order.</p>
+    
     <div class="tracker-box">
       <div class="tracker-input-row">
-        <input type="text" id="trackInput" placeholder="e.g., TE2024-00481" onkeyup="trackShipment()">
-        <button onclick="trackShipment()">Track</button>
+        <input type="text" placeholder="Enter Tracking ID (e.g., TEH-2024-001234)" value="">
+        <button>🔍 Track</button>
       </div>
-      <div id="trackerResult" class="tracker-result"></div>
-    </div>
-    <div style="margin-top: 24px; padding: 16px; background: var(--color-bg-secondary); border-radius: var(--border-radius-md); font-size: 13px; color: var(--color-text-secondary);">
-      <strong>Demo tracking IDs:</strong> TE2024-00481 · TE2024-00392 · TE2024-00310
+      
+      <div class="tracker-result">
+        <div class="tr-courier-row">
+          <div class="tr-courier">
+            <div class="tr-courier-dot"></div>
+            <div>
+              <div class="tr-courier-name">Express Courier</div>
+              <div class="tr-courier-id">Tracking ID: TEH-2024-001234</div>
+            </div>
+          </div>
+          <span class="tr-eta">Est. Delivery: 3 Days</span>
+        </div>
+
+        <div class="tr-steps">
+          <div class="tr-step">
+            <div class="tr-step-line">
+              <div class="tr-dot done"></div>
+              <div class="tr-line done"></div>
+            </div>
+            <div class="tr-step-info">
+              <div class="tr-step-title">Order Confirmed</div>
+              <div class="tr-step-meta">Jan 15, 2024 - 10:30 AM</div>
+            </div>
+          </div>
+
+          <div class="tr-step">
+            <div class="tr-step-line">
+              <div class="tr-dot done"></div>
+              <div class="tr-line done"></div>
+            </div>
+            <div class="tr-step-info">
+              <div class="tr-step-title">Processing & Packaging</div>
+              <div class="tr-step-meta">Jan 15, 2024 - 2:45 PM</div>
+            </div>
+          </div>
+
+          <div class="tr-step">
+            <div class="tr-step-line">
+              <div class="tr-dot active"></div>
+              <div class="tr-line"></div>
+            </div>
+            <div class="tr-step-info">
+              <div class="tr-step-title">Shipped</div>
+              <div class="tr-step-meta">In Transit</div>
+            </div>
+          </div>
+
+          <div class="tr-step">
+            <div class="tr-step-line">
+              <div class="tr-dot pending"></div>
+            </div>
+            <div class="tr-step-info">
+              <div class="tr-step-title pending">Out for Delivery</div>
+              <div class="tr-step-meta">Expected tomorrow</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- PARTNERS -->
-  <section class="partners-section section" id="partners">
-    <h2 class="section-title">Trusted Shipping Partners</h2>
-    <p class="section-subtitle">We ship via world's most reliable international couriers.</p>
+  <!-- HOW IT WORKS -->
+  <section id="how" class="section how-section">
+    <h2 class="section-title">How It Works</h2>
+    <p class="section-subtitle">Simple steps to get quality spices delivered to your door.</p>
+    
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h3 class="step-title">Browse & Select</h3>
+        <p class="step-desc">Explore our premium collection of authentic spices and choose the ones you need.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h3 class="step-title">Add to Cart</h3>
+        <p class="step-desc">Select quantity and add items to your cart. We offer flexible bulk order discounts.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h3 class="step-title">Checkout</h3>
+        <p class="step-desc">Secure payment with multiple options. International shipping available worldwide.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <h3 class="step-title">Track & Receive</h3>
+        <p class="step-desc">Get real-time tracking updates and receive your order fresh and on time.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTNERS & CERTIFICATIONS -->
+  <section class="section partners-section">
+    <h2 class="section-title">Trusted By Industry Leaders</h2>
+    <p class="section-subtitle">Our certifications and partnerships ensure the highest quality standards.</p>
+    
     <div class="partners-row">
-      <div class="partner-pill"><div class="partner-dot"></div>DHL Express</div>
-      <div class="partner-pill"><div class="partner-dot"></div>Aramex</div>
-      <div class="partner-pill"><div class="partner-dot"></div>Pos Malaysia</div>
-      <div class="partner-pill"><div class="partner-dot"></div>FedEx International</div>
-      <div class="partner-pill"><div class="partner-dot"></div>India Post</div>
-      <div class="partner-pill"><div class="partner-dot"></div>Blue Dart</div>
+      <div class="partner-pill">
+        <div class="partner-dot"></div>
+        ISO 22000 Certified
+      </div>
+      <div class="partner-pill">
+        <div class="partner-dot"></div>
+        Fair Trade Verified
+      </div>
+      <div class="partner-pill">
+        <div class="partner-dot"></div>
+        Organic USDA Approved
+      </div>
+      <div class="partner-pill">
+        <div class="partner-dot"></div>
+        FSSC 22000 Certified
+      </div>
+      <div class="partner-pill">
+        <div class="partner-dot"></div>
+        DGFT Registered
+      </div>
     </div>
   </section>
 
   <!-- QUOTE FORM -->
-  <section class="quote-section" id="quote">
+  <section id="quote" class="quote-section">
     <div class="quote-content">
-      <h2 class="quote-title">Bulk Orders & Corporate Gifting</h2>
-      <p class="quote-subtitle">Custom packages & special pricing for bulk orders. Fill in your details for a personalized quote.</p>
-      <div class="form-grid">
-        <div class="form-field">
-          <label>Your Name</label>
-          <input type="text" id="qName" placeholder="John Smith">
+      <h2 class="quote-title">Get a Custom Quote</h2>
+      <p class="quote-subtitle">For bulk orders and custom requirements, request a personalized quote from our team.</p>
+      
+      <form>
+        <div class="form-grid">
+          <div class="form-field">
+            <label>Full Name *</label>
+            <input type="text" placeholder="John Doe" required>
+          </div>
+          <div class="form-field">
+            <label>Email Address *</label>
+            <input type="email" placeholder="john@example.com" required>
+          </div>
+          <div class="form-field">
+            <label>Company Name</label>
+            <input type="text" placeholder="Your Company">
+          </div>
+          <div class="form-field">
+            <label>Country *</label>
+            <select required>
+              <option value="">Select Country</option>
+              <option value="usa">United States</option>
+              <option value="uk">United Kingdom</option>
+              <option value="canada">Canada</option>
+              <option value="australia">Australia</option>
+              <option value="india">India</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Product Type *</label>
+            <select required>
+              <option value="">Select Product</option>
+              <option value="chilli">Red Chilli</option>
+              <option value="turmeric">Turmeric</option>
+              <option value="pepper">Black Pepper</option>
+              <option value="cardamom">Cardamom</option>
+              <option value="custom">Custom Mix</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Required Quantity (kg) *</label>
+            <input type="number" placeholder="e.g., 100" min="1" required>
+          </div>
         </div>
-        <div class="form-field">
-          <label>Company (if applicable)</label>
-          <input type="text" id="qCompany" placeholder="Your Company">
+        <p class="form-note">* Required fields. We'll respond within 24 hours.</p>
+        <div class="form-actions">
+          <button type="submit" class="quote-btn">📤 Send Quote Request</button>
+          <button type="button" class="quote-wa-btn" onclick="alert('WhatsApp redirecting...')">
+            💬 Message on WhatsApp
+          </button>
         </div>
-        <div class="form-field">
-          <label>Email Address</label>
-          <input type="email" id="qEmail" placeholder="you@example.com">
-        </div>
-        <div class="form-field">
-          <label>Phone Number</label>
-          <input type="tel" id="qPhone" placeholder="+1 (555) 000-0000">
-        </div>
-        <div class="form-field" style="grid-column: 1 / -1;">
-          <label>Which spices interest you?</label>
-          <input type="text" id="qSpices" placeholder="e.g., Black Pepper, Turmeric, Cardamom">
-        </div>
-        <div class="form-field" style="grid-column: 1 / -1;">
-          <label>Estimated Quantity (kg)</label>
-          <input type="number" id="qQuantity" placeholder="e.g., 100">
-        </div>
-      </div>
-      <div class="form-actions">
-        <button class="quote-btn" onclick="submitQuote()">Send Quote Request</button>
-        <button class="quote-wa-btn" onclick="waQuoteInquiry()">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.918-1.42A9.956 9.956 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.031-1.094l-.29-.172-2.918.843.872-2.844-.19-.3A7.96 7.96 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
-          WhatsApp Inquiry
-        </button>
-      </div>
-      <div class="form-note">We'll respond within 2 hours • Email: exports.tamileelam@gamil.com</div>
+      </form>
     </div>
   </section>
 
@@ -1343,332 +1520,84 @@
   <footer>
     <div class="footer-content">
       <div class="footer-col">
-        <h3>TamilEelam Export House</h3>
-        <p>Premium spices & herbs from South India. Global Connect, Tamil Heritage. FSSAI Certified.</p>
+        <h3>About Us</h3>
+        <p>TamilEelam Export House is a leading exporter of premium spices from Tamil Nadu, India. We've been serving global customers since 2010.</p>
       </div>
       <div class="footer-col">
-        <h3>Quick Links</h3>
-        <a href="#products">Products</a>
-        <a href="#tracker">Track Order</a>
-        <a href="#how">How It Works</a>
-        <a href="#quote">Request Quote</a>
+        <h3>Products</h3>
+        <a href="#">Red Chilli</a>
+        <a href="#">Turmeric</a>
+        <a href="#">Black Pepper</a>
+        <a href="#">Cardamom</a>
+        <a href="#">Custom Blends</a>
       </div>
       <div class="footer-col">
-        <h3>Company</h3>
-        <a href="#">About Us</a>
-        <a href="#">Certifications</a>
+        <h3>Support</h3>
+        <a href="#">Contact Us</a>
+        <a href="#">Track Order</a>
+        <a href="#">Return Policy</a>
+        <a href="#">FAQ</a>
+        <a href="#">Bulk Orders</a>
+      </div>
+      <div class="footer-col">
+        <h3>Legal</h3>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookie Policy</a>
         <a href="#">Shipping Info</a>
-        <a href="#">Contact</a>
-      </div>
-      <div class="footer-col">
-        <h3>Contact Us</h3>
-        <p><strong>WhatsApp:</strong> +91 8489718858</p>
-        <p><strong>Email:</strong> exports.tamileelam@gamil.com</p>
-        <p><strong>Address:</strong> Tamil Nadu, India</p>
       </div>
     </div>
     <div class="footer-bottom">
-      <div>© 2026 TamilEelam Export House. All rights reserved.</div>
-      <div>
-        <a href="#" style="color: var(--color-text-secondary);">Privacy Policy</a> · 
-        <a href="#" style="color: var(--color-text-secondary);">Terms of Service</a>
+      <p>&copy; 2024 TamilEelam Export House. All rights reserved.</p>
+      <div style="display: flex; gap: 16px;">
+        <a href="#" style="text-decoration: none; color: var(--color-text-secondary);">Facebook</a>
+        <a href="#" style="text-decoration: none; color: var(--color-text-secondary);">Instagram</a>
+        <a href="#" style="text-decoration: none; color: var(--color-text-secondary);">Twitter</a>
       </div>
     </div>
   </footer>
 
-  <!-- WHATSAPP FLOAT WIDGET -->
+  <!-- WHATSAPP WIDGET -->
   <div class="wa-float">
-    <div class="wa-tooltip" id="waTooltip">
-      <div class="wa-header">
-        <div class="wa-avatar">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.918-1.42A9.956 9.956 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.031-1.094l-.29-.172-2.918.843.872-2.844-.19-.3A7.96 7.96 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
-        </div>
-        <div class="wa-info">
-          <h3>TamilEelam Support</h3>
-          <div class="wa-status">● Online now</div>
-        </div>
-      </div>
-      <div class="wa-msg">👋 Hi! Welcome to TamilEelam. Let's help you get premium South Indian spices today!</div>
-      <div class="wa-quick-btns">
-        <button class="wa-qbtn" onclick="waMsg('🛒 I want to place an order')">🛒 Place an Order</button>
-        <button class="wa-qbtn" onclick="waMsg('📦 Track my shipment')">📦 Track Shipment</button>
-        <button class="wa-qbtn" onclick="waMsg('💰 Ask about pricing')">💰 Ask Pricing</button>
-      </div>
-      <button class="wa-start-btn" onclick="startWAChat()">Start Chat →</button>
+    <div class="wa-tooltip">
+      <strong>Need help?</strong><br>
+      Chat with our team on WhatsApp for instant support and orders.
     </div>
-    <button class="wa-bubble" onclick="toggleWATooltip()">
-      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.918-1.42A9.956 9.956 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.031-1.094l-.29-.172-2.918.843.872-2.844-.19-.3A7.96 7.96 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
+    <button class="wa-bubble" onclick="this.parentElement.querySelector('.wa-tooltip').classList.toggle('show')">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.6 6.32c-1.63-1.63-3.8-2.53-6.1-2.53-4.75 0-8.62 3.86-8.62 8.61 0 1.52.39 3 1.14 4.31L2 22l4.87-1.28c1.25.68 2.66 1.04 4.09 1.04h.01c4.75 0 8.62-3.86 8.62-8.61 0-2.3-.9-4.47-2.53-6.1m-6.1 13.85h-.01c-1.28 0-2.53-.34-3.61-.98l-.26-.15-2.68.71.72-2.65-.17-.27c-.68-1.1-1.04-2.37-1.04-3.66 0-3.95 3.21-7.16 7.16-7.16 1.91 0 3.71.74 5.06 2.09 1.35 1.35 2.09 3.15 2.09 5.06 0 3.95-3.21 7.16-7.16 7.16m3.91-5.35c-.21-.11-1.26-.62-1.46-.69-.2-.08-.34-.12-.49.12-.14.24-.57.69-.7.83-.12.14-.25.16-.46.05-.21-.11-1.08-.4-2.06-1.27-.76-.68-1.27-1.52-1.42-1.73-.14-.21 0-.33.11-.43.11-.1.24-.26.36-.39.12-.13.16-.22.25-.36.08-.15.04-.28-.02-.39-.06-.11-.48-1.16-.66-1.59-.17-.41-.35-.36-.48-.36-.12 0-.26-.02-.4-.02-.14 0-.37.05-.56.24-.19.2-.72.7-.72 1.71 0 1.01.74 1.98.84 2.12.1.14 1.42 2.17 3.44 3.04.48.21.86.33 1.15.42.48.15.92.13 1.27.08.39-.06 1.26-.51 1.44-1.01.18-.5.18-.93.12-1.01-.05-.08-.2-.13-.41-.22z"/>
+      </svg>
     </button>
   </div>
 
   <script>
-    // DATA
-    const RATES = { 
-      INR: 1, 
-      AED: 0.044, 
-      SGD: 0.016, 
-      MYR: 0.056, 
-      SAR: 0.045, 
-      USD: 0.012, 
-      EUR: 0.011, 
-      GBP: 0.0094, 
-      AUD: 0.018, 
-      CAD: 0.016
-    };
-    const SYM = { 
-      INR: '₹', 
-      AED: 'AED ', 
-      SGD: 'S$', 
-      MYR: 'RM ', 
-      SAR: 'SAR ', 
-      USD: '$', 
-      EUR: '€', 
-      GBP: '£', 
-      AUD: 'A$', 
-      CAD: 'C$'
-    };
-    const WA_NUMBER = '918489718858';
-    const EMAIL = 'exports.tamileelam@gamil.com';
+    // Currency conversion functionality
+    document.querySelectorAll('.cur-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.cur-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
 
-    const PRODUCTS = [
-      { id: 0, name: 'Black Pepper', origin: 'Wayanad, Kerala', icon: '⚫', inr: 650, badge: 'Export Grade' },
-      { id: 1, name: 'White Pepper', origin: 'Kerala', icon: '⚪', inr: 750, badge: 'Premium' },
-      { id: 2, name: 'Red Chilli (Whole)', origin: 'Guntur, AP', icon: '🌶️', inr: 280, badge: 'Best Seller' },
-      { id: 3, name: 'Kashmiri Chilli', origin: 'Kashmir', icon: '🔴', inr: 420, badge: 'Premium' },
-      { id: 4, name: 'Turmeric (Whole)', origin: 'Erode, TN', icon: '🟡', inr: 180, badge: 'Organic' },
-      { id: 5, name: 'Turmeric Powder', origin: 'Erode, TN', icon: '✨', inr: 200, badge: 'Popular' },
-      { id: 6, name: 'Cumin Seeds', origin: 'Rajasthan', icon: '🌰', inr: 310, badge: 'Grade A' },
-      { id: 7, name: 'Coriander Seeds', origin: 'Rajasthan', icon: '🟤', inr: 220, badge: 'Quality' },
-      { id: 8, name: 'Coriander Powder', origin: 'Rajasthan', icon: '🟫', inr: 240, badge: 'Quality' },
-      { id: 9, name: 'Cardamom (Green)', origin: 'Idukki, Kerala', icon: '🟢', inr: 1400, badge: 'Premium' },
-      { id: 10, name: 'Cardamom (Black)', origin: 'Kerala', icon: '⬛', inr: 950, badge: 'Rare' },
-      { id: 11, name: 'Cloves', origin: 'Kerala', icon: '🔨', inr: 850, badge: 'Premium' },
-      { id: 12, name: 'Cinnamon', origin: 'Kerala', icon: '🪵', inr: 420, badge: 'Organic' },
-      { id: 13, name: 'Bay Leaf', origin: 'Kerala', icon: '🍃', inr: 380, badge: 'Quality' },
-      { id: 14, name: 'Mustard Seeds', origin: 'Bengal', icon: '🟡', inr: 160, badge: 'Popular' },
-      { id: 15, name: 'Fenugreek Seeds', origin: 'Rajasthan', icon: '🟠', inr: 140, badge: 'Quality' },
-      { id: 16, name: 'Fennel Seeds', origin: 'Rajasthan', icon: '🟢', inr: 180, badge: 'Quality' },
-      { id: 17, name: 'Star Anise', origin: 'Gujarat', icon: '⭐', inr: 350, badge: 'Premium' },
-      { id: 18, name: 'Nutmeg', origin: 'Kerala', icon: '🥜', inr: 520, badge: 'Premium' },
-      { id: 19, name: 'Mace', origin: 'Kerala', icon: '🔶', inr: 580, badge: 'Premium' },
-      { id: 20, name: 'Asafoetida (Hing)', origin: 'Afghanistan', icon: '🌋', inr: 1200, badge: 'Rare' },
-      { id: 21, name: 'Curry Leaves (Dry)', origin: 'Tamil Nadu', icon: '🍂', inr: 420, badge: 'Quality' },
-      { id: 22, name: 'Tamarind', origin: 'Tamil Nadu', icon: '🟤', inr: 320, badge: 'Popular' },
-      { id: 23, name: 'Garlic (Dry)', origin: 'Tamil Nadu', icon: '🧄', inr: 280, badge: 'Quality' },
-      { id: 24, name: 'Ginger (Dry)', origin: 'Kerala', icon: '🟫', inr: 350, badge: 'Quality' },
-      { id: 25, name: 'Paprika', origin: 'Hungary Import', icon: '🔴', inr: 180, badge: 'Quality' },
-      { id: 26, name: 'Saffron', origin: 'Kashmir', icon: '🧵', inr: 3500, badge: 'Luxury' },
-      { id: 27, name: 'Vanilla', origin: 'Madagascar', icon: '🫘', inr: 2800, badge: 'Premium' },
-      { id: 28, name: 'Sesame Seeds', origin: 'Tamil Nadu', icon: '⚪', inr: 320, badge: 'Quality' },
-      { id: 29, name: 'Poppy Seeds', origin: 'West Bengal', icon: '⚫', inr: 480, badge: 'Quality' },
-      { id: 30, name: 'Carom Seeds (Ajwain)', origin: 'Rajasthan', icon: '🔶', inr: 280, badge: 'Quality' },
-      { id: 31, name: 'Black Cumin (Kalonji)', origin: 'Bengal', icon: '⚫', inr: 320, badge: 'Quality' },
-      { id: 32, name: 'Dried Rose Petals', origin: 'Kashmir', icon: '🌹', inr: 580, badge: 'Specialty' },
-      { id: 33, name: 'Allspice', origin: 'Import', icon: '🟤', inr: 420, badge: 'Quality' },
-      { id: 34, name: 'Kokum', origin: 'Karnataka', icon: '🔴', inr: 240, badge: 'Quality' }
-    ];
+    // Quantity input functionality
+    document.querySelectorAll('.qty-input').forEach(input => {
+      input.addEventListener('change', function() {
+        const price = parseFloat(this.closest('.product-info').querySelector('.product-price').textContent.replace('$', ''));
+        const total = price * this.value;
+        this.closest('.qty-control').querySelector('.qty-total').textContent = '$' + total.toFixed(2);
+      });
+    });
 
-    const TRACKING = {
-      'TE2024-00481': { courier: 'DHL Express', id: 'DHL7291048310', eta: 'Delivered', product: 'Black Pepper · 5 kg', dest: 'Dubai, UAE', steps: [
-        { title: 'Order confirmed', meta: '12 Apr 2025, 10:30 AM · Madurai warehouse', state: 'done' },
-        { title: 'Packed & dispatched', meta: '13 Apr 2025, 9:00 AM · Madurai sorting hub', state: 'done' },
-        { title: 'Departed origin country', meta: '14 Apr 2025, 4:45 AM · Chennai International Airport', state: 'done' },
-        { title: 'Arrived at destination', meta: '15 Apr 2025, 11:20 AM · Dubai customs clearance', state: 'done' },
-        { title: 'Out for delivery', meta: '16 Apr 2025, 8:00 AM · Dubai last-mile facility', state: 'done' },
-        { title: 'Delivered', meta: '16 Apr 2025, 2:34 PM · Received by customer', state: 'active' }
-      ]},
-      'TE2024-00392': { courier: 'Aramex', id: 'ARX5581029374', eta: 'Est. delivery: 3–4 days', product: 'Cardamom (Green) · 500g', dest: 'Singapore', steps: [
-        { title: 'Order confirmed', meta: '02 May 2025, 11:00 AM · Madurai warehouse', state: 'done' },
-        { title: 'Packed & dispatched', meta: '03 May 2025, 10:15 AM · Madurai sorting hub', state: 'done' },
-        { title: 'Departed origin country', meta: '04 May 2025, 6:10 AM · Chennai International Airport', state: 'active' },
-        { title: 'Arrived at destination', meta: 'Estimated 06 May 2025 · Singapore customs', state: 'pending' },
-        { title: 'Out for delivery', meta: 'Estimated 07 May 2025', state: 'pending' },
-        { title: 'Delivered', meta: 'Estimated 07–08 May 2025', state: 'pending' }
-      ]},
-      'TE2024-00310': { courier: 'Pos Malaysia', id: 'PMYS4421837650', eta: 'Est. delivery: 5–6 days', product: 'Turmeric Powder · 2 kg', dest: 'Kuala Lumpur, Malaysia', steps: [
-        { title: 'Order confirmed', meta: '28 Apr 2025, 3:00 PM · Madurai warehouse', state: 'done' },
-        { title: 'Packed & dispatched', meta: '29 Apr 2025, 9:30 AM · Madurai sorting hub', state: 'active' },
-        { title: 'Departed origin country', meta: 'Estimated 30 Apr 2025 · Chennai airport', state: 'pending' },
-        { title: 'Arrived at destination', meta: 'Estimated 02 May 2025 · KL customs', state: 'pending' },
-        { title: 'Out for delivery', meta: 'Estimated 03 May 2025', state: 'pending' },
-        { title: 'Delivered', meta: 'Estimated 03–04 May 2025', state: 'pending' }
-      ]}
-    };
-
-    let currentCurrency = 'INR';
-
-    // FUNCTIONS
-    function formatPrice(value, currency) {
-      if (currency === 'INR') return SYM[currency] + Math.round(value).toLocaleString();
-      return SYM[currency] + value.toFixed(2);
-    }
-
-    function convertPrice(inr, currency) {
-      return inr * RATES[currency];
-    }
-
-    function renderProducts() {
-      const grid = document.getElementById('productsGrid');
-      grid.innerHTML = PRODUCTS.map(p => {
-        const price = convertPrice(p.inr, currentCurrency);
-        return `
-          <div class="product-card" onclick="selectProduct(this, ${p.id})">
-            <div class="product-image">${p.icon}</div>
-            <div class="product-info">
-              <div class="product-name">${p.name}</div>
-              <div class="product-origin">${p.origin}</div>
-              <div class="product-price">${formatPrice(price, currentCurrency)}</div>
-              <div class="product-price-unit">/ kg</div>
-              <div class="product-badge">${p.badge}</div>
-              <div class="qty-control">
-                <label class="qty-label">Qty:</label>
-                <input type="number" class="qty-input" value="1" min="1" onchange="updateTotal(this, ${p.id})" onclick="event.stopPropagation()">
-                <div class="qty-total" id="qty-${p.id}">${formatPrice(price, currentCurrency)}</div>
-              </div>
-              <button class="product-wa-btn" onclick="event.stopPropagation(); waOrderProduct(${p.id})">
-                <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.918-1.42A9.956 9.956 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.031-1.094l-.29-.172-2.918.843.872-2.844-.19-.3A7.96 7.96 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
-                Order on WhatsApp
-              </button>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function setCurrency(btn, currency) {
-      currentCurrency = currency;
-      document.querySelectorAll('.cur-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      renderProducts();
-    }
-
-    function updateTotal(input, productId) {
-      const product = PRODUCTS[productId];
-      const qty = parseFloat(input.value) || 1;
-      const price = convertPrice(product.inr, currentCurrency);
-      document.getElementById(`qty-${productId}`).textContent = formatPrice(price * qty, currentCurrency);
-    }
-
-    function selectProduct(card, productId) {
-      document.querySelectorAll('.product-card').forEach(c => c.classList.remove('selected'));
-      card.classList.add('selected');
-    }
-
-    function trackShipment() {
-      const id = document.getElementById('trackInput').value.trim().toUpperCase();
-      const result = document.getElementById('trackerResult');
-      
-      if (!id) {
-        result.innerHTML = '';
-        return;
-      }
-
-      const tracking = TRACKING[id];
-      if (!tracking) {
-        result.innerHTML = `<div class="tr-error">⚠ Tracking ID not found. Please check your order confirmation.</div>`;
-        return;
-      }
-
-      const stepsHtml = tracking.steps.map((s, i) => {
-        const isLast = i === tracking.steps.length - 1;
-        return `
-          <div class="tr-step">
-            <div class="tr-step-line">
-              <div class="tr-dot ${s.state}"></div>
-              ${!isLast ? `<div class="tr-line ${s.state === 'done' ? 'done' : ''}"></div>` : ''}
-            </div>
-            <div class="tr-step-info">
-              <div class="tr-step-title ${s.state === 'pending' ? 'pending' : ''}">${s.title}</div>
-              <div class="tr-step-meta">${s.meta}</div>
-            </div>
-          </div>
-        `;
-      }).join('');
-
-      result.innerHTML = `
-        <div class="tr-courier-row">
-          <div class="tr-courier">
-            <div class="tr-courier-dot"></div>
-            <div>
-              <div class="tr-courier-name">${tracking.courier} · ${tracking.id}</div>
-              <div class="tr-courier-id">${tracking.product} → ${tracking.dest}</div>
-            </div>
-          </div>
-          <div class="tr-eta">${tracking.eta}</div>
-        </div>
-        <div class="tr-steps">${stepsHtml}</div>
-      `;
-    }
-
-    // WHATSAPP FUNCTIONS
-    function toggleWATooltip() {
-      const tooltip = document.getElementById('waTooltip');
-      tooltip.classList.toggle('show');
-    }
-
-    function openWA() {
-      const msg = encodeURIComponent('Hi! I\'m interested in your premium spices. Can you share pricing and product details?');
-      window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, '_blank');
-    }
-
-    function waMsg(text) {
-      const msg = encodeURIComponent(text);
-      window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, '_blank');
-    }
-
-    function waOrderProduct(productId) {
-      const product = PRODUCTS[productId];
-      const qty = document.querySelector(`#productsGrid .product-card:nth-child(${productId + 1}) .qty-input`)?.value || 1;
-      const price = convertPrice(product.inr, currentCurrency);
-      const total = formatPrice(price * qty, currentCurrency);
-      const msg = encodeURIComponent(`Hi! I'd like to order ${qty} kg of ${product.name} (${currentCurrency} ${total}). Please provide details and payment options.`);
-      window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, '_blank');
-    }
-
-    function startWAChat() {
-      openWA();
-      toggleWATooltip();
-    }
-
-    function waQuoteInquiry() {
-      const name = document.getElementById('qName').value || 'Friend';
-      const spices = document.getElementById('qSpices').value || 'various spices';
-      const qty = document.getElementById('qQuantity').value || 'as per requirement';
-      const msg = encodeURIComponent(`Hi! I'm ${name}. I'm interested in bulk ordering ${spices}. Estimated quantity: ${qty} kg. Please send quote details.`);
-      window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, '_blank');
-    }
-
-    function submitQuote() {
-      const name = document.getElementById('qName').value;
-      const email = document.getElementById('qEmail').value;
-      const company = document.getElementById('qCompany').value;
-      const phone = document.getElementById('qPhone').value;
-      const spices = document.getElementById('qSpices').value;
-      const qty = document.getElementById('qQuantity').value;
-      
-      if (!name || !email) {
-        alert('Please fill in your name and email');
-        return;
-      }
-
-      // Show success message
-      const message = `✅ Quote Request Received!\n\nYour Details:\n• Name: ${name}\n• Email: ${email}\n• Company: ${company}\n• Phone: ${phone}\n• Spices: ${spices}\n• Quantity: ${qty} kg\n\n📧 We'll send you a detailed quote at: ${email}\n⏱️ Response time: Within 2 hours\n\n💬 Or message us on WhatsApp: +91 8489718858\n\nThank you for choosing TamilEelam Export House!`;
-
-      alert(message);
-      
-      // Clear form
-      document.querySelectorAll('.form-field input').forEach(el => el.value = '');
-    }
-
-    function scrollTo(id) {
-      const element = document.getElementById(id);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-
-    // INIT
-    renderProducts();
+    // Smooth scroll enhancement
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
   </script>
 
 </body>
