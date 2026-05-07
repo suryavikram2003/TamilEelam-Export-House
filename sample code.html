@@ -89,6 +89,7 @@
       border-bottom: 1px solid var(--color-border-light);
       backdrop-filter: blur(10px);
       background-color: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     }
 
     .nav {
@@ -173,6 +174,40 @@
       background: var(--color-primary);
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(26, 58, 82, 0.2);
+    }
+
+    .cart-badge {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: #FEE2E2;
+      border-radius: 50%;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .cart-badge:hover {
+      background: #FCA5A5;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: var(--color-secondary);
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
     }
 
     /* HERO */
@@ -389,6 +424,39 @@
       background: white;
     }
 
+    .filter-bar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .filter-label {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .filter-btn {
+      border: 1px solid var(--color-border);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      cursor: pointer;
+      background: white;
+      color: var(--color-text-primary);
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--color-primary);
+      color: white;
+      border-color: var(--color-primary);
+    }
+
     .currency-bar {
       background: var(--color-bg-secondary);
       padding: 16px 24px;
@@ -434,8 +502,8 @@
 
     .products-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 24px;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 28px;
       margin-top: 32px;
     }
 
@@ -446,12 +514,15 @@
       overflow: hidden;
       transition: all 0.3s ease;
       cursor: pointer;
+      position: relative;
+      display: flex;
+      flex-direction: column;
     }
 
     .product-card:hover {
       border-color: var(--color-primary);
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+      transform: translateY(-8px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
     }
 
     .product-card.selected {
@@ -459,35 +530,138 @@
       box-shadow: 0 8px 24px rgba(26, 58, 82, 0.15);
     }
 
-    .product-image {
-      height: 100px;
+    .product-badge-container {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      z-index: 10;
+    }
+
+    .product-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      background: #D1FAE5;
+      color: #065F46;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-badge.bestseller {
+      background: #FEF3C7;
+      color: #92400E;
+    }
+
+    .product-badge.sale {
+      background: #FEE2E2;
+      color: #991B1B;
+    }
+
+    .product-image-container {
+      position: relative;
+      height: 240px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 40px;
       background: linear-gradient(135deg, #F5EBE0 0%, #E8D5C4 100%);
       border-bottom: 1px solid var(--color-border);
+      overflow: hidden;
+    }
+
+    .product-image-container img {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+      transition: transform 0.3s ease;
+    }
+
+    .product-card:hover .product-image-container img {
+      transform: scale(1.08);
+    }
+
+    .stock-indicator {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      font-size: 12px;
+      padding: 6px 10px;
+      background: white;
+      border-radius: 20px;
+      border: 1px solid var(--color-border);
+      font-weight: 600;
+    }
+
+    .stock-indicator.low {
+      background: #FEE2E2;
+      color: #991B1B;
+      border-color: #FCA5A5;
+    }
+
+    .stock-indicator.available {
+      background: #D1FAE5;
+      color: #065F46;
+      border-color: #6EE7B7;
     }
 
     .product-info {
-      padding: 20px;
+      padding: 24px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
     }
 
     .product-name {
-      font-size: 16px;
-      font-weight: 600;
-      margin-bottom: 4px;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
       color: var(--color-text-primary);
     }
 
     .product-origin {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--color-text-secondary);
       margin-bottom: 12px;
+      font-style: italic;
+    }
+
+    .product-description {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    .rating-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #FEF3C7;
+      padding: 8px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #92400E;
+      margin-bottom: 16px;
+      width: fit-content;
+    }
+
+    .star {
+      color: #FBBF24;
+      font-size: 14px;
+    }
+
+    .price-container {
+      margin-bottom: 16px;
     }
 
     .product-price {
-      font-size: 20px;
+      font-size: 24px;
       font-weight: 700;
       color: var(--color-accent);
       margin-bottom: 4px;
@@ -496,71 +670,137 @@
     .product-price-unit {
       font-size: 12px;
       color: var(--color-text-secondary);
-      margin-bottom: 12px;
-    }
-
-    .product-badge {
-      display: inline-block;
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-size: 11px;
-      font-weight: 600;
-      margin-bottom: 12px;
-      background: #E8D5C4;
-      color: var(--color-primary);
     }
 
     .qty-control {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 12px;
-      padding-top: 12px;
-      border-top: 1px solid var(--color-border);
+      gap: 12px;
+      margin-bottom: 16px;
+      padding: 12px;
+      background: var(--color-bg-secondary);
+      border-radius: var(--border-radius-sm);
+      border: 1px solid var(--color-border);
     }
 
     .qty-label {
       font-size: 12px;
       color: var(--color-text-secondary);
-      min-width: 50px;
+      font-weight: 600;
+      min-width: 40px;
+    }
+
+    .qty-btn {
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--color-border);
+      background: white;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-primary);
+    }
+
+    .qty-btn:hover {
+      background: var(--color-primary);
+      color: white;
     }
 
     .qty-input {
-      width: 60px;
-      padding: 4px 8px;
+      width: 50px;
+      padding: 6px;
       border: 1px solid var(--color-border);
-      border-radius: var(--border-radius-sm);
+      border-radius: 4px;
       font-size: 13px;
+      text-align: center;
+      font-weight: 600;
     }
 
     .qty-total {
       margin-left: auto;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--color-accent);
-      font-size: 13px;
+      font-size: 14px;
     }
 
-    .product-wa-btn {
+    .product-actions {
+      display: flex;
+      gap: 12px;
+      flex-direction: column;
+    }
+
+    .btn-add-cart {
+      width: 100%;
+      background: var(--color-accent);
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: var(--border-radius-sm);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-add-cart:hover {
+      background: var(--color-primary);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(198, 124, 78, 0.3);
+    }
+
+    .btn-whatsapp {
       width: 100%;
       background: var(--color-secondary);
       color: white;
       border: none;
-      padding: 10px;
+      padding: 12px;
       border-radius: var(--border-radius-sm);
       font-size: 13px;
       font-weight: 600;
       cursor: pointer;
-      margin-top: 8px;
+      transition: all 0.3s ease;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      transition: all 0.3s ease;
+      gap: 8px;
     }
 
-    .product-wa-btn:hover {
+    .btn-whatsapp:hover {
       background: #1FA752;
       transform: translateY(-2px);
+    }
+
+    .wishlist-btn {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: white;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      z-index: 5;
+    }
+
+    .wishlist-btn:hover {
+      transform: scale(1.1);
+      background: var(--color-accent);
+      color: white;
     }
 
     /* SHIPMENT TRACKER */
@@ -732,15 +972,6 @@
       color: var(--color-text-secondary);
     }
 
-    .tr-error {
-      background: #FEE2E2;
-      color: #991B1B;
-      padding: 12px 16px;
-      border-radius: var(--border-radius-sm);
-      font-size: 13px;
-      margin-top: 16px;
-    }
-
     /* HOW IT WORKS */
     .how-section {
       background: white;
@@ -867,7 +1098,7 @@
       font-weight: 600;
     }
 
-    .form-field input, .form-field select {
+    .form-field input, .form-field select, .form-field textarea {
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: var(--border-radius-sm);
@@ -879,7 +1110,7 @@
       transition: all 0.3s ease;
     }
 
-    .form-field input:focus, .form-field select:focus {
+    .form-field input:focus, .form-field select:focus, .form-field textarea:focus {
       background: rgba(255, 255, 255, 0.15);
       border-color: rgba(255, 255, 255, 0.4);
     }
@@ -889,7 +1120,7 @@
       color: white;
     }
 
-    .form-field input::placeholder {
+    .form-field input::placeholder, .form-field textarea::placeholder {
       color: rgba(255, 255, 255, 0.4);
     }
 
@@ -1021,11 +1252,18 @@
       justify-content: center;
       box-shadow: 0 4px 16px rgba(37, 211, 102, 0.3);
       transition: all 0.3s ease;
+      animation: pulse 2s infinite;
     }
 
     .wa-bubble:hover {
       transform: scale(1.1);
       box-shadow: 0 6px 24px rgba(37, 211, 102, 0.4);
+      animation: none;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 4px 16px rgba(37, 211, 102, 0.3); }
+      50% { box-shadow: 0 8px 24px rgba(37, 211, 102, 0.5); }
     }
 
     .wa-bubble svg {
@@ -1060,54 +1298,118 @@
       }
     }
 
-    /* FEATURE: Rating/Reviews Card */
-    .rating-badge {
-      display: inline-flex;
+    /* CART MODAL */
+    .cart-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 2000;
+      overflow-y: auto;
+    }
+
+    .cart-modal.show {
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .cart-sidebar {
+      width: 100%;
+      max-width: 420px;
+      background: white;
+      margin-left: auto;
+      border-radius: 12px 12px 0 0;
+      padding: 24px;
+      animation: slideInRight 0.3s ease;
+    }
+
+    @keyframes slideInRight {
+      from {
+        transform: translateX(100%);
+      }
+      to {
+        transform: translateX(0);
+      }
+    }
+
+    .cart-header {
+      display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 8px;
-      background: #FEF3C7;
-      padding: 8px 12px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 600;
-      color: #92400E;
-      margin-bottom: 16px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: 16px;
     }
 
-    .star {
-      color: #FBBF24;
-    }
-
-    /* FEATURE: Quick Add to Cart */
-    .quick-add-btn {
-      background: var(--color-accent);
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      border-radius: var(--border-radius-sm);
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .quick-add-btn:hover {
-      background: var(--color-primary);
-      transform: scale(1.05);
-    }
-
-    /* FEATURE: Certification Badge */
-    .cert-badge {
-      display: inline-block;
-      padding: 6px 12px;
-      background: #D1FAE5;
-      color: #065F46;
-      border-radius: 12px;
-      font-size: 11px;
+    .cart-header h2 {
+      font-size: 20px;
       font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      color: var(--color-text-primary);
+    }
+
+    .cart-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--color-text-secondary);
+    }
+
+    .cart-items {
+      margin-bottom: 24px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .cart-item {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--color-border-light);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .cart-item-info {
+      flex-grow: 1;
+    }
+
+    .cart-item-name {
+      font-weight: 600;
+      color: var(--color-text-primary);
+      margin-bottom: 4px;
+    }
+
+    .cart-item-qty {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+    }
+
+    .cart-item-price {
+      font-weight: 700;
+      color: var(--color-accent);
+    }
+
+    .cart-summary {
+      border-top: 2px solid var(--color-border);
+      padding-top: 16px;
+      margin-bottom: 20px;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
       margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .summary-total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--color-accent);
     }
 
     @media (max-width: 768px) {
@@ -1124,8 +1426,16 @@
         font-size: 32px;
       }
 
+      .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      }
+
       .leaf-1, .leaf-2, .leaf-3, .leaf-4, .leaf-5 {
         opacity: 0.04;
+      }
+
+      .cart-sidebar {
+        max-width: 100%;
       }
     }
   </style>
@@ -1169,7 +1479,13 @@
         <a href="#tracker">Tracker</a>
         <a href="#how">How it Works</a>
       </nav>
-      <button class="nav-cta" onclick="document.getElementById('quote').scrollIntoView({behavior: 'smooth'})">Get Quote</button>
+      <div style="display: flex; gap: 16px; align-items: center;">
+        <div class="cart-badge" onclick="toggleCart()">
+          🛒
+          <span class="cart-count" id="cartCount">0</span>
+        </div>
+        <button class="nav-cta" onclick="document.getElementById('quote').scrollIntoView({behavior: 'smooth'})">Get Quote</button>
+      </div>
     </div>
   </header>
 
@@ -1182,7 +1498,7 @@
         <p class="hero-desc">Authentic Tamil Nadu spices delivered to your doorstep. Trusted by chefs and food businesses globally since 2010.</p>
         <div class="hero-btns">
           <button class="btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})">Browse Products</button>
-          <button class="btn-secondary">
+          <button class="btn-secondary" onclick="alert('Opening WhatsApp...')">
             <span>💬</span> Chat with us
           </button>
         </div>
@@ -1225,7 +1541,15 @@
   <!-- PRODUCTS -->
   <section id="products" class="section products-section">
     <h2 class="section-title">Our Premium Products</h2>
-    <p class="section-subtitle">Explore our carefully curated selection of authentic spices.</p>
+    <p class="section-subtitle">Explore our carefully curated selection of authentic spices from Tamil Nadu.</p>
+
+    <div class="filter-bar">
+      <span class="filter-label">🔍 Filter by:</span>
+      <button class="filter-btn active" onclick="filterProducts('all')">All Products</button>
+      <button class="filter-btn" onclick="filterProducts('bestseller')">Bestsellers</button>
+      <button class="filter-btn" onclick="filterProducts('organic')">Organic</button>
+      <button class="filter-btn" onclick="filterProducts('sale')">On Sale</button>
+    </div>
 
     <div class="currency-bar">
       <span class="cur-label">💱 Select Currency:</span>
@@ -1237,94 +1561,8 @@
       </div>
     </div>
 
-    <div class="products-grid">
-      <!-- Product Card 1 -->
-      <div class="product-card">
-        <div class="product-image">🌶️</div>
-        <div class="product-info">
-          <div class="cert-badge">Organic Certified</div>
-          <h3 class="product-name">Kashmiri Chilli</h3>
-          <p class="product-origin">From Kashmir Valley</p>
-          <div class="rating-badge">
-            <span class="star">⭐⭐⭐⭐⭐</span> 4.8
-          </div>
-          <div class="product-price">$12.99</div>
-          <p class="product-price-unit">Per 100g</p>
-          <div class="qty-control">
-            <label class="qty-label">Qty:</label>
-            <input type="number" class="qty-input" value="1" min="1">
-            <span class="qty-total">$12.99</span>
-          </div>
-          <button class="product-wa-btn">📦 Add to Cart</button>
-          <button class="product-wa-btn" style="background: var(--color-secondary);">💬 WhatsApp</button>
-        </div>
-      </div>
-
-      <!-- Product Card 2 -->
-      <div class="product-card">
-        <div class="product-image">🧂</div>
-        <div class="product-info">
-          <div class="cert-badge">Fair Trade</div>
-          <h3 class="product-name">Black Cardamom</h3>
-          <p class="product-origin">From Idukki, Kerala</p>
-          <div class="rating-badge">
-            <span class="star">⭐⭐⭐⭐⭐</span> 4.9
-          </div>
-          <div class="product-price">$18.50</div>
-          <p class="product-price-unit">Per 100g</p>
-          <div class="qty-control">
-            <label class="qty-label">Qty:</label>
-            <input type="number" class="qty-input" value="1" min="1">
-            <span class="qty-total">$18.50</span>
-          </div>
-          <button class="product-wa-btn">📦 Add to Cart</button>
-          <button class="product-wa-btn" style="background: var(--color-secondary);">💬 WhatsApp</button>
-        </div>
-      </div>
-
-      <!-- Product Card 3 -->
-      <div class="product-card">
-        <div class="product-image">💛</div>
-        <div class="product-info">
-          <div class="cert-badge">Organic Certified</div>
-          <h3 class="product-name">Turmeric Powder</h3>
-          <p class="product-origin">From Telangana</p>
-          <div class="rating-badge">
-            <span class="star">⭐⭐⭐⭐⭐</span> 4.7
-          </div>
-          <div class="product-price">$8.99</div>
-          <p class="product-price-unit">Per 200g</p>
-          <div class="qty-control">
-            <label class="qty-label">Qty:</label>
-            <input type="number" class="qty-input" value="1" min="1">
-            <span class="qty-total">$8.99</span>
-          </div>
-          <button class="product-wa-btn">📦 Add to Cart</button>
-          <button class="product-wa-btn" style="background: var(--color-secondary);">💬 WhatsApp</button>
-        </div>
-      </div>
-
-      <!-- Product Card 4 -->
-      <div class="product-card">
-        <div class="product-image">⚫</div>
-        <div class="product-info">
-          <div class="cert-badge">Premium Grade</div>
-          <h3 class="product-name">Black Pepper</h3>
-          <p class="product-origin">From Kerala</p>
-          <div class="rating-badge">
-            <span class="star">⭐⭐⭐⭐⭐</span> 4.9
-          </div>
-          <div class="product-price">$15.99</div>
-          <p class="product-price-unit">Per 100g</p>
-          <div class="qty-control">
-            <label class="qty-label">Qty:</label>
-            <input type="number" class="qty-input" value="1" min="1">
-            <span class="qty-total">$15.99</span>
-          </div>
-          <button class="product-wa-btn">📦 Add to Cart</button>
-          <button class="product-wa-btn" style="background: var(--color-secondary);">💬 WhatsApp</button>
-        </div>
-      </div>
+    <div class="products-grid" id="productsGrid">
+      <!-- Products will be generated by JavaScript -->
     </div>
   </section>
 
@@ -1335,7 +1573,7 @@
     
     <div class="tracker-box">
       <div class="tracker-input-row">
-        <input type="text" placeholder="Enter Tracking ID (e.g., TEH-2024-001234)" value="">
+        <input type="text" placeholder="Enter Tracking ID (e.g., TEH-2024-001234)">
         <button>🔍 Track</button>
       </div>
       
@@ -1463,7 +1701,7 @@
       <h2 class="quote-title">Get a Custom Quote</h2>
       <p class="quote-subtitle">For bulk orders and custom requirements, request a personalized quote from our team.</p>
       
-      <form>
+      <form onsubmit="handleQuoteSubmit(event)">
         <div class="form-grid">
           <div class="form-field">
             <label>Full Name *</label>
@@ -1504,6 +1742,10 @@
             <label>Required Quantity (kg) *</label>
             <input type="number" placeholder="e.g., 100" min="1" required>
           </div>
+        </div>
+        <div class="form-field">
+          <label>Additional Details</label>
+          <textarea placeholder="Tell us about your requirements..." style="height: 100px; resize: vertical;"></textarea>
         </div>
         <p class="form-note">* Required fields. We'll respond within 24 hours.</p>
         <div class="form-actions">
@@ -1557,6 +1799,24 @@
     </div>
   </footer>
 
+  <!-- CART MODAL -->
+  <div class="cart-modal" id="cartModal">
+    <div class="cart-sidebar">
+      <div class="cart-header">
+        <h2>Your Cart</h2>
+        <button class="cart-close" onclick="toggleCart()">✕</button>
+      </div>
+      <div class="cart-items" id="cartItems"></div>
+      <div class="cart-summary" id="cartSummary"></div>
+      <button class="btn-primary" style="width: 100%; margin-bottom: 12px;">
+        ✓ Proceed to Checkout
+      </button>
+      <button class="btn-whatsapp" style="width: 100%;" onclick="alert('Connecting to WhatsApp...')">
+        💬 Order via WhatsApp
+      </button>
+    </div>
+  </div>
+
   <!-- WHATSAPP WIDGET -->
   <div class="wa-float">
     <div class="wa-tooltip">
@@ -1571,33 +1831,352 @@
   </div>
 
   <script>
-    // Currency conversion functionality
-    document.querySelectorAll('.cur-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        document.querySelectorAll('.cur-btn').forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-      });
-    });
+    // Product Database
+    const products = [
+      {
+        id: 1,
+        name: "Kashmiri Red Chilli",
+        origin: "Kashmir Valley",
+        price: 12.99,
+        description: "Premium Kashmiri chilli with rich color and mild heat",
+        unit: "100g",
+        rating: 4.8,
+        reviews: 245,
+        image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23C41E3A'/%3E%3Cellipse cx='50' cy='40' rx='18' ry='15' fill='%23A01729'/%3E%3Cpath d='M40 35 Q50 25 60 35' fill='%23FF6B6B'/%3E%3C/svg%3E",
+        badge: "bestseller",
+        stock: true,
+        category: ["bestseller", "organic"]
+      },
+      {
+        id: 2,
+        name: "Black Cardamom",
+        origin: "Idukki, Kerala",
+        price: 18.50,
+        description: "Aromatic black cardamom with strong, distinctive flavor",
+        unit: "100g",
+        rating: 4.9,
+        reviews: 312,
+        image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23202020'/%3E%3Cellipse cx='50' cy='50' rx='20' ry='25' fill='%23404040'/%3E%3Ccircle cx='50' cy='35' r='6' fill='%23606060'/%3E%3C/svg%3E",
+        badge: "bestseller",
+        stock: true,
+        category: ["bestseller", "organic", "sale"]
+      },
+      {
+        id: 3,
+        name: "Turmeric Powder",
+        origin: "Telangana",
+        price: 8.99,
+        description: "Pure turmeric powder with vibrant golden color",
+        unit: "200g",
+        rating: 4.7,
+        reviews: 189,
+        image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23D4A574'/%3E%3Ccircle cx='35' cy='35' r='8' fill='%23C4934A'/%3E%3Ccircle cx='65' cy='65' r='8' fill='%23C4934A'/%3E%3C/svg%3E",
+        badge: "organic",
+        stock: true,
+        category: ["organic"]
+      },
+      {
+        id: 4,
+        name: "Black Pepper (Whole)",
+        origin: "Kerala",
+        price: 15.99,
+        description: "Premium whole black pepper with sharp aroma",
+        unit: "100g",
+        rating: 4.9,
+        reviews: 428,
+        image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23202020'/%3E%3Ccircle cx='40' cy='40' r='6' fill='%23404040'/%3E%3Ccircle cx='60' cy='60' r='6' fill='%23404040'/%3E%3Ccircle cx='50' cy='50' r='4' fill='%23606060'/%3E%3C/svg%3E",
+        badge: null,
+        stock: true,
+        category: ["bestseller"]
+      },
+      {
+        id: 5,
+        name: "Cinnamon Stick",
+        origin: "Tamil Nadu",
+        price: 22.99,
+        description: "Premium Ceylon cinnamon sticks for culinary excellence",
+        unit: "50g",
+        rating: 4.8,
+        reviews: 156,
+        image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='30' y='20' width='40' height='60' rx='5' fill='%23A0522D'/%3E%3Crect x='35' y='25' width='30' height='50' fill='%238B4513'/%3E%3Cline x1='40' y1='30' x2='40' y2='70' stroke='%23654321' stroke-width='1'/%3E%3C/svg%3E",
+        badge: "sale",
+        stock: true,
+        category: ["sale"]
+      },
+      {
+        id: 6,
+        name: "Cumin Seeds",
+        origin: "Rajasthan",
+        price: 10.99,
+        description: "Aromatic cumin seeds with earthy flavor",
+        unit: "150g",
+        rating: 4.6,
+        reviews: 203,
+        image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cellipse cx='50' cy='50' rx='35' ry='40' fill='%238B7355'/%3E%3Cellipse cx='40' cy='40' rx='6' ry='8' fill='%236B5344'/%3E%3Cellipse cx='60' cy='60' rx='6' ry='8' fill='%236B5344'/%3E%3C/svg%3E",
+        badge: "organic",
+        stock: true,
+        category: ["organic"]
+      },
+      {
+        id: 7,
+        name: "Fenugreek Seeds",
+        origin: "Tamil Nadu",
+        price: 9.49,
+        description: "Fresh fenugreek seeds with distinctive aroma",
+        unit: "100g",
+        rating: 4.5,
+        reviews: 94,
+        image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23DAA520'/%3E%3Cpath d='M30 40 L50 60 L70 40' fill='%23B8860B' stroke='%23A67C0F' stroke-width='2'/%3E%3C/svg%3E",
+        badge: null,
+        stock: false,
+        category: []
+      },
+      {
+        id: 8,
+        name: "Cloves",
+        origin: "Kerala",
+        price: 24.99,
+        description: "Premium whole cloves with intense aroma",
+        unit: "50g",
+        rating: 4.9,
+        reviews: 187,
+        image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='60' r='20' fill='%23654321'/%3E%3Cpath d='M50 40 L48 55 L52 55' fill='%23654321'/%3E%3Ccircle cx='35' cy='35' r='8' fill='%23654321'/%3E%3C/svg%3E",
+        badge: "bestseller",
+        stock: true,
+        category: ["bestseller"]
+      }
+    ];
 
-    // Quantity input functionality
-    document.querySelectorAll('.qty-input').forEach(input => {
-      input.addEventListener('change', function() {
-        const price = parseFloat(this.closest('.product-info').querySelector('.product-price').textContent.replace('$', ''));
-        const total = price * this.value;
-        this.closest('.qty-control').querySelector('.qty-total').textContent = '$' + total.toFixed(2);
-      });
-    });
+    let cart = [];
+    let selectedFilter = 'all';
 
-    // Smooth scroll enhancement
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          e.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth' });
-        }
+    // Initialize products
+    function initProducts() {
+      displayProducts(products);
+      setupEventListeners();
+    }
+
+    // Display products
+    function displayProducts(productsToDisplay) {
+      const grid = document.getElementById('productsGrid');
+      grid.innerHTML = '';
+
+      productsToDisplay.forEach(product => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.innerHTML = `
+          <button class="wishlist-btn" onclick="toggleWishlist(${product.id})">♡</button>
+          
+          <div class="product-badge-container">
+            ${product.badge ? `<div class="product-badge ${product.badge}">${product.badge.toUpperCase()}</div>` : ''}
+            <div class="product-badge" style="background: #E0E7FF; color: #3730A3;">NEW</div>
+          </div>
+
+          <div class="product-image-container">
+            <img src="${product.image}" alt="${product.name}">
+            <div class="stock-indicator ${product.stock ? 'available' : 'low'}">
+              ${product.stock ? '✓ In Stock' : '⚠ Low Stock'}
+            </div>
+          </div>
+
+          <div class="product-info">
+            <h3 class="product-name">${product.name}</h3>
+            <p class="product-origin">📍 ${product.origin}</p>
+            <p class="product-description">${product.description}</p>
+            
+            <div class="rating-badge">
+              <span class="star">⭐</span> ${product.rating} (${product.reviews} reviews)
+            </div>
+
+            <div class="price-container">
+              <div class="product-price">$${product.price}</div>
+              <p class="product-price-unit">Per ${product.unit}</p>
+            </div>
+
+            <div class="qty-control">
+              <label class="qty-label">Qty:</label>
+              <button class="qty-btn" onclick="decreaseQty(this)">−</button>
+              <input type="number" class="qty-input" value="1" min="1" max="100">
+              <button class="qty-btn" onclick="increaseQty(this)">+</button>
+              <span class="qty-total">$${product.price}</span>
+            </div>
+
+            <div class="product-actions">
+              <button class="btn-add-cart" onclick="addToCart(${product.id}, this)">
+                🛒 Add to Cart
+              </button>
+              <button class="btn-whatsapp" onclick="orderViaWhatsApp(${product.id})">
+                💬 Order via WhatsApp
+              </button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
       });
-    });
+    }
+
+    // Filter products
+    function filterProducts(category) {
+      selectedFilter = category;
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      if (category === 'all') {
+        displayProducts(products);
+      } else {
+        const filtered = products.filter(p => p.category.includes(category));
+        displayProducts(filtered);
+      }
+    }
+
+    // Quantity controls
+    function increaseQty(btn) {
+      const input = btn.previousElementSibling;
+      input.value = parseInt(input.value) + 1;
+      updateTotal(btn);
+    }
+
+    function decreaseQty(btn) {
+      const input = btn.nextElementSibling;
+      if (parseInt(input.value) > 1) {
+        input.value = parseInt(input.value) - 1;
+        updateTotal(btn);
+      }
+    }
+
+    function updateTotal(element) {
+      const card = element.closest('.product-card');
+      const qtyInput = card.querySelector('.qty-input');
+      const product = products.find(p => p.id === parseInt(card.dataset.productId || 0));
+      if (!product) {
+        const qty = parseInt(qtyInput.value);
+        const price = parseFloat(card.querySelector('.product-price').textContent.replace('$', ''));
+        card.querySelector('.qty-total').textContent = '$' + (price * qty).toFixed(2);
+      }
+    }
+
+    // Add to cart
+    function addToCart(productId, btn) {
+      const card = btn.closest('.product-card');
+      const qty = parseInt(card.querySelector('.qty-input').value);
+      const product = products.find(p => p.id === productId);
+
+      const cartItem = {
+        id: productId,
+        name: product.name,
+        price: product.price,
+        quantity: qty
+      };
+
+      cart.push(cartItem);
+      updateCartCount();
+      showNotification('Added to cart!');
+    }
+
+    // Update cart count
+    function updateCartCount() {
+      const count = cart.reduce((total, item) => total + item.quantity, 0);
+      document.getElementById('cartCount').textContent = count;
+    }
+
+    // Toggle cart
+    function toggleCart() {
+      const modal = document.getElementById('cartModal');
+      modal.classList.toggle('show');
+      if (modal.classList.contains('show')) {
+        updateCartDisplay();
+      }
+    }
+
+    // Update cart display
+    function updateCartDisplay() {
+      const cartItems = document.getElementById('cartItems');
+      const cartSummary = document.getElementById('cartSummary');
+
+      if (cart.length === 0) {
+        cartItems.innerHTML = '<p style="text-align: center; color: #9CA3AF; padding: 32px 0;">Your cart is empty</p>';
+        cartSummary.innerHTML = '';
+        return;
+      }
+
+      cartItems.innerHTML = cart.map(item => `
+        <div class="cart-item">
+          <div class="cart-item-info">
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-qty">Qty: ${item.quantity}</div>
+          </div>
+          <div class="cart-item-price">$${(item.price * item.quantity).toFixed(2)}</div>
+        </div>
+      `).join('');
+
+      const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+      const tax = subtotal * 0.1;
+      const total = subtotal + tax;
+
+      cartSummary.innerHTML = `
+        <div class="summary-row">
+          <span>Subtotal:</span>
+          <span>$${subtotal.toFixed(2)}</span>
+        </div>
+        <div class="summary-row">
+          <span>Tax (10%):</span>
+          <span>$${tax.toFixed(2)}</span>
+        </div>
+        <div class="summary-row">
+          <span>Shipping:</span>
+          <span>Free</span>
+        </div>
+        <div class="summary-total">
+          <span>Total:</span>
+          <span>$${total.toFixed(2)}</span>
+        </div>
+      `;
+    }
+
+    // Order via WhatsApp
+    function orderViaWhatsApp(productId) {
+      const product = products.find(p => p.id === productId);
+      const message = `Hi, I'm interested in ordering ${product.name} - $${product.price}`;
+      alert('WhatsApp: ' + message);
+    }
+
+    // Handle quote submit
+    function handleQuoteSubmit(e) {
+      e.preventDefault();
+      alert('Quote request submitted! We will contact you within 24 hours.');
+    }
+
+    // Notification
+    function showNotification(message) {
+      const notif = document.createElement('div');
+      notif.textContent = message;
+      notif.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 24px;
+        background: var(--color-secondary);
+        color: white;
+        padding: 16px 24px;
+        border-radius: 8px;
+        z-index: 3000;
+        animation: slideInRight 0.3s ease;
+      `;
+      document.body.appendChild(notif);
+      setTimeout(() => notif.remove(), 2000);
+    }
+
+    // Setup event listeners
+    function setupEventListeners() {
+      document.querySelectorAll('.cur-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.cur-btn').forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+    }
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', initProducts);
   </script>
 
 </body>
