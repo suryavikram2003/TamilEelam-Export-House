@@ -1,0 +1,1675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TamilEelam Export House — Premium Spices & Herbs Worldwide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --color-primary: #1A3A52;
+      --color-primary-light: #D4A574;
+      --color-accent: #C67C4E;
+      --color-secondary: #25D366;
+      --color-text-primary: #1F2937;
+      --color-text-secondary: #6B7280;
+      --color-text-tertiary: #D1D5DB;
+      --color-bg-primary: #FFFFFF;
+      --color-bg-secondary: #F9FAFB;
+      --color-bg-tertiary: #2D1810;
+      --color-border: #E5E7EB;
+      --color-border-light: #F3F4F6;
+      --border-radius-sm: 6px;
+      --border-radius-md: 12px;
+      --border-radius-lg: 16px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--color-text-primary);
+      background: var(--color-bg-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* HEADER & NAV */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--color-bg-primary);
+      border-bottom: 1px solid var(--color-border-light);
+      backdrop-filter: blur(10px);
+      background-color: rgba(255, 255, 255, 0.95);
+    }
+
+    .nav {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .logo-mark {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+
+    .logo-sub {
+      font-size: 10px;
+      color: var(--color-text-secondary);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      flex: 1;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover {
+      color: var(--color-primary);
+    }
+
+    .nav-cta {
+      background: var(--color-accent);
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 24px;
+      font-size: 13px;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .nav-cta:hover {
+      background: var(--color-primary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(26, 58, 82, 0.2);
+    }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      min-height: 600px;
+      background: linear-gradient(135deg, #E8D5C4 0%, #D4A574 50%, #C67C4E 100%);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: -200px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(198, 124, 78, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .hero-container {
+      max-width: 1400px;
+      width: 100%;
+      padding: 60px 32px;
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--color-primary);
+      font-weight: 700;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 56px;
+      line-height: 1.2;
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+
+    .hero-title .highlight {
+      color: #FFFFFF;
+    }
+
+    .hero-desc {
+      font-size: 16px;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      max-width: 480px;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .btn-primary {
+      background: var(--color-primary);
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      border-radius: var(--border-radius-sm);
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background: var(--color-accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(26, 58, 82, 0.3);
+    }
+
+    .btn-secondary {
+      background: var(--color-secondary);
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      border-radius: var(--border-radius-sm);
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      background: #1FA752;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+    }
+
+    .hero-image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 120px;
+    }
+
+    /* SECTIONS */
+    .section {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 80px 32px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--color-text-primary);
+    }
+
+    .section-subtitle {
+      font-size: 16px;
+      color: var(--color-text-secondary);
+      margin-bottom: 48px;
+      max-width: 600px;
+    }
+
+    /* WHY TAMILEELAM */
+    .why-section {
+      background: var(--color-bg-secondary);
+    }
+
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+      margin-top: 48px;
+    }
+
+    .trust-card {
+      background: white;
+      padding: 32px;
+      border-radius: var(--border-radius-md);
+      border: 1px solid var(--color-border);
+      transition: all 0.3s ease;
+    }
+
+    .trust-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    .trust-icon {
+      font-size: 36px;
+      margin-bottom: 16px;
+    }
+
+    .trust-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--color-text-primary);
+    }
+
+    .trust-desc {
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+    }
+
+    /* PRODUCTS */
+    .products-section {
+      background: white;
+    }
+
+    .currency-bar {
+      background: var(--color-bg-secondary);
+      padding: 16px 24px;
+      border-radius: var(--border-radius-md);
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .cur-label {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .cur-buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .cur-btn {
+      border: 1px solid var(--color-border);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      cursor: pointer;
+      background: white;
+      color: var(--color-text-primary);
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .cur-btn:hover, .cur-btn.active {
+      background: var(--color-primary);
+      color: white;
+      border-color: var(--color-primary);
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 32px;
+    }
+
+    .product-card {
+      background: white;
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius-md);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .product-card:hover {
+      border-color: var(--color-primary);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-card.selected {
+      border: 2px solid var(--color-primary);
+      box-shadow: 0 8px 24px rgba(26, 58, 82, 0.15);
+    }
+
+    .product-image {
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      background: linear-gradient(135deg, #F5EBE0 0%, #E8D5C4 100%);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .product-info {
+      padding: 20px;
+    }
+
+    .product-name {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: var(--color-text-primary);
+    }
+
+    .product-origin {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      margin-bottom: 12px;
+    }
+
+    .product-price {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--color-accent);
+      margin-bottom: 4px;
+    }
+
+    .product-price-unit {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      margin-bottom: 12px;
+    }
+
+    .product-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      background: #E8D5C4;
+      color: var(--color-primary);
+    }
+
+    .qty-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .qty-label {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      min-width: 50px;
+    }
+
+    .qty-input {
+      width: 60px;
+      padding: 4px 8px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius-sm);
+      font-size: 13px;
+    }
+
+    .qty-total {
+      margin-left: auto;
+      font-weight: 600;
+      color: var(--color-accent);
+      font-size: 13px;
+    }
+
+    .product-wa-btn {
+      width: 100%;
+      background: var(--color-secondary);
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: var(--border-radius-sm);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .product-wa-btn:hover {
+      background: #1FA752;
+      transform: translateY(-2px);
+    }
+
+    /* SHIPMENT TRACKER */
+    .tracker-section {
+      background: var(--color-bg-secondary);
+    }
+
+    .tracker-box {
+      background: white;
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius-md);
+      padding: 32px;
+      margin-top: 32px;
+    }
+
+    .tracker-input-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 0;
+    }
+
+    .tracker-input-row input {
+      flex: 1;
+      padding: 12px 16px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius-sm);
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .tracker-input-row button {
+      background: var(--color-primary);
+      color: white;
+      border: none;
+      padding: 12px 32px;
+      border-radius: var(--border-radius-sm);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.3s ease;
+    }
+
+    .tracker-input-row button:hover {
+      background: var(--color-accent);
+      transform: translateY(-2px);
+    }
+
+    .tracker-result {
+      margin-top: 24px;
+    }
+
+    .tr-courier-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .tr-courier {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tr-courier-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #22C55E;
+    }
+
+    .tr-courier-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+    }
+
+    .tr-courier-id {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+    }
+
+    .tr-eta {
+      background: #FEF3C7;
+      color: #92400E;
+      font-size: 12px;
+      padding: 6px 16px;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+    .tr-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .tr-step {
+      display: flex;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .tr-step:last-child {
+      border-bottom: none;
+    }
+
+    .tr-step-line {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .tr-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .tr-dot.done {
+      background: var(--color-accent);
+    }
+
+    .tr-dot.active {
+      background: var(--color-secondary);
+      box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.2);
+    }
+
+    .tr-dot.pending {
+      background: var(--color-border);
+    }
+
+    .tr-line {
+      width: 2px;
+      flex: 1;
+      min-height: 24px;
+      background: var(--color-border);
+      margin: 3px 0;
+    }
+
+    .tr-line.done {
+      background: var(--color-accent);
+    }
+
+    .tr-step-info {
+      padding-bottom: 8px;
+      flex: 1;
+    }
+
+    .tr-step-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      margin-bottom: 2px;
+    }
+
+    .tr-step-title.pending {
+      color: var(--color-text-secondary);
+    }
+
+    .tr-step-meta {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+    }
+
+    .tr-error {
+      background: #FEE2E2;
+      color: #991B1B;
+      padding: 12px 16px;
+      border-radius: var(--border-radius-sm);
+      font-size: 13px;
+      margin-top: 16px;
+    }
+
+    /* HOW IT WORKS */
+    .how-section {
+      background: white;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 32px;
+      margin-top: 48px;
+    }
+
+    .step-card {
+      text-align: center;
+    }
+
+    .step-num {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      color: white;
+      font-size: 20px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .step-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--color-text-primary);
+    }
+
+    .step-desc {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+
+    /* PARTNERS */
+    .partners-section {
+      background: var(--color-bg-secondary);
+    }
+
+    .partners-row {
+      display: flex;
+      gap: 16px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .partner-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: white;
+      border: 1px solid var(--color-border);
+      border-radius: 20px;
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      font-weight: 500;
+    }
+
+    .partner-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--color-secondary);
+      flex-shrink: 0;
+    }
+
+    /* QUOTE FORM */
+    .quote-section {
+      background: linear-gradient(135deg, var(--color-bg-tertiary) 0%, #1A3A52 100%);
+      color: white;
+    }
+
+    .quote-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 80px 32px;
+    }
+
+    .quote-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--color-primary-light);
+    }
+
+    .quote-subtitle {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 32px;
+      max-width: 600px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-field label {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.5);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+
+    .form-field input, .form-field select {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--border-radius-sm);
+      padding: 10px 14px;
+      font-size: 14px;
+      color: white;
+      font-family: 'DM Sans', sans-serif;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .form-field input:focus, .form-field select:focus {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .form-field select option {
+      background: var(--color-bg-tertiary);
+      color: white;
+    }
+
+    .form-field input::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .quote-btn {
+      background: var(--color-accent);
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      border-radius: var(--border-radius-sm);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .quote-btn:hover {
+      background: var(--color-primary);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(26, 58, 82, 0.3);
+    }
+
+    .quote-wa-btn {
+      background: var(--color-secondary);
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      border-radius: var(--border-radius-sm);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .quote-wa-btn:hover {
+      background: #1FA752;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+    }
+
+    .form-note {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.4);
+      margin-top: 12px;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--color-bg-secondary);
+      border-top: 1px solid var(--color-border);
+      padding: 40px 32px;
+    }
+
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-col h3 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--color-text-primary);
+    }
+
+    .footer-col a, .footer-col p {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      margin-bottom: 8px;
+      display: block;
+      transition: color 0.3s ease;
+    }
+
+    .footer-col a:hover {
+      color: var(--color-primary);
+    }
+
+    .footer-bottom {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding-top: 32px;
+      border-top: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 12px;
+      color: var(--color-text-secondary);
+    }
+
+    /* WHATSAPP FLOAT WIDGET */
+    .wa-float {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+    }
+
+    .wa-bubble {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--color-secondary);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(37, 211, 102, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .wa-bubble:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 24px rgba(37, 211, 102, 0.4);
+    }
+
+    .wa-bubble svg {
+      width: 28px;
+      height: 28px;
+      fill: white;
+    }
+
+    .wa-tooltip {
+      background: white;
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius-md);
+      padding: 16px;
+      width: 260px;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+      display: none;
+    }
+
+    .wa-tooltip.show {
+      display: block;
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .wa-header {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+      align-items: flex-start;
+    }
+
+    .wa-avatar {
+      width: 36px;
+      height: 36px;
+      background: var(--color-secondary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .wa-avatar svg {
+      width: 20px;
+      height: 20px;
+      fill: white;
+    }
+
+    .wa-info h3 {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      margin: 0;
+    }
+
+    .wa-status {
+      font-size: 11px;
+      color: var(--color-secondary);
+    }
+
+    .wa-msg {
+      background: var(--color-bg-secondary);
+      border-radius: var(--border-radius-sm);
+      padding: 10px;
+      font-size: 12px;
+      color: var(--color-text-primary);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    .wa-quick-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .wa-qbtn {
+      border: 1px solid var(--color-border);
+      background: white;
+      color: var(--color-text-primary);
+      padding: 8px 10px;
+      border-radius: var(--border-radius-sm);
+      font-size: 11px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.3s ease;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .wa-qbtn:hover {
+      background: var(--color-bg-secondary);
+    }
+
+    .wa-start-btn {
+      width: 100%;
+      background: var(--color-secondary);
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: var(--border-radius-sm);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .wa-start-btn:hover {
+      background: #1FA752;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .nav {
+        padding: 12px 20px;
+        gap: 20px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero-container {
+        grid-template-columns: 1fr;
+        padding: 40px 20px;
+        gap: 40px;
+      }
+
+      .hero-title {
+        font-size: 36px;
+      }
+
+      .section {
+        padding: 60px 20px;
+      }
+
+      .section-title {
+        font-size: 28px;
+      }
+
+      .trust-grid, .steps-grid, .products-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .quote-content {
+        padding: 60px 20px;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .wa-float {
+        bottom: 16px;
+        right: 16px;
+      }
+
+      .wa-tooltip {
+        width: 240px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <nav class="nav">
+      <a href="#" class="logo">
+        <div class="logo-mark">🐯</div>
+        <div>
+          <div class="logo-text">TamilEelam</div>
+          <div class="logo-sub">Export House</div>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="#products">Products</a>
+        <a href="#tracker">Track Order</a>
+        <a href="#how">How It Works</a>
+        <a href="#partners">Shipping</a>
+      </div>
+      <button class="nav-cta" onclick="scrollTo('quote')">Get a Quote</button>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-container">
+      <div class="hero-left">
+        <div class="eyebrow">Global Connect, Tamil Heritage</div>
+        <h1 class="hero-title">Premium <span class="highlight">Spices</span> & Herbs<br>From South India</h1>
+        <p class="hero-desc">Authentic, hand-selected spices from Tamil Nadu & Kerala — FSSAI certified and delivered fresh to 50+ countries worldwide.</p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="scrollTo('products')">Browse All Spices</button>
+          <button class="btn-secondary" onclick="openWA()">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.918-1.42A9.956 9.956 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.031-1.094l-.29-.172-2.918.843.872-2.844-.19-.3A7.96 7.96 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
+            Chat on WhatsApp
+          </button>
+        </div>
+      </div>
+      <div class="hero-image">🐯</div>
+    </div>
+  </section>
+
+  <!-- WHY TAMILEELAM -->
+  <section class="why-section section" id="why">
+    <h2 class="section-title">Why Choose TamilEelam?</h2>
+    <p class="section-subtitle">We're committed to delivering authentic, premium spices with unmatched quality and service.</p>
+    <div class="trust-grid">
+      <div class="trust-card">
+        <div class="trust-icon">✓</div>
+        <div class="trust-title">FSSAI Certified</div>
+        <div class="trust-desc">All spices certified by Food Safety and Standards Authority of India for highest quality standards.</div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon">🌍</div>
+        <div class="trust-title">Global Reach</div>
+        <div class="trust-desc">Shipping to 50+ countries with live tracking and express delivery via trusted partners.</div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon">💰</div>
+        <div class="trust-title">Competitive Pricing</div>
+        <div class="trust-desc">Direct from farmers. No middlemen. Save 35-45% compared to retail market prices.</div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon">🚀</div>
+        <div class="trust-title">Fresh & Fast</div>
+        <div class="trust-desc">Vacuum-sealed, temperature-controlled storage. Shipped within 24 hours of order confirmation.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section class="products-section section" id="products">
+    <h2 class="section-title">Complete Spice Collection</h2>
+    <p class="section-subtitle">35+ authentic spices & herbs from Tamil Nadu, Kerala & across India.</p>
+    
+    <div class="currency-bar">
+      <div class="cur-label">Select Currency:</div>
+      <div class="cur-buttons">
+        <button class="cur-btn active" onclick="setCurrency(this, 'INR')">₹ INR</button>
+        <button class="cur-btn" onclick="setCurrency(this, 'AED')">AED</button>
+        <button class="cur-btn" onclick="setCurrency(this, 'SGD')">S$ SGD</button>
+        <button class="cur-btn" onclick="setCurrency(this, 'MYR')">RM MYR</button>
+        <button class="cur-btn" onclick="setCurrency(this, 'SAR')">SAR</button>
+        <button class="cur-btn" onclick="setCurrency(this, 'USD')">$ USD</button>
+        <button class="cur-btn" onclick="setCurrency(this, 'EUR')">€ EUR</button>
+        <button class="cur-btn" onclick="setCurrency(this, 'GBP')">£ GBP</button>
+        <button class="cur-btn" onclick="setCurrency(this, 'AUD')">A$ AUD</button>
+        <button class="cur-btn" onclick="setCurrency(this, 'CAD')">C$ CAD</button>
+      </div>
+    </div>
+
+    <div class="products-grid" id="productsGrid"></div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-section section" id="how">
+    <h2 class="section-title">How It Works</h2>
+    <p class="section-subtitle">Simple, transparent process — from browse to doorstep.</p>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-title">Browse & Select</div>
+        <div class="step-desc">Explore 35+ premium spices with live pricing in your local currency.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-title">Instant Quote</div>
+        <div class="step-desc">Message us on WhatsApp with quantity — get pricing within 1 hour.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-title">Quick Dispatch</div>
+        <div class="step-desc">Order confirmed. Packed fresh same day. Shipped within 24 hours.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-title">Track & Enjoy</div>
+        <div class="step-desc">Real-time tracking from warehouse to your kitchen. World-class delivery.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHIPMENT TRACKER -->
+  <section class="tracker-section section" id="tracker">
+    <h2 class="section-title">Track Your Shipment</h2>
+    <p class="section-subtitle">Enter your tracking ID to see live status updates.</p>
+    <div class="tracker-box">
+      <div class="tracker-input-row">
+        <input type="text" id="trackInput" placeholder="e.g., TE2024-00481" onkeyup="trackShipment()">
+        <button onclick="trackShipment()">Track</button>
+      </div>
+      <div id="trackerResult" class="tracker-result"></div>
+    </div>
+    <div style="margin-top: 24px; padding: 16px; background: var(--color-bg-secondary); border-radius: var(--border-radius-md); font-size: 13px; color: var(--color-text-secondary);">
+      <strong>Demo tracking IDs:</strong> TE2024-00481 · TE2024-00392 · TE2024-00310
+    </div>
+  </section>
+
+  <!-- PARTNERS -->
+  <section class="partners-section section" id="partners">
+    <h2 class="section-title">Trusted Shipping Partners</h2>
+    <p class="section-subtitle">We ship via world's most reliable international couriers.</p>
+    <div class="partners-row">
+      <div class="partner-pill"><div class="partner-dot"></div>DHL Express</div>
+      <div class="partner-pill"><div class="partner-dot"></div>Aramex</div>
+      <div class="partner-pill"><div class="partner-dot"></div>Pos Malaysia</div>
+      <div class="partner-pill"><div class="partner-dot"></div>FedEx International</div>
+      <div class="partner-pill"><div class="partner-dot"></div>India Post</div>
+      <div class="partner-pill"><div class="partner-dot"></div>Blue Dart</div>
+    </div>
+  </section>
+
+  <!-- QUOTE FORM -->
+  <section class="quote-section" id="quote">
+    <div class="quote-content">
+      <h2 class="quote-title">Bulk Orders & Corporate Gifting</h2>
+      <p class="quote-subtitle">Custom packages & special pricing for bulk orders. Fill in your details for a personalized quote.</p>
+      <div class="form-grid">
+        <div class="form-field">
+          <label>Your Name</label>
+          <input type="text" id="qName" placeholder="John Smith">
+        </div>
+        <div class="form-field">
+          <label>Company (if applicable)</label>
+          <input type="text" id="qCompany" placeholder="Your Company">
+        </div>
+        <div class="form-field">
+          <label>Email Address</label>
+          <input type="email" id="qEmail" placeholder="you@example.com">
+        </div>
+        <div class="form-field">
+          <label>Phone Number</label>
+          <input type="tel" id="qPhone" placeholder="+1 (555) 000-0000">
+        </div>
+        <div class="form-field" style="grid-column: 1 / -1;">
+          <label>Which spices interest you?</label>
+          <input type="text" id="qSpices" placeholder="e.g., Black Pepper, Turmeric, Cardamom">
+        </div>
+        <div class="form-field" style="grid-column: 1 / -1;">
+          <label>Estimated Quantity (kg)</label>
+          <input type="number" id="qQuantity" placeholder="e.g., 100">
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="quote-btn" onclick="submitQuote()">Send Quote Request</button>
+        <button class="quote-wa-btn" onclick="waQuoteInquiry()">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.918-1.42A9.956 9.956 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.031-1.094l-.29-.172-2.918.843.872-2.844-.19-.3A7.96 7.96 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
+          WhatsApp Inquiry
+        </button>
+      </div>
+      <div class="form-note">We'll respond within 2 hours • Email: exports.tamileelam@gamil.com</div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-col">
+        <h3>TamilEelam Export House</h3>
+        <p>Premium spices & herbs from South India. Global Connect, Tamil Heritage. FSSAI Certified.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Quick Links</h3>
+        <a href="#products">Products</a>
+        <a href="#tracker">Track Order</a>
+        <a href="#how">How It Works</a>
+        <a href="#quote">Request Quote</a>
+      </div>
+      <div class="footer-col">
+        <h3>Company</h3>
+        <a href="#">About Us</a>
+        <a href="#">Certifications</a>
+        <a href="#">Shipping Info</a>
+        <a href="#">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h3>Contact Us</h3>
+        <p><strong>WhatsApp:</strong> +91 8489718858</p>
+        <p><strong>Email:</strong> exports.tamileelam@gamil.com</p>
+        <p><strong>Address:</strong> Tamil Nadu, India</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 TamilEelam Export House. All rights reserved.</div>
+      <div>
+        <a href="#" style="color: var(--color-text-secondary);">Privacy Policy</a> · 
+        <a href="#" style="color: var(--color-text-secondary);">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WHATSAPP FLOAT WIDGET -->
+  <div class="wa-float">
+    <div class="wa-tooltip" id="waTooltip">
+      <div class="wa-header">
+        <div class="wa-avatar">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.918-1.42A9.956 9.956 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.031-1.094l-.29-.172-2.918.843.872-2.844-.19-.3A7.96 7.96 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
+        </div>
+        <div class="wa-info">
+          <h3>TamilEelam Support</h3>
+          <div class="wa-status">● Online now</div>
+        </div>
+      </div>
+      <div class="wa-msg">👋 Hi! Welcome to TamilEelam. Let's help you get premium South Indian spices today!</div>
+      <div class="wa-quick-btns">
+        <button class="wa-qbtn" onclick="waMsg('🛒 I want to place an order')">🛒 Place an Order</button>
+        <button class="wa-qbtn" onclick="waMsg('📦 Track my shipment')">📦 Track Shipment</button>
+        <button class="wa-qbtn" onclick="waMsg('💰 Ask about pricing')">💰 Ask Pricing</button>
+      </div>
+      <button class="wa-start-btn" onclick="startWAChat()">Start Chat →</button>
+    </div>
+    <button class="wa-bubble" onclick="toggleWATooltip()">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.918-1.42A9.956 9.956 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.031-1.094l-.29-.172-2.918.843.872-2.844-.19-.3A7.96 7.96 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
+    </button>
+  </div>
+
+  <script>
+    // DATA
+    const RATES = { 
+      INR: 1, 
+      AED: 0.044, 
+      SGD: 0.016, 
+      MYR: 0.056, 
+      SAR: 0.045, 
+      USD: 0.012, 
+      EUR: 0.011, 
+      GBP: 0.0094, 
+      AUD: 0.018, 
+      CAD: 0.016
+    };
+    const SYM = { 
+      INR: '₹', 
+      AED: 'AED ', 
+      SGD: 'S$', 
+      MYR: 'RM ', 
+      SAR: 'SAR ', 
+      USD: '$', 
+      EUR: '€', 
+      GBP: '£', 
+      AUD: 'A$', 
+      CAD: 'C$'
+    };
+    const WA_NUMBER = '918489718858';
+    const EMAIL = 'exports.tamileelam@gamil.com';
+
+    const PRODUCTS = [
+      { id: 0, name: 'Black Pepper', origin: 'Wayanad, Kerala', icon: '⚫', inr: 650, badge: 'Export Grade' },
+      { id: 1, name: 'White Pepper', origin: 'Kerala', icon: '⚪', inr: 750, badge: 'Premium' },
+      { id: 2, name: 'Red Chilli (Whole)', origin: 'Guntur, AP', icon: '🌶️', inr: 280, badge: 'Best Seller' },
+      { id: 3, name: 'Kashmiri Chilli', origin: 'Kashmir', icon: '🔴', inr: 420, badge: 'Premium' },
+      { id: 4, name: 'Turmeric (Whole)', origin: 'Erode, TN', icon: '🟡', inr: 180, badge: 'Organic' },
+      { id: 5, name: 'Turmeric Powder', origin: 'Erode, TN', icon: '✨', inr: 200, badge: 'Popular' },
+      { id: 6, name: 'Cumin Seeds', origin: 'Rajasthan', icon: '🌰', inr: 310, badge: 'Grade A' },
+      { id: 7, name: 'Coriander Seeds', origin: 'Rajasthan', icon: '🟤', inr: 220, badge: 'Quality' },
+      { id: 8, name: 'Coriander Powder', origin: 'Rajasthan', icon: '🟫', inr: 240, badge: 'Quality' },
+      { id: 9, name: 'Cardamom (Green)', origin: 'Idukki, Kerala', icon: '🟢', inr: 1400, badge: 'Premium' },
+      { id: 10, name: 'Cardamom (Black)', origin: 'Kerala', icon: '⬛', inr: 950, badge: 'Rare' },
+      { id: 11, name: 'Cloves', origin: 'Kerala', icon: '🔨', inr: 850, badge: 'Premium' },
+      { id: 12, name: 'Cinnamon', origin: 'Kerala', icon: '🪵', inr: 420, badge: 'Organic' },
+      { id: 13, name: 'Bay Leaf', origin: 'Kerala', icon: '🍃', inr: 380, badge: 'Quality' },
+      { id: 14, name: 'Mustard Seeds', origin: 'Bengal', icon: '🟡', inr: 160, badge: 'Popular' },
+      { id: 15, name: 'Fenugreek Seeds', origin: 'Rajasthan', icon: '🟠', inr: 140, badge: 'Quality' },
+      { id: 16, name: 'Fennel Seeds', origin: 'Rajasthan', icon: '🟢', inr: 180, badge: 'Quality' },
+      { id: 17, name: 'Star Anise', origin: 'Gujarat', icon: '⭐', inr: 350, badge: 'Premium' },
+      { id: 18, name: 'Nutmeg', origin: 'Kerala', icon: '🥜', inr: 520, badge: 'Premium' },
+      { id: 19, name: 'Mace', origin: 'Kerala', icon: '🔶', inr: 580, badge: 'Premium' },
+      { id: 20, name: 'Asafoetida (Hing)', origin: 'Afghanistan', icon: '🌋', inr: 1200, badge: 'Rare' },
+      { id: 21, name: 'Curry Leaves (Dry)', origin: 'Tamil Nadu', icon: '🍂', inr: 420, badge: 'Quality' },
+      { id: 22, name: 'Tamarind', origin: 'Tamil Nadu', icon: '🟤', inr: 320, badge: 'Popular' },
+      { id: 23, name: 'Garlic (Dry)', origin: 'Tamil Nadu', icon: '🧄', inr: 280, badge: 'Quality' },
+      { id: 24, name: 'Ginger (Dry)', origin: 'Kerala', icon: '🟫', inr: 350, badge: 'Quality' },
+      { id: 25, name: 'Paprika', origin: 'Hungary Import', icon: '🔴', inr: 180, badge: 'Quality' },
+      { id: 26, name: 'Saffron', origin: 'Kashmir', icon: '🧵', inr: 3500, badge: 'Luxury' },
+      { id: 27, name: 'Vanilla', origin: 'Madagascar', icon: '🫘', inr: 2800, badge: 'Premium' },
+      { id: 28, name: 'Sesame Seeds', origin: 'Tamil Nadu', icon: '⚪', inr: 320, badge: 'Quality' },
+      { id: 29, name: 'Poppy Seeds', origin: 'West Bengal', icon: '⚫', inr: 480, badge: 'Quality' },
+      { id: 30, name: 'Carom Seeds (Ajwain)', origin: 'Rajasthan', icon: '🔶', inr: 280, badge: 'Quality' },
+      { id: 31, name: 'Black Cumin (Kalonji)', origin: 'Bengal', icon: '⚫', inr: 320, badge: 'Quality' },
+      { id: 32, name: 'Dried Rose Petals', origin: 'Kashmir', icon: '🌹', inr: 580, badge: 'Specialty' },
+      { id: 33, name: 'Allspice', origin: 'Import', icon: '🟤', inr: 420, badge: 'Quality' },
+      { id: 34, name: 'Kokum', origin: 'Karnataka', icon: '🔴', inr: 240, badge: 'Quality' }
+    ];
+
+    const TRACKING = {
+      'TE2024-00481': { courier: 'DHL Express', id: 'DHL7291048310', eta: 'Delivered', product: 'Black Pepper · 5 kg', dest: 'Dubai, UAE', steps: [
+        { title: 'Order confirmed', meta: '12 Apr 2025, 10:30 AM · Madurai warehouse', state: 'done' },
+        { title: 'Packed & dispatched', meta: '13 Apr 2025, 9:00 AM · Madurai sorting hub', state: 'done' },
+        { title: 'Departed origin country', meta: '14 Apr 2025, 4:45 AM · Chennai International Airport', state: 'done' },
+        { title: 'Arrived at destination', meta: '15 Apr 2025, 11:20 AM · Dubai customs clearance', state: 'done' },
+        { title: 'Out for delivery', meta: '16 Apr 2025, 8:00 AM · Dubai last-mile facility', state: 'done' },
+        { title: 'Delivered', meta: '16 Apr 2025, 2:34 PM · Received by customer', state: 'active' }
+      ]},
+      'TE2024-00392': { courier: 'Aramex', id: 'ARX5581029374', eta: 'Est. delivery: 3–4 days', product: 'Cardamom (Green) · 500g', dest: 'Singapore', steps: [
+        { title: 'Order confirmed', meta: '02 May 2025, 11:00 AM · Madurai warehouse', state: 'done' },
+        { title: 'Packed & dispatched', meta: '03 May 2025, 10:15 AM · Madurai sorting hub', state: 'done' },
+        { title: 'Departed origin country', meta: '04 May 2025, 6:10 AM · Chennai International Airport', state: 'active' },
+        { title: 'Arrived at destination', meta: 'Estimated 06 May 2025 · Singapore customs', state: 'pending' },
+        { title: 'Out for delivery', meta: 'Estimated 07 May 2025', state: 'pending' },
+        { title: 'Delivered', meta: 'Estimated 07–08 May 2025', state: 'pending' }
+      ]},
+      'TE2024-00310': { courier: 'Pos Malaysia', id: 'PMYS4421837650', eta: 'Est. delivery: 5–6 days', product: 'Turmeric Powder · 2 kg', dest: 'Kuala Lumpur, Malaysia', steps: [
+        { title: 'Order confirmed', meta: '28 Apr 2025, 3:00 PM · Madurai warehouse', state: 'done' },
+        { title: 'Packed & dispatched', meta: '29 Apr 2025, 9:30 AM · Madurai sorting hub', state: 'active' },
+        { title: 'Departed origin country', meta: 'Estimated 30 Apr 2025 · Chennai airport', state: 'pending' },
+        { title: 'Arrived at destination', meta: 'Estimated 02 May 2025 · KL customs', state: 'pending' },
+        { title: 'Out for delivery', meta: 'Estimated 03 May 2025', state: 'pending' },
+        { title: 'Delivered', meta: 'Estimated 03–04 May 2025', state: 'pending' }
+      ]}
+    };
+
+    let currentCurrency = 'INR';
+
+    // FUNCTIONS
+    function formatPrice(value, currency) {
+      if (currency === 'INR') return SYM[currency] + Math.round(value).toLocaleString();
+      return SYM[currency] + value.toFixed(2);
+    }
+
+    function convertPrice(inr, currency) {
+      return inr * RATES[currency];
+    }
+
+    function renderProducts() {
+      const grid = document.getElementById('productsGrid');
+      grid.innerHTML = PRODUCTS.map(p => {
+        const price = convertPrice(p.inr, currentCurrency);
+        return `
+          <div class="product-card" onclick="selectProduct(this, ${p.id})">
+            <div class="product-image">${p.icon}</div>
+            <div class="product-info">
+              <div class="product-name">${p.name}</div>
+              <div class="product-origin">${p.origin}</div>
+              <div class="product-price">${formatPrice(price, currentCurrency)}</div>
+              <div class="product-price-unit">/ kg</div>
+              <div class="product-badge">${p.badge}</div>
+              <div class="qty-control">
+                <label class="qty-label">Qty:</label>
+                <input type="number" class="qty-input" value="1" min="1" onchange="updateTotal(this, ${p.id})" onclick="event.stopPropagation()">
+                <div class="qty-total" id="qty-${p.id}">${formatPrice(price, currentCurrency)}</div>
+              </div>
+              <button class="product-wa-btn" onclick="event.stopPropagation(); waOrderProduct(${p.id})">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.918-1.42A9.956 9.956 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.946 7.946 0 01-4.031-1.094l-.29-.172-2.918.843.872-2.844-.19-.3A7.96 7.96 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
+                Order on WhatsApp
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function setCurrency(btn, currency) {
+      currentCurrency = currency;
+      document.querySelectorAll('.cur-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderProducts();
+    }
+
+    function updateTotal(input, productId) {
+      const product = PRODUCTS[productId];
+      const qty = parseFloat(input.value) || 1;
+      const price = convertPrice(product.inr, currentCurrency);
+      document.getElementById(`qty-${productId}`).textContent = formatPrice(price * qty, currentCurrency);
+    }
+
+    function selectProduct(card, productId) {
+      document.querySelectorAll('.product-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+    }
+
+    function trackShipment() {
+      const id = document.getElementById('trackInput').value.trim().toUpperCase();
+      const result = document.getElementById('trackerResult');
+      
+      if (!id) {
+        result.innerHTML = '';
+        return;
+      }
+
+      const tracking = TRACKING[id];
+      if (!tracking) {
+        result.innerHTML = `<div class="tr-error">⚠ Tracking ID not found. Please check your order confirmation.</div>`;
+        return;
+      }
+
+      const stepsHtml = tracking.steps.map((s, i) => {
+        const isLast = i === tracking.steps.length - 1;
+        return `
+          <div class="tr-step">
+            <div class="tr-step-line">
+              <div class="tr-dot ${s.state}"></div>
+              ${!isLast ? `<div class="tr-line ${s.state === 'done' ? 'done' : ''}"></div>` : ''}
+            </div>
+            <div class="tr-step-info">
+              <div class="tr-step-title ${s.state === 'pending' ? 'pending' : ''}">${s.title}</div>
+              <div class="tr-step-meta">${s.meta}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      result.innerHTML = `
+        <div class="tr-courier-row">
+          <div class="tr-courier">
+            <div class="tr-courier-dot"></div>
+            <div>
+              <div class="tr-courier-name">${tracking.courier} · ${tracking.id}</div>
+              <div class="tr-courier-id">${tracking.product} → ${tracking.dest}</div>
+            </div>
+          </div>
+          <div class="tr-eta">${tracking.eta}</div>
+        </div>
+        <div class="tr-steps">${stepsHtml}</div>
+      `;
+    }
+
+    // WHATSAPP FUNCTIONS
+    function toggleWATooltip() {
+      const tooltip = document.getElementById('waTooltip');
+      tooltip.classList.toggle('show');
+    }
+
+    function openWA() {
+      const msg = encodeURIComponent('Hi! I\'m interested in your premium spices. Can you share pricing and product details?');
+      window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, '_blank');
+    }
+
+    function waMsg(text) {
+      const msg = encodeURIComponent(text);
+      window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, '_blank');
+    }
+
+    function waOrderProduct(productId) {
+      const product = PRODUCTS[productId];
+      const qty = document.querySelector(`#productsGrid .product-card:nth-child(${productId + 1}) .qty-input`)?.value || 1;
+      const price = convertPrice(product.inr, currentCurrency);
+      const total = formatPrice(price * qty, currentCurrency);
+      const msg = encodeURIComponent(`Hi! I'd like to order ${qty} kg of ${product.name} (${currentCurrency} ${total}). Please provide details and payment options.`);
+      window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, '_blank');
+    }
+
+    function startWAChat() {
+      openWA();
+      toggleWATooltip();
+    }
+
+    function waQuoteInquiry() {
+      const name = document.getElementById('qName').value || 'Friend';
+      const spices = document.getElementById('qSpices').value || 'various spices';
+      const qty = document.getElementById('qQuantity').value || 'as per requirement';
+      const msg = encodeURIComponent(`Hi! I'm ${name}. I'm interested in bulk ordering ${spices}. Estimated quantity: ${qty} kg. Please send quote details.`);
+      window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, '_blank');
+    }
+
+    function submitQuote() {
+      const name = document.getElementById('qName').value;
+      const email = document.getElementById('qEmail').value;
+      const company = document.getElementById('qCompany').value;
+      const phone = document.getElementById('qPhone').value;
+      const spices = document.getElementById('qSpices').value;
+      const qty = document.getElementById('qQuantity').value;
+      
+      if (!name || !email) {
+        alert('Please fill in your name and email');
+        return;
+      }
+
+      // Show success message
+      const message = `✅ Quote Request Received!\n\nYour Details:\n• Name: ${name}\n• Email: ${email}\n• Company: ${company}\n• Phone: ${phone}\n• Spices: ${spices}\n• Quantity: ${qty} kg\n\n📧 We'll send you a detailed quote at: ${email}\n⏱️ Response time: Within 2 hours\n\n💬 Or message us on WhatsApp: +91 8489718858\n\nThank you for choosing TamilEelam Export House!`;
+
+      alert(message);
+      
+      // Clear form
+      document.querySelectorAll('.form-field input').forEach(el => el.value = '');
+    }
+
+    function scrollTo(id) {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // INIT
+    renderProducts();
+  </script>
+
+</body>
+</html>
