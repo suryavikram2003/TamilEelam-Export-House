@@ -20,7 +20,7 @@ app.use('/frontend', express.static(path.join(projectRoot, 'frontend')));
 app.use('/pic', express.static(path.join(projectRoot, 'pic')));
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(projectRoot, 'sample code.html'));
+  res.sendFile(path.join(projectRoot, 'enhanced_site.html'));
 });
 
 app.get('/enhanced-site', (req, res) => {
@@ -121,7 +121,7 @@ function generateWhatsAppLink(productName, quantity) {
   const message =
     `Hi, I'm interested in ${productName} (${quantity}). Can you send me a quote?`;
 
-  return `https://wa.me/919876543210?text=${encodeURIComponent(message)}`;
+  return `https://wa.me/917448361008?text=${encodeURIComponent(message)}`;
 }
 
 /* =========================================================
@@ -169,7 +169,7 @@ app.post(
 
         <p>We will contact you shortly.</p>
 
-        <a href="https://wa.me/919876543210">
+        <a href="https://wa.me/917448361008">
           Chat on WhatsApp
         </a>
       `;

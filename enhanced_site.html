@@ -32,10 +32,13 @@
 
     header{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,.98);backdrop-filter:blur(12px);border-bottom:2px solid #e2e8f0;box-shadow:0 4px 12px rgba(0,0,0,.08)}
     .nav{max-width:1400px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:24px}
-    .logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
-    .logo img{width:48px;height:48px;border-radius:50%;object-fit:cover;border:3px solid var(--primary);box-shadow:0 4px 12px rgba(0,0,0,.12)}
-    .logo-text{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--primary)}
-    .logo-sub{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:600}
+    .logo{display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit;min-width:220px}
+    .logo-mark{width:58px;height:58px;border-radius:18px;padding:5px;background:linear-gradient(145deg,#fff7ed,#f1f5f9);border:1px solid rgba(13,36,56,.14);box-shadow:0 10px 24px rgba(13,36,56,.14),inset 0 0 0 1px rgba(255,255,255,.8);position:relative;display:flex;align-items:center;justify-content:center}
+    .logo-mark::after{content:'';position:absolute;right:-4px;bottom:-4px;width:18px;height:18px;border-radius:50%;background:var(--accent);border:3px solid #fff;box-shadow:0 4px 10px rgba(217,87,47,.28)}
+    .logo img{width:100%;height:100%;border-radius:14px;object-fit:cover;border:2px solid rgba(13,36,56,.18)}
+    .logo-copy{display:flex;flex-direction:column;gap:1px}
+    .logo-text{font-family:'Playfair Display',serif;font-size:22px;line-height:1;font-weight:700;color:var(--primary)}
+    .logo-sub{font-size:10px;letter-spacing:2.4px;text-transform:uppercase;color:var(--accent);font-weight:800}
     .nav-links{display:flex;gap:24px;flex-wrap:wrap}
     .nav-links a{font-size:13px;color:var(--muted);text-decoration:none;font-weight:600;transition:.2s ease}
     .nav-links a:hover{color:var(--primary);font-weight:700}
@@ -179,6 +182,8 @@
     .btn-checkout-wa:hover{background:#1a6b1a;transform:translateY(-2px)}
     .btn-close-checkout{background:#f1f5f9;color:var(--text);border:2px solid #cbd5e1;font-weight:700}
     .btn-close-checkout:hover{background:#e2e8f0}
+    .selected-order-list{width:100%;border-top:1px solid #e2e8f0;margin-top:14px;padding-top:12px;display:flex;gap:10px;flex-wrap:wrap}
+    .selected-order-pill{background:#f8fafc;border:1px solid #cbd5e1;border-radius:999px;padding:7px 11px;font-size:12px;font-weight:800;color:var(--primary)}
 
     /* Compare Modal */
     .compare-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:2500;overflow-y:auto;backdrop-filter:blur(4px)}
@@ -297,8 +302,8 @@
   <header>
     <div class="nav">
       <a class="logo" href="#">
-        <img src="Pic.jpeg" alt="TamilEelam Export House logo">
-        <div>
+        <div class="logo-mark"><img src="Pic.jpeg" alt="TamilEelam Export House logo"></div>
+        <div class="logo-copy">
           <div class="logo-text">TamilEelam</div>
           <div class="logo-sub">Export House</div>
         </div>
@@ -323,7 +328,7 @@
         <p class="hero-desc">Authentic Tamil Nadu spices with instant zoom, quick purchase, and multi-currency support. Direct WhatsApp ordering for seamless transactions.</p>
         <div class="hero-btns">
           <button class="btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Browse Products</button>
-          <button class="btn-secondary" onclick="alert('Opening WhatsApp...')">💬 Chat with us</button>
+          <button class="btn-secondary" onclick="openWhatsAppChat()">💬 Chat with us</button>
         </div>
       </div>
       <div class="hero-image"><img src="Pic.jpeg" alt="Premium spice collection"></div>
@@ -416,7 +421,7 @@
           <div class="form-field"><label>Required Quantity (kg) *</label><input type="number" placeholder="e.g., 100" min="1" required></div>
         </div>
         <div class="form-field"><label>Additional Details</label><textarea placeholder="Tell us about your requirements..." style="height:120px;resize:vertical"></textarea></div>
-        <div class="form-actions"><button type="submit" class="quote-btn">📤 Send Quote Request</button><button type="button" class="quote-wa-btn" onclick="alert('WhatsApp redirecting...')">💬 Chat on WhatsApp</button></div>
+        <div class="form-actions"><button type="submit" class="quote-btn">📤 Send Quote Request</button><button type="button" class="quote-wa-btn" onclick="openWhatsAppChat()">💬 Chat on WhatsApp</button></div>
       </form>
     </div>
   </section>
@@ -450,6 +455,7 @@
         <button class="btn-checkout-wa" onclick="checkoutViaWhatsApp()">💬 Order via WhatsApp</button>
         <button class="btn-close-checkout" onclick="closeStickyCheckout()">Close</button>
       </div>
+      <div class="selected-order-list" id="selectedOrderList"></div>
     </div>
   </div>
 
@@ -483,7 +489,7 @@
     <div class="wa-tooltip">
       <strong>Need help?</strong><br>Chat with our team on WhatsApp for instant support and orders.
     </div>
-    <button class="wa-bubble" onclick="alert('Opening WhatsApp...')">
+    <button class="wa-bubble" onclick="openWhatsAppChat()">
       <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.272-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.172.198-.295.297-.492.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421-7.403h-.004a9.87 9.87 0 00-4.255.949l-.305.15L2.967 3.975l.857 3.235.151.482a9.9 9.9 0 003.682 5.223l.528.438a9.863 9.863 0 005.049 1.382h.004c5.444 0 9.868-4.424 9.868-9.867C21.632 5.555 17.208 1.128 11.766 1.128"/></svg>
     </button>
   </div>
@@ -506,6 +512,8 @@
     let activeCurrency = 'INR';
     let selectedForCompare = [];
     let currentQuickBuyProduct = null;
+    let selectedOrderItems = [];
+    const whatsappNumber = '917448361008';
 
     const products = [
       { id: 1, name: 'Black Pepper', origin: 'Western Ghats', price: 650, unit: 'kg', badge: 'popular', discount: 10, filters: ['popular'], img: '⚫', rating: 4.8, reviews: 142 },
@@ -526,6 +534,43 @@
       const r = currencyRates[activeCurrency];
       const places = activeCurrency === 'INR' || activeCurrency === 'JPY' ? 0 : 2;
       return `${r.symbol}${(v * r.rate).toFixed(places)}`;
+    }
+
+    function getDiscountedPrice(product) {
+      return product.price * (1 - product.discount / 100);
+    }
+
+    function upsertOrderItem(product, qty = 1) {
+      const quantity = Math.max(1, parseInt(qty) || 1);
+      const price = getDiscountedPrice(product);
+      const existing = selectedOrderItems.find(item => item.id === product.id);
+      if (existing) existing.qty += quantity;
+      else selectedOrderItems.push({ id: product.id, name: product.name, unit: product.unit, price, qty: quantity });
+      showCheckoutBar();
+    }
+
+    function buildWhatsAppMessage(items = selectedOrderItems) {
+      const orderItems = items.length ? items : selectedForCompare.map(product => ({
+        id: product.id,
+        name: product.name,
+        unit: product.unit,
+        price: getDiscountedPrice(product),
+        qty: 1
+      }));
+      if (!orderItems.length) {
+        return 'Hi TamilEelam Export House, I would like to know more about your products.';
+      }
+      const lines = orderItems.map((item, index) => `${index + 1}. ${item.name} - ${item.qty} ${item.unit} - ${money(item.price * item.qty)}`).join('\n');
+      const total = orderItems.reduce((sum, item) => sum + item.price * item.qty, 0);
+      return `Hi TamilEelam Export House,\n\nI want to place an order for:\n${lines}\n\nTotal: ${money(total)}\n\nPlease confirm availability, delivery time, and payment details.`;
+    }
+
+    function openWhatsApp(message) {
+      window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank');
+    }
+
+    function openWhatsAppChat() {
+      openWhatsApp('Hi TamilEelam Export House, I would like to know more about your products.');
     }
 
     function renderProducts(list = products) {
@@ -642,9 +687,9 @@
       const email = document.getElementById('qbEmail').value;
       const qty = document.getElementById('qbQty').value;
       if (email) {
+        upsertOrderItem(currentQuickBuyProduct, qty);
         showToast(`✅ Order confirmed! ${qty}kg of ${currentQuickBuyProduct.name} - Confirmation sent to ${email}`);
         closeQuickBuy();
-        showCheckoutBar();
       }
     }
 
@@ -652,9 +697,11 @@
       const qty = document.getElementById('qbQty').value;
       const discountedPrice = currentQuickBuyProduct.price * (1 - currentQuickBuyProduct.discount / 100);
       const total = discountedPrice * qty;
+      const item = { id: currentQuickBuyProduct.id, name: currentQuickBuyProduct.name, unit: currentQuickBuyProduct.unit, price: discountedPrice, qty: parseInt(qty) || 1 };
+      upsertOrderItem(currentQuickBuyProduct, qty);
+      openWhatsApp(buildWhatsAppMessage([item]));
       showToast(`💬 Opening WhatsApp for ${qty}kg of ${currentQuickBuyProduct.name} - Total: ${money(total)}`);
       closeQuickBuy();
-      showCheckoutBar();
     }
 
     function toggleCompare(id) {
@@ -724,8 +771,10 @@
 
     function orderViaWhatsApp(id) {
       const p = products.find(x => x.id === id);
+      const item = { id: p.id, name: p.name, unit: p.unit, price: getDiscountedPrice(p), qty: 1 };
+      upsertOrderItem(p, 1);
+      openWhatsApp(buildWhatsAppMessage([item]));
       showToast(`💬 Redirecting to WhatsApp for ${p.name}...`);
-      showCheckoutBar();
     }
 
     function toggleWishlist(id) {
@@ -740,8 +789,18 @@
     function showCheckoutBar() {
       const bar = document.getElementById('stickyCheckout');
       bar.classList.add('show');
-      document.getElementById('checkoutItemCount').textContent = selectedForCompare.length + 1;
-      document.getElementById('checkoutTotal').textContent = money(Math.random() * 10000);
+      const orderItems = selectedOrderItems.length ? selectedOrderItems : selectedForCompare.map(product => ({
+        id: product.id,
+        name: product.name,
+        unit: product.unit,
+        price: getDiscountedPrice(product),
+        qty: 1
+      }));
+      document.getElementById('checkoutItemCount').textContent = orderItems.reduce((sum, item) => sum + item.qty, 0);
+      document.getElementById('checkoutTotal').textContent = money(orderItems.reduce((sum, item) => sum + item.price * item.qty, 0));
+      document.getElementById('selectedOrderList').innerHTML = orderItems.length
+        ? orderItems.map(item => `<span class="selected-order-pill">${item.name} x ${item.qty}</span>`).join('')
+        : '<span class="selected-order-pill">No products selected</span>';
     }
 
     function closeStickyCheckout() {
@@ -749,11 +808,17 @@
     }
 
     function proceedToCheckout() {
-      showToast('🛍️ Proceeding to secure checkout...');
+      checkoutViaWhatsApp();
     }
 
     function checkoutViaWhatsApp() {
-      showToast('💬 Opening WhatsApp checkout...');
+      const hasItems = selectedOrderItems.length || selectedForCompare.length;
+      if (!hasItems) {
+        showToast('Select a product before ordering on WhatsApp');
+        return;
+      }
+      openWhatsApp(buildWhatsAppMessage());
+      showToast('💬 Opening WhatsApp with selected products...');
     }
 
     function showToast(msg) {
