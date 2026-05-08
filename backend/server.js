@@ -32,6 +32,10 @@ app.get('/Pic.jpeg', (req, res) => {
   res.sendFile(path.join(projectRoot, 'Pic.jpeg'));
 });
 
+app.get('/Logo.jpeg', (req, res) => {
+  res.sendFile(path.join(projectRoot, 'Logo.jpeg'));
+});
+
 app.use('/api/products', requireDatabase, productRoutes);
 
 /* =========================================================
