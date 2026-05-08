@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Commodity Prices - Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: white;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .card h2 {
+            color: #667eea;
+            font-size: 18px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        input[type="text"],
+        select {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #764ba2;
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .result {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+            font-size: 13px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .result.error {
+            border-left-color: #ff6b6b;
+            background: #ffe0e0;
+        }
+
+        .result.success {
+            border-left-color: #51cf66;
+            background: #e7f5e7;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .status-badge.operational {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-badge.degraded {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-badge.unreachable {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .spices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .spice-item {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            text-align: center;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .spice-item:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .price-display {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .price-display .value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .price-display .unit {
+            font-size: 12px;
+            color: #666;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 13px;
+        }
+
+        table th, table td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background: #f0f0f0;
+            font-weight: bold;
+        }
+
+        table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #999;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌶️ Live Commodity Prices API Test</h1>
+
+        <!-- Test 1: Single Commodity -->
+        <div class="grid">
+            <div class="card">
+                <h2>1️⃣ Single Commodity Price</h2>
+                <div class="input-group">
+                    <input type="text" id="commodityName" placeholder="Enter commodity (e.g., Turmeric, Chilli)">
+                    <button onclick="testSingleCommodity()" id="btn1">Fetch</button>
+                </div>
+                <div id="result1" class="result"></div>
+            </div>
+
+            <!-- Test 2: API Status -->
+            <div class="card">
+                <h2>📊 API Status Check</h2>
+                <button onclick="testAPIStatus()" style="width: 100%;">Check Status</button>
+                <div id="result2" class="result"></div>
+            </div>
+
+            <!-- Test 3: Bulk Commodities -->
+            <div class="card">
+                <h2>📦 Bulk Commodities (Top 10)</h2>
+                <button onclick="testBulkCommodities()" style="width: 100%;">Fetch Top Spices</button>
+                <div id="result3" class="result"></div>
+            </div>
+        </div>
+
+        <!-- Test 4: All Spices in Inventory -->
+        <div class="card">
+            <h2>🎯 All Inventory Prices (35 Spices)</h2>
+            <button onclick="testAllSpices()" style="width: 100%;">
+                <span id="allSpicesBtn">Fetch All Prices</span>
+            </button>
+            <div id="result4" class="result"></div>
+        </div>
+
+        <!-- Test 5: Quick Price Lookup -->
+        <div class="card">
+            <h2>⚡ Quick Price Lookup</h2>
+            <p style="margin-bottom: 15px; color: #666; font-size: 13px;">Click any spice to see its current price:</p>
+            <div class="spices-grid" id="spicesGrid">
+                <div class="spice-item" onclick="quickLookup(this)">Black Pepper</div>
+                <div class="spice-item" onclick="quickLookup(this)">White Pepper</div>
+                <div class="spice-item" onclick="quickLookup(this)">Turmeric (Whole)</div>
+                <div class="spice-item" onclick="quickLookup(this)">Red Chilli (Whole)</div>
+                <div class="spice-item" onclick="quickLookup(this)">Cumin Seeds</div>
+                <div class="spice-item" onclick="quickLookup(this)">Coriander Seeds</div>
+                <div class="spice-item" onclick="quickLookup(this)">Cardamom (Green)</div>
+                <div class="spice-item" onclick="quickLookup(this)">Cloves</div>
+                <div class="spice-item" onclick="quickLookup(this)">Cinnamon</div>
+                <div class="spice-item" onclick="quickLookup(this)">Garlic (Dry)</div>
+                <div class="spice-item" onclick="quickLookup(this)">Ginger (Dry)</div>
+                <div class="spice-item" onclick="quickLookup(this)">Tamarind</div>
+                <div class="spice-item" onclick="quickLookup(this)">Saffron</div>
+            </div>
+            <div id="result5" class="result" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = '/api/live-prices';
+
+        function showLoading(resultDiv) {
+            resultDiv.innerHTML = '<span class="loading"></span> Loading...';
+            resultDiv.className = 'result';
+        }
+
+        function showError(resultDiv, error, title = 'Error') {
+            resultDiv.innerHTML = `<strong>${title}</strong>\n\n${JSON.stringify(error, null, 2)}`;
+            resultDiv.className = 'result error';
+        }
+
+        function showSuccess(resultDiv, data, title = 'Success') {
+            resultDiv.innerHTML = `<strong>${title}</strong>\n\n${JSON.stringify(data, null, 2)}`;
+            resultDiv.className = 'result success';
+        }
+
+        // Test 1: Single Commodity
+        async function testSingleCommodity() {
+            const name = document.getElementById('commodityName').value.trim();
+            if (!name) {
+                alert('Please enter a commodity name');
+                return;
+            }
+
+            const resultDiv = document.getElementById('result1');
+            showLoading(resultDiv);
+
+            try {
+                const response = await fetch(`${API_BASE}/commodity/${encodeURIComponent(name)}`);
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    const price = data.data;
+                    const display = `
+COMMODITY: ${price.commodity}
+SOURCE: ${price.source}
+MODAL PRICE: ₹${price.modalPrice}/${price.unit}
+MIN: ₹${price.minPrice} | MAX: ₹${price.maxPrice}
+MARKET: ${price.market}
+DATE: ${price.date}
+
+Full Response:
+${JSON.stringify(data, null, 2)}`;
+                    showSuccess(resultDiv, display, `Price for ${name}`);
+                } else {
+                    showError(resultDiv, data);
+                }
+            } catch (error) {
+                showError(resultDiv, { message: error.message });
+            }
+        }
+
+        // Test 2: API Status
+        async function testAPIStatus() {
+            const resultDiv = document.getElementById('result2');
+            showLoading(resultDiv);
+
+            try {
+                const response = await fetch(`${API_BASE}/status`);
+                const data = await response.json();
+
+                let statusText = `OVERALL STATUS: ${data.overallStatus}\n`;
+                statusText += `\nCEDA API: ${data.apis.ceda.status}`;
+                statusText += `\nData.gov.in: ${data.apis.dataGov.status}\n`;
+                statusText += `\nFull Response:\n${JSON.stringify(data, null, 2)}`;
+
+                showSuccess(resultDiv, statusText, 'API Status');
+            } catch (error) {
+                showError(resultDiv, { message: error.message });
+            }
+        }
+
+        // Test 3: Bulk Commodities
+        async function testBulkCommodities() {
+            const commodities = ['Turmeric', 'Black Pepper', 'Chilli', 'Cumin', 'Coriander', 
+                               'Cardamom', 'Garlic', 'Ginger', 'Tamarind', 'Cinnamon'];
+            const resultDiv = document.getElementById('result3');
+            showLoading(resultDiv);
+
+            try {
+                const url = `${API_BASE}/bulk?commodities=${commodities.join(',')}`;
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    let display = `FETCHED: ${data.count} commodities\n\n`;
+                    display += 'PRICES:\n';
+                    Object.entries(data.data).forEach(([name, price]) => {
+                        if (!price.error) {
+                            display += `\n${name}: ₹${price.modalPrice}/${price.unit} (${price.source})`;
+                        }
+                    });
+                    display += `\n\nFull Response:\n${JSON.stringify(data, null, 2)}`;
+                    showSuccess(resultDiv, display, 'Bulk Prices');
+                } else {
+                    showError(resultDiv, data);
+                }
+            } catch (error) {
+                showError(resultDiv, { message: error.message });
+            }
+        }
+
+        // Test 4: All Spices
+        async function testAllSpices() {
+            const resultDiv = document.getElementById('result4');
+            const btn = document.getElementById('allSpicesBtn');
+            
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loading"></span> Fetching all prices...';
+            showLoading(resultDiv);
+
+            try {
+                const response = await fetch(`${API_BASE}/spices`);
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    let display = `INVENTORY PRICES UPDATE\n`;
+                    display += `Total Spices: ${data.summary.total}\n`;
+                    display += `Prices Fetched: ${data.summary.pricesFetched}\n`;
+                    display += `Failed: ${data.summary.failedFetches}\n`;
+                    display += `Success Rate: ${Math.round((data.summary.pricesFetched / data.summary.total) * 100)}%\n\n`;
+
+                    display += 'PRICE TABLE:\n';
+                    display += 'Spice Name | Price (₹/kg) | Market | Source\n';
+                    display += '─'.repeat(70) + '\n';
+
+                    Object.entries(data.data).forEach(([name, price]) => {
+                        if (!price.error) {
+                            const padName = name.padEnd(25);
+                            const padPrice = (price.modalPrice || 'N/A').toString().padEnd(12);
+                            const market = (price.market || 'N/A').substring(0, 15).padEnd(15);
+                            const source = price.source || 'N/A';
+                            display += `${padName} | ${padPrice} | ${market} | ${source}\n`;
+                        }
+                    });
+
+                    display += `\n\nFull Response:\n${JSON.stringify(data, null, 2)}`;
+                    showSuccess(resultDiv, display, 'All Inventory Prices');
+                } else {
+                    showError(resultDiv, data);
+                }
+            } catch (error) {
+                showError(resultDiv, { message: error.message });
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = 'Fetch All Prices';
+            }
+        }
+
+        // Test 5: Quick Lookup
+        async function quickLookup(element) {
+            const spiceName = element.textContent;
+            const resultDiv = document.getElementById('result5');
+            resultDiv.style.display = 'block';
+            showLoading(resultDiv);
+
+            try {
+                const response = await fetch(`${API_BASE}/commodity/${encodeURIComponent(spiceName)}`);
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    const price = data.data;
+                    let display = `\n💰 PRICE: ₹${price.modalPrice}/${price.unit}\n`;
+                    display += `📊 Range: ₹${price.minPrice} - ₹${price.maxPrice}\n`;
+                    display += `🏪 Market: ${price.market}\n`;
+                    display += `📅 Date: ${price.date}\n`;
+                    display += `🔗 Source: ${price.source}\n`;
+                    if (price.variety) display += `🌾 Variety: ${price.variety}\n`;
+                    if (price.state) display += `📍 State: ${price.state}\n`;
+                    
+                    resultDiv.innerHTML = display;
+                    resultDiv.className = 'result success';
+                } else {
+                    showError(resultDiv, data, `Error: ${spiceName}`);
+                }
+            } catch (error) {
+                showError(resultDiv, { message: error.message });
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('✅ Live Prices API Tester Loaded');
+            console.log('Available endpoints:');
+            console.log('- GET /api/live-prices/commodity/:name');
+            console.log('- GET /api/live-prices/bulk?commodities=...');
+            console.log('- GET /api/live-prices/spices');
+            console.log('- GET /api/live-prices/status');
+        });
+
+        // Allow Enter key in input
+        document.getElementById('commodityName').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') testSingleCommodity();
+        });
+    </script>
+</body>
+</html>

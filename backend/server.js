@@ -9,6 +9,7 @@ const path = require('path');
 
 const app = express();
 const productRoutes = require('./routes/products');
+const livePricesRoutes = require('./routes/livePrices');
 const projectRoot = path.join(__dirname, '..');
 const adminEmail = process.env.ADMIN_EMAIL || 'vikramvikass007@gmail.com';
 
@@ -38,6 +39,7 @@ app.get('/Logo.jpeg', (req, res) => {
 });
 
 app.use('/api/products', requireDatabase, productRoutes);
+app.use('/api/live-prices', livePricesRoutes); // Real-time commodity prices (doesn't require DB)
 
 /* =========================================================
    MONGODB CONNECTION
