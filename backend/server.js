@@ -5,16 +5,33 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
 const { body, validationResult } = require('express-validator');
+const path = require('path');
 
 const app = express();
 const productRoutes = require('./routes/products');
+const projectRoot = path.join(__dirname, '..');
 
-app.use('/api/products', productRoutes);
 /* =========================================================
    MIDDLEWARE
 ========================================================= */
 app.use(express.json());
 app.use(cors());
+app.use('/frontend', express.static(path.join(projectRoot, 'frontend')));
+app.use('/pic', express.static(path.join(projectRoot, 'pic')));
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(projectRoot, 'sample code.html'));
+});
+
+app.get('/enhanced-site', (req, res) => {
+  res.sendFile(path.join(projectRoot, 'enhanced_site.html'));
+});
+
+app.get('/Pic.jpeg', (req, res) => {
+  res.sendFile(path.join(projectRoot, 'Pic.jpeg'));
+});
+
+app.use('/api/products', productRoutes);
 
 /* =========================================================
    MONGODB CONNECTION
@@ -319,6 +336,10 @@ app.get('/api/dashboard', async (req, res) => {
 /* =========================================================
    HEALTH CHECK
 ========================================================= */
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', message: 'Server is running' });
+});
+
 app.get('/api/health', (req, res) => {
   res.json({
     status: '✅ Server Running'

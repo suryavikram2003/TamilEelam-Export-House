@@ -4,7 +4,7 @@
 // This file handles all communication between the frontend and backend server
 // Ensures seamless connection for product inquiries, quotes, and contacts
 
-const API_BASE_URL = 'http://localhost:5000';
+const API_BASE_URL = window.location.origin;
 
 // ============================================================================
 // UTILITY FUNCTIONS
@@ -74,7 +74,7 @@ async function testBackendConnection() {
     }
   } catch (error) {
     debugLog('❌ Backend Connection Failed', error);
-    console.log('%c❌ Backend server is NOT running on localhost:5000', 'color: red; font-weight: bold; font-size: 14px;');
+    console.log(`%c❌ Backend server is NOT running at ${API_BASE_URL}`, 'color: red; font-weight: bold; font-size: 14px;');
     console.log('Start the backend with: cd backend && npm start');
     return false;
   }
