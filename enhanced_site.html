@@ -61,7 +61,7 @@
     .section{max-width:1400px;margin:0 auto;padding:80px 24px;position:relative;z-index:2}
     .section-title{font-family:'Playfair Display',serif;font-size:clamp(34px,5vw,48px);margin-bottom:12px;color:var(--primary);font-weight:700}
     .section-subtitle{max-width:760px;color:var(--muted);margin-bottom:36px;font-size:15px;line-height:1.7}
-    .why-section,.tracker-section,.partners-section{background:var(--bg2)}
+    .why-section{background:var(--bg2)}
     .trust-grid,.steps-grid,.footer-content{display:grid;gap:24px}
     .trust-grid{grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:36px}
     .trust-card{background:#fff;border:2px solid #e2e8f0;border-radius:12px;padding:28px;transition:.3s ease;box-shadow:0 2px 8px rgba(0,0,0,.04)}
@@ -195,7 +195,6 @@
     .compare-table tbody tr:hover{background:var(--bg2)}
     .compare-table tbody tr:nth-child(odd){background:#fafbfc}
 
-    /* Tracker Section */
     .tracker-box{background:#fff;border:2px solid #e2e8f0;border-radius:14px;padding:28px;margin-top:28px}
     .tracker-input-row{display:flex;gap:12px;flex-wrap:wrap}
     .tracker-input-row input{flex:1;min-width:220px;padding:12px 14px;border:2px solid #cbd5e1;border-radius:8px;color:var(--text);transition:.2s ease}
@@ -307,7 +306,6 @@
       <nav class="nav-links">
         <a href="#products">Products</a>
         <a href="#why">Why Us</a>
-        <a href="#tracker">Tracker</a>
         <a href="#how">How it Works</a>
       </nav>
       <div style="display:flex;gap:12px;align-items:center;position:relative">
@@ -389,19 +387,6 @@
     </div>
   </section>
 
-  <!-- Tracker Section -->
-  <section id="tracker" class="section tracker-section">
-    <h2 class="section-title">Track Your Shipment</h2>
-    <p class="section-subtitle">Enter your tracking ID to get real-time updates on your order status.</p>
-    <div class="tracker-box">
-      <div class="tracker-input-row"><input type="text" placeholder="Enter Tracking ID (e.g., TEH-2024-001234)"><button>🔍 Track</button></div>
-      <div class="tr-courier-row"><div><div class="trust-title">Express Courier</div><div class="product-origin">Tracking ID: TEH-2024-001234</div></div><div style="background:#fef3c7;color:#92400e;padding:8px 14px;border-radius:6px;font-weight:700;font-size:11px">📍 In Transit</div></div>
-      <div class="tr-step"><div><div class="tr-dot done"></div><div class="tr-line done"></div></div><div><div class="trust-title" style="font-size:14px">Order Confirmed</div><div class="product-origin">2 hours ago</div></div></div>
-      <div class="tr-step"><div><div class="tr-dot done"></div><div class="tr-line done"></div></div><div><div class="trust-title" style="font-size:14px">Processing & Packaging</div><div class="product-origin">1 hour ago</div></div></div>
-      <div class="tr-step"><div><div class="tr-dot active"></div><div class="tr-line"></div></div><div><div class="trust-title" style="font-size:14px">Shipped</div><div class="product-origin">In transit to your city</div></div></div>
-      <div class="tr-step"><div><div class="tr-dot pending"></div></div><div><div class="trust-title" style="font-size:14px;color:var(--muted)">Out for Delivery</div><div class="product-origin">Expected tomorrow</div></div></div>
-    </div>
-  </section>
 
   <!-- How It Works Section -->
   <section id="how" class="section how-section">
@@ -415,18 +400,6 @@
     </div>
   </section>
 
-  <!-- Partners Section -->
-  <section class="section partners-section">
-    <h2 class="section-title">Certified & Trusted</h2>
-    <p class="section-subtitle">Quality assurance and export readiness backed by international certifications.</p>
-    <div class="partners-row">
-      <div class="partner-pill"><div class="partner-dot"></div>ISO 22000 Certified</div>
-      <div class="partner-pill"><div class="partner-dot"></div>Fair Trade Verified</div>
-      <div class="partner-pill"><div class="partner-dot"></div>Organic USDA Approved</div>
-      <div class="partner-pill"><div class="partner-dot"></div>FSSC 22000 Certified</div>
-      <div class="partner-pill"><div class="partner-dot"></div>DGFT Registered</div>
-    </div>
-  </section>
 
   <!-- Quote Section -->
   <section id="quote" class="quote-section">
@@ -453,7 +426,7 @@
     <div class="footer-content">
       <div class="footer-col"><h3>About Us</h3><p>TamilEelam Export House exports premium spices from Tamil Nadu, India to customers worldwide with 20+ years of expertise.</p></div>
       <div class="footer-col"><h3>Products</h3><a href="#products">Complete Spice Collection</a><a href="#quote">Bulk Orders</a><a href="#products">Filter by Type</a></div>
-      <div class="footer-col"><h3>Support</h3><a href="#tracker">Track Order</a><a href="#quote">Request Quote</a><a href="#products">Browse Catalog</a></div>
+      <div class="footer-col"><h3>Support</h3><a href="#quote">Request Quote</a><a href="#products">Browse Catalog</a></div>
       <div class="footer-col"><h3>Contact</h3><p>WhatsApp: +91 98765 43210</p><p>Email: info@tamileelamexport.com</p></div>
     </div>
     <div class="footer-bottom"><p>&copy; 2026 TamilEelam Export House. All rights reserved.</p><p>Premium spice exports worldwide | Multi-currency support</p></div>
