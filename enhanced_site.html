@@ -599,7 +599,7 @@
     let recentlyVisited = [];
     const whatsappNumber = '917448361008';
 
-    const products = [
+    const fallbackProducts = [
       { id: 1, name: 'Black Pepper', origin: 'Western Ghats', price: 650, unit: 'kg', badge: 'popular', discount: 10, filters: ['popular'], image: 'Black Pepper.jpeg', rating: 4.8, reviews: 142 },
       { id: 2, name: 'White Pepper', origin: 'Kerala', price: 750, unit: 'kg', badge: 'popular', discount: 5, filters: ['popular'], image: 'White Pepper.jpeg', rating: 4.9, reviews: 98 },
       { id: 3, name: 'Red Chilli (Whole)', origin: 'Guntur', price: 280, unit: 'kg', badge: 'sale', discount: 15, filters: ['premium'], image: 'Red Chilli (Whole).jpeg', rating: 4.7, reviews: 201 },
@@ -636,6 +636,73 @@
       { id: 34, name: 'Allspice', origin: 'Jamaica', price: 420, unit: 'kg', badge: 'premium', discount: 7, filters: ['premium'], image: 'Black Pepper.jpeg', rating: 4.6, reviews: 68 },
       { id: 35, name: 'Kokum', origin: 'Karnataka', price: 480, unit: 'kg', badge: 'organic', discount: 5, filters: ['organic'], image: 'Turmeric (Whole).jpeg', rating: 4.7, reviews: 87 }
     ];
+
+    let products = [...fallbackProducts];
+
+    async function loadProductsFromAPI() {
+      try {
+        const response = await fetch('/api/products', { headers: { Accept: 'application/json' } });
+        if (!response.ok) throw new Error(`Products API returned ${response.status}`);
+
+        const apiProducts = await response.json();
+        if (Array.isArray(apiProducts) && apiProducts.length) {
+          products = apiProducts.map((product, index) => ({
+            id: product.id ?? index + 1,
+            name: product.name,
+            origin: product.origin,
+            price: Number(product.price) || 0,
+            unit: product.unit || 'kg',
+            badge: product.badge || '',
+            discount: Number(product.discount) || 0,
+            filters: Array.isArray(product.filters) ? product.filters : [],
+            image: product.image || '',
+            rating: Number(product.rating) || 0,
+            reviews: Number(product.reviews) || 0,
+            stock: Number(product.stock) || 0,
+            availability: product.availability || 'In Stock',
+            lastUpdated: product.lastUpdated
+          }));
+          return true;
+        }
+
+        const seedResponse = await fetch('/api/products/seed/initialize', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }
+        });
+
+        if (seedResponse.ok) {
+          const seeded = await fetch('/api/products', { headers: { Accept: 'application/json' } });
+          if (seeded.ok) {
+            const seededProducts = await seeded.json();
+            if (Array.isArray(seededProducts) && seededProducts.length) {
+              products = seededProducts.map((product, index) => ({
+                id: product.id ?? index + 1,
+                name: product.name,
+                origin: product.origin,
+                price: Number(product.price) || 0,
+                unit: product.unit || 'kg',
+                badge: product.badge || '',
+                discount: Number(product.discount) || 0,
+                filters: Array.isArray(product.filters) ? product.filters : [],
+                image: product.image || '',
+                rating: Number(product.rating) || 0,
+                reviews: Number(product.reviews) || 0,
+                stock: Number(product.stock) || 0,
+                availability: product.availability || 'In Stock',
+                lastUpdated: product.lastUpdated
+              }));
+              return true;
+            }
+          }
+        }
+
+        return false;
+      } catch (error) {
+        console.warn('Loading products from API failed, using fallback data:', error);
+        products = [...fallbackProducts];
+        return false;
+      }
+    }
 
     function money(v) {
       const r = currencyRates[activeCurrency];
@@ -1079,14 +1146,7 @@
     }
 
    document.addEventListener('DOMContentLoaded', async () => {
-  try {
-    if (typeof initializeProducts === 'function') {
-      const ok = await initializeProducts();
-      if (!ok) console.warn('Products initialization returned false, using local data');
-    }
-  } catch (err) {
-    console.warn('initializeProducts not available or failed:', err);
-  }
+  await loadProductsFromAPI();
   renderProducts();
 });
   </script>
