@@ -10,6 +10,7 @@ const path = require('path');
 const app = express();
 const productRoutes = require('./routes/products');
 const projectRoot = path.join(__dirname, '..');
+const adminEmail = process.env.ADMIN_EMAIL || 'vikramvikass007@gmail.com';
 
 /* =========================================================
    MIDDLEWARE
@@ -208,7 +209,7 @@ app.post(
       `;
 
       await sendEmail(
-        process.env.ADMIN_EMAIL,
+        adminEmail,
         '📦 New Product Inquiry',
         adminHtml
       );
@@ -258,7 +259,6 @@ app.get('/api/inquiries', requireDatabase, async (req, res) => {
 ========================================================= */
 app.post(
   '/api/quotes',
-  requireDatabase,
   [
     body('name').notEmpty(),
     body('email').isEmail(),
@@ -275,20 +275,29 @@ app.post(
     }
 
     try {
-      const quote = new Quote(req.body);
-
-      await quote.save();
+      if (isMongoConnected) {
+        const quote = new Quote(req.body);
+        await quote.save();
+      }
 
       await sendEmail(
-        process.env.ADMIN_EMAIL,
+        adminEmail,
         '💼 New Quote Request',
         `<h2>New Quote Request</h2>
-         <p>${req.body.name}</p>`
+         <p><strong>Name:</strong> ${req.body.name}</p>
+         <p><strong>Email:</strong> ${req.body.email}</p>
+         <p><strong>Company:</strong> ${req.body.company || '-'}</p>
+         <p><strong>Country:</strong> ${req.body.country || '-'}</p>
+         <p><strong>Product:</strong> ${req.body.productType}</p>
+         <p><strong>Quantity:</strong> ${req.body.quantity} kg</p>
+         <p><strong>Details:</strong> ${req.body.details || '-'}</p>`
       );
 
       res.json({
         success: true,
-        message: 'Quote request submitted'
+        message: isMongoConnected
+          ? 'Quote request submitted'
+          : 'Quote email sent. Database is currently disconnected, so it was not saved.'
       });
 
     } catch (error) {
@@ -325,7 +334,7 @@ app.post(
       await contact.save();
 
       await sendEmail(
-        process.env.ADMIN_EMAIL,
+        adminEmail,
         '💬 Contact Form Message',
         `
           <h2>New Contact Message</h2>
