@@ -19,6 +19,7 @@ app.use(express.json());
 app.use(cors());
 app.use('/frontend', express.static(path.join(projectRoot, 'frontend')));
 app.use('/pic', express.static(path.join(projectRoot, 'pic')));
+app.use('/spieces_image', express.static(path.join(projectRoot, 'spieces_image')));
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(projectRoot, 'enhanced_site.html'));
