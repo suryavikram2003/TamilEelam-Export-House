@@ -31,14 +31,46 @@ app.get('/Pic.jpeg', (req, res) => {
   res.sendFile(path.join(projectRoot, 'Pic.jpeg'));
 });
 
-app.use('/api/products', productRoutes);
+app.use('/api/products', requireDatabase, productRoutes);
 
 /* =========================================================
    MONGODB CONNECTION
 ========================================================= */
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('✅ MongoDB Connected'))
-  .catch(err => console.log('❌ MongoDB Error:', err));
+let isMongoConnected = false;
+
+if (process.env.MONGO_URI) {
+  mongoose.connect(process.env.MONGO_URI, {
+    serverSelectionTimeoutMS: 10000
+  })
+    .then(() => {
+      isMongoConnected = true;
+      console.log('✅ MongoDB Connected');
+    })
+    .catch(err => {
+      isMongoConnected = false;
+      console.error(`❌ MongoDB connection failed: ${err.message}`);
+      console.error('Check your MongoDB Atlas Network Access allowlist and MONGO_URI environment variable.');
+    });
+} else {
+  console.warn('⚠️ MONGO_URI is not set. Database-backed APIs will return 503.');
+}
+
+mongoose.connection.on('disconnected', () => {
+  isMongoConnected = false;
+});
+
+mongoose.connection.on('connected', () => {
+  isMongoConnected = true;
+});
+
+function requireDatabase(req, res, next) {
+  if (isMongoConnected) return next();
+
+  return res.status(503).json({
+    success: false,
+    message: 'Database is not connected. Check MongoDB Atlas IP allowlist and MONGO_URI.'
+  });
+}
 
 /* =========================================================
    SCHEMAS
@@ -129,6 +161,7 @@ function generateWhatsAppLink(productName, quantity) {
 ========================================================= */
 app.post(
   '/api/inquiries',
+  requireDatabase,
   [
     body('name').notEmpty(),
     body('email').isEmail(),
@@ -206,7 +239,7 @@ app.post(
 /* =========================================================
    GET ALL INQUIRIES
 ========================================================= */
-app.get('/api/inquiries', async (req, res) => {
+app.get('/api/inquiries', requireDatabase, async (req, res) => {
   try {
     const inquiries = await Inquiry.find()
       .sort({ createdAt: -1 });
@@ -225,6 +258,7 @@ app.get('/api/inquiries', async (req, res) => {
 ========================================================= */
 app.post(
   '/api/quotes',
+  requireDatabase,
   [
     body('name').notEmpty(),
     body('email').isEmail(),
@@ -270,6 +304,7 @@ app.post(
 ========================================================= */
 app.post(
   '/api/contact',
+  requireDatabase,
   [
     body('name').notEmpty(),
     body('email').isEmail(),
@@ -314,7 +349,7 @@ app.post(
 /* =========================================================
    DASHBOARD API
 ========================================================= */
-app.get('/api/dashboard', async (req, res) => {
+app.get('/api/dashboard', requireDatabase, async (req, res) => {
   try {
     const inquiriesCount = await Inquiry.countDocuments();
     const quotesCount = await Quote.countDocuments();
@@ -337,12 +372,17 @@ app.get('/api/dashboard', async (req, res) => {
    HEALTH CHECK
 ========================================================= */
 app.get('/health', (req, res) => {
-  res.json({ status: 'ok', message: 'Server is running' });
+  res.json({
+    status: 'ok',
+    message: 'Server is running',
+    database: isMongoConnected ? 'connected' : 'disconnected'
+  });
 });
 
 app.get('/api/health', (req, res) => {
   res.json({
-    status: '✅ Server Running'
+    status: '✅ Server Running',
+    database: isMongoConnected ? 'connected' : 'disconnected'
   });
 });
 
