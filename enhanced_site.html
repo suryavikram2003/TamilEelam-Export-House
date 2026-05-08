@@ -123,9 +123,9 @@
     .product-card:hover{border-color:var(--accent);transform:translateY(-8px);box-shadow:0 12px 28px rgba(0,0,0,.12)}
     
     /* Product Image Container with Zoom */
-    .product-image-container{height:220px;background:linear-gradient(135deg,#f8f1ed,#ede4dd);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-    .product-image-container img{width:120px;height:120px;object-fit:contain;filter:drop-shadow(0 8px 12px rgba(0,0,0,.12));transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
-    .product-card:hover .product-image-container img{transform:scale(1.5)}
+    .product-image-container{height:280px;background:linear-gradient(135deg,#f8f1ed,#ede4dd);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+    .product-image-container img{width:260px;height:260px;object-fit:cover;border-radius:8px;filter:drop-shadow(0 8px 12px rgba(0,0,0,.12));transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
+    .product-card:hover .product-image-container img{transform:scale(1.08)}
     
     .wishlist-btn{position:absolute;top:12px;left:12px;width:40px;height:40px;border-radius:50%;border:2px solid #e2e8f0;background:#fff;cursor:pointer;z-index:2;font-size:20px;transition:.2s ease;box-shadow:0 2px 8px rgba(0,0,0,.08)}
     .wishlist-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
@@ -179,7 +179,7 @@
     .qb-header{text-align:center;margin-bottom:20px;padding-right:20px}
     .qb-header h2{font-size:28px;font-weight:800;color:var(--primary);margin-bottom:8px}
     .qb-header p{font-size:13px !important}
-    .qb-image{text-align:center;font-size:100px;margin:20px 0;display:block}
+    .qb-image{text-align:center;margin:15px 0;display:block}
     .qb-form{display:flex;flex-direction:column;gap:16px;flex:1}
     .qb-form-group{display:flex;flex-direction:column;gap:8px}
     .qb-form-group label{font-size:11px;font-weight:800;text-transform:uppercase;color:var(--primary);letter-spacing:.5px}
@@ -600,30 +600,41 @@
     const whatsappNumber = '917448361008';
 
     const products = [
-      { id: 1, name: 'Black Pepper', origin: 'Western Ghats', price: 650, unit: 'kg', badge: 'popular', discount: 10, filters: ['popular'], image: 'Black Pepper.jpeg', img: '🌶️', rating: 4.8, reviews: 142 },
-      { id: 2, name: 'White Pepper', origin: 'Kerala', price: 750, unit: 'kg', badge: 'popular', discount: 5, filters: ['popular'], image: 'White Pepper.jpeg', img: '🤍', rating: 4.9, reviews: 98 },
-      { id: 3, name: 'Red Chilli (Whole)', origin: 'Guntur', price: 280, unit: 'kg', badge: 'sale', discount: 15, filters: ['premium'], image: 'Red Chilli (Whole).jpeg', img: '🌶️', rating: 4.7, reviews: 201 },
-      { id: 4, name: 'Kashmiri Chilli', origin: 'Kashmir', price: 420, unit: 'kg', badge: 'organic', discount: 8, filters: ['organic'], image: 'Kashmiri Chilli.jpeg', img: '🌶️', rating: 4.8, reviews: 89 },
-      { id: 5, name: 'Turmeric (Whole)', origin: 'Erode', price: 180, unit: 'kg', badge: 'organic', discount: 12, filters: ['organic'], image: 'Turmeric (Whole).jpeg', img: '🟨', rating: 4.9, reviews: 312 },
-      { id: 6, name: 'Turmeric Powder', origin: 'Erode', price: 200, unit: 'kg', badge: 'organic', discount: 10, filters: ['organic'], image: 'Turmeric Powder.jpeg', img: '🟨', rating: 4.8, reviews: 267 },
-      { id: 7, name: 'Cumin Seeds', origin: 'Rajasthan', price: 310, unit: 'kg', badge: 'popular', discount: 0, filters: ['popular', 'premium'], image: 'Cumin Seeds.jpeg', img: '🟤', rating: 4.7, reviews: 156 },
-      { id: 8, name: 'Coriander Seeds', origin: 'Rajasthan', price: 220, unit: 'kg', badge: 'popular', discount: 7, filters: ['popular'], image: 'Coriander Seeds.jpeg', img: '⚪', rating: 4.8, reviews: 178 },
-      { id: 9, name: 'Cardamom (Green)', origin: 'Idukki, Kerala', price: 1400, unit: 'kg', badge: 'popular', discount: 5, filters: ['premium'], image: 'Cardamom (Green).jpeg', img: '💚', rating: 4.9, reviews: 289 },
-      { id: 10, name: 'Cloves', origin: 'Kerala', price: 850, unit: 'kg', badge: 'premium', discount: 8, filters: ['premium'], image: 'Black Pepper.jpeg', img: '🔘', rating: 4.8, reviews: 134 },
-      { id: 11, name: 'Cinnamon', origin: 'Tamil Nadu', price: 420, unit: 'kg', badge: 'premium', discount: 10, filters: ['premium'], image: 'Red Chilli (Whole).jpeg', img: '🟤', rating: 4.7, reviews: 167 },
-      { id: 12, name: 'Saffron', origin: 'Kashmir', price: 3500, unit: 'kg', badge: 'premium', discount: 15, filters: ['premium'], image: 'Turmeric Powder.jpeg', img: '✨', rating: 4.9, reviews: 76 },
-      { id: 13, name: 'Coriander Powder', origin: 'Tamil Nadu', price: 240, unit: 'kg', badge: 'popular', discount: 6, filters: ['popular'], image: 'Coriander Powder.jpeg', img: '🟤', rating: 4.7, reviews: 188 },
-      { id: 14, name: 'Mustard Seeds', origin: 'Tamil Nadu', price: 160, unit: 'kg', badge: 'organic', discount: 4, filters: ['organic'], image: 'Cumin Seeds.jpeg', img: '🟨', rating: 4.6, reviews: 121 },
-      { id: 15, name: 'Fenugreek Seeds', origin: 'Tamil Nadu', price: 140, unit: 'kg', badge: 'organic', discount: 0, filters: ['organic'], image: 'Coriander Seeds.jpeg', img: '⚪', rating: 4.6, reviews: 104 },
-      { id: 16, name: 'Fennel Seeds', origin: 'Tamil Nadu', price: 180, unit: 'kg', badge: 'organic', discount: 5, filters: ['organic'], image: 'Cumin Seeds.jpeg', img: '🟤', rating: 4.8, reviews: 147 },
-      { id: 17, name: 'Bay Leaf', origin: 'Himalayas', price: 380, unit: 'kg', badge: 'premium', discount: 7, filters: ['premium'], image: 'Coriander Seeds.jpeg', img: '🍃', rating: 4.7, reviews: 92 },
-      { id: 18, name: 'Nutmeg', origin: 'Kerala', price: 620, unit: 'kg', badge: 'premium', discount: 9, filters: ['premium'], image: 'Cumin Seeds.jpeg', img: '🟤', rating: 4.8, reviews: 116 },
-      { id: 19, name: 'Star Anise', origin: 'Tamil Nadu', price: 350, unit: 'kg', badge: 'premium', discount: 6, filters: ['premium'], image: 'Coriander Seeds.jpeg', img: '⭐', rating: 4.7, reviews: 84 },
-      { id: 20, name: 'Dry Ginger', origin: 'Tamil Nadu', price: 350, unit: 'kg', badge: 'popular', discount: 8, filters: ['popular'], image: 'Turmeric (Whole).jpeg', img: '🟨', rating: 4.6, reviews: 132 },
-      { id: 21, name: 'Garlic Dry', origin: 'Tamil Nadu', price: 280, unit: 'kg', badge: 'popular', discount: 5, filters: ['popular'], image: 'Coriander Powder.jpeg', img: '🟤', rating: 4.5, reviews: 118 },
-      { id: 22, name: 'Sesame Seeds', origin: 'Tamil Nadu', price: 320, unit: 'kg', badge: 'organic', discount: 7, filters: ['organic'], image: 'Coriander Seeds.jpeg', img: '⚪', rating: 4.8, reviews: 173 },
-      { id: 23, name: 'Asafoetida Hing', origin: 'Uttar Pradesh', price: 1200, unit: 'kg', badge: 'premium', discount: 10, filters: ['premium'], image: 'Coriander Powder.jpeg', img: '💛', rating: 4.9, reviews: 67 },
-      { id: 24, name: 'Tamarind', origin: 'Tamil Nadu', price: 320, unit: 'kg', badge: 'popular', discount: 3, filters: ['popular'], image: 'Turmeric (Whole).jpeg', img: '🟤', rating: 4.7, reviews: 155 }
+      { id: 1, name: 'Black Pepper', origin: 'Western Ghats', price: 650, unit: 'kg', badge: 'popular', discount: 10, filters: ['popular'], image: 'Black Pepper.jpeg', rating: 4.8, reviews: 142 },
+      { id: 2, name: 'White Pepper', origin: 'Kerala', price: 750, unit: 'kg', badge: 'popular', discount: 5, filters: ['popular'], image: 'White Pepper.jpeg', rating: 4.9, reviews: 98 },
+      { id: 3, name: 'Red Chilli (Whole)', origin: 'Guntur', price: 280, unit: 'kg', badge: 'sale', discount: 15, filters: ['premium'], image: 'Red Chilli (Whole).jpeg', rating: 4.7, reviews: 201 },
+      { id: 4, name: 'Kashmiri Chilli', origin: 'Kashmir', price: 420, unit: 'kg', badge: 'organic', discount: 8, filters: ['organic'], image: 'Kashmiri Chilli.jpeg', rating: 4.8, reviews: 89 },
+      { id: 5, name: 'Turmeric (Whole)', origin: 'Erode', price: 180, unit: 'kg', badge: 'organic', discount: 12, filters: ['organic'], image: 'Turmeric (Whole).jpeg', rating: 4.9, reviews: 312 },
+      { id: 6, name: 'Turmeric Powder', origin: 'Erode', price: 200, unit: 'kg', badge: 'organic', discount: 10, filters: ['organic'], image: 'Turmeric Powder.jpeg', rating: 4.8, reviews: 267 },
+      { id: 7, name: 'Cumin Seeds', origin: 'Rajasthan', price: 310, unit: 'kg', badge: 'popular', discount: 0, filters: ['popular', 'premium'], image: 'Cumin Seeds.jpeg', rating: 4.7, reviews: 156 },
+      { id: 8, name: 'Coriander Seeds', origin: 'Rajasthan', price: 220, unit: 'kg', badge: 'popular', discount: 7, filters: ['popular'], image: 'Coriander Seeds.jpeg', rating: 4.8, reviews: 178 },
+      { id: 9, name: 'Coriander Powder', origin: 'Tamil Nadu', price: 240, unit: 'kg', badge: 'popular', discount: 6, filters: ['popular'], image: 'Coriander Powder.jpeg', rating: 4.7, reviews: 188 },
+      { id: 10, name: 'Cardamom (Green)', origin: 'Idukki, Kerala', price: 1400, unit: 'kg', badge: 'popular', discount: 5, filters: ['premium'], image: 'Cardamom (Green).jpeg', rating: 4.9, reviews: 289 },
+      { id: 11, name: 'Cardamom (Black)', origin: 'Guatemala', price: 1600, unit: 'kg', badge: 'premium', discount: 8, filters: ['premium'], image: 'Cardamom (Green).jpeg', rating: 4.8, reviews: 145 },
+      { id: 12, name: 'Cloves', origin: 'Kerala', price: 850, unit: 'kg', badge: 'premium', discount: 8, filters: ['premium'], image: 'Black Pepper.jpeg', rating: 4.8, reviews: 134 },
+      { id: 13, name: 'Cinnamon', origin: 'Tamil Nadu', price: 420, unit: 'kg', badge: 'premium', discount: 10, filters: ['premium'], image: 'Red Chilli (Whole).jpeg', rating: 4.7, reviews: 167 },
+      { id: 14, name: 'Bay Leaf', origin: 'Himalayas', price: 380, unit: 'kg', badge: 'premium', discount: 7, filters: ['premium'], image: 'Coriander Seeds.jpeg', rating: 4.7, reviews: 92 },
+      { id: 15, name: 'Mustard Seeds', origin: 'Tamil Nadu', price: 160, unit: 'kg', badge: 'organic', discount: 4, filters: ['organic'], image: 'Cumin Seeds.jpeg', rating: 4.6, reviews: 121 },
+      { id: 16, name: 'Fenugreek Seeds', origin: 'Tamil Nadu', price: 140, unit: 'kg', badge: 'organic', discount: 0, filters: ['organic'], image: 'Coriander Seeds.jpeg', rating: 4.6, reviews: 104 },
+      { id: 17, name: 'Fennel Seeds', origin: 'Tamil Nadu', price: 180, unit: 'kg', badge: 'organic', discount: 5, filters: ['organic'], image: 'Cumin Seeds.jpeg', rating: 4.8, reviews: 147 },
+      { id: 18, name: 'Star Anise', origin: 'Tamil Nadu', price: 350, unit: 'kg', badge: 'premium', discount: 6, filters: ['premium'], image: 'Coriander Seeds.jpeg', rating: 4.7, reviews: 84 },
+      { id: 19, name: 'Nutmeg', origin: 'Kerala', price: 620, unit: 'kg', badge: 'premium', discount: 9, filters: ['premium'], image: 'Cumin Seeds.jpeg', rating: 4.8, reviews: 116 },
+      { id: 20, name: 'Mace', origin: 'Kerala', price: 680, unit: 'kg', badge: 'premium', discount: 7, filters: ['premium'], image: 'Turmeric (Whole).jpeg', rating: 4.7, reviews: 78 },
+      { id: 21, name: 'Asafoetida (Hing)', origin: 'Uttar Pradesh', price: 1200, unit: 'kg', badge: 'premium', discount: 10, filters: ['premium'], image: 'Coriander Powder.jpeg', rating: 4.9, reviews: 67 },
+      { id: 22, name: 'Curry Leaves (Dry)', origin: 'Tamil Nadu', price: 320, unit: 'kg', badge: 'organic', discount: 4, filters: ['organic'], image: 'Coriander Powder.jpeg', rating: 4.6, reviews: 95 },
+      { id: 23, name: 'Tamarind', origin: 'Tamil Nadu', price: 280, unit: 'kg', badge: 'popular', discount: 3, filters: ['popular'], image: 'Turmeric (Whole).jpeg', rating: 4.7, reviews: 155 },
+      { id: 24, name: 'Garlic (Dry)', origin: 'Tamil Nadu', price: 240, unit: 'kg', badge: 'organic', discount: 5, filters: ['organic'], image: 'Coriander Powder.jpeg', rating: 4.5, reviews: 118 },
+      { id: 25, name: 'Ginger (Dry)', origin: 'Tamil Nadu', price: 350, unit: 'kg', badge: 'popular', discount: 8, filters: ['popular'], image: 'Turmeric (Whole).jpeg', rating: 4.6, reviews: 132 },
+      { id: 26, name: 'Paprika', origin: 'Rajasthan', price: 320, unit: 'kg', badge: 'organic', discount: 6, filters: ['organic'], image: 'Red Chilli (Whole).jpeg', rating: 4.7, reviews: 98 },
+      { id: 27, name: 'Saffron', origin: 'Kashmir', price: 3500, unit: 'kg', badge: 'premium', discount: 15, filters: ['premium'], image: 'Turmeric Powder.jpeg', rating: 4.9, reviews: 76 },
+      { id: 28, name: 'Vanilla', origin: 'Madagascar', price: 2800, unit: 'kg', badge: 'premium', discount: 12, filters: ['premium'], image: 'Coriander Seeds.jpeg', rating: 4.8, reviews: 89 },
+      { id: 29, name: 'Sesame Seeds', origin: 'Tamil Nadu', price: 320, unit: 'kg', badge: 'organic', discount: 7, filters: ['organic'], image: 'Coriander Seeds.jpeg', rating: 4.8, reviews: 173 },
+      { id: 30, name: 'Poppy Seeds', origin: 'Rajasthan', price: 280, unit: 'kg', badge: 'organic', discount: 4, filters: ['organic'], image: 'Coriander Seeds.jpeg', rating: 4.6, reviews: 76 },
+      { id: 31, name: 'Carom Seeds (Ajwain)', origin: 'Rajasthan', price: 240, unit: 'kg', badge: 'popular', discount: 5, filters: ['popular'], image: 'Cumin Seeds.jpeg', rating: 4.7, reviews: 102 },
+      { id: 32, name: 'Black Cumin (Kalonji)', origin: 'Rajasthan', price: 380, unit: 'kg', badge: 'organic', discount: 6, filters: ['organic'], image: 'Cumin Seeds.jpeg', rating: 4.8, reviews: 94 },
+      { id: 33, name: 'Dried Rose Petals', origin: 'Kashmir', price: 580, unit: 'kg', badge: 'premium', discount: 8, filters: ['premium'], image: 'Red Chilli (Whole).jpeg', rating: 4.7, reviews: 112 },
+      { id: 34, name: 'Allspice', origin: 'Jamaica', price: 420, unit: 'kg', badge: 'premium', discount: 7, filters: ['premium'], image: 'Black Pepper.jpeg', rating: 4.6, reviews: 68 },
+      { id: 35, name: 'Kokum', origin: 'Karnataka', price: 480, unit: 'kg', badge: 'organic', discount: 5, filters: ['organic'], image: 'Turmeric (Whole).jpeg', rating: 4.7, reviews: 87 }
     ];
 
     function money(v) {
@@ -783,7 +794,7 @@
             ${p.discount > 0 ? `<div class="product-badge discount">${p.discount}% OFF</div>` : ''}
           </div>
           <div class="product-image-container">
-            <img alt="${p.name}" src="/spieces_image/${encodeURIComponent(p.image || '')}" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' rx=\'20\' fill=\'%23ede4dd\'/%3E%3Ctext x=\'50\' y=\'60\' text-anchor=\'middle\' font-size=\'50\'%3E?' + '%3C/text%3E%3C/svg%3E';" style="width:120px;height:120px;object-fit:contain">
+            <img alt="${p.name}" src="/spieces_image/${encodeURIComponent(p.image || '')}" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' rx=\'20\' fill=\'%23ede4dd\'/%3E%3Ctext x=\'50\' y=\'60\' text-anchor=\'middle\' font-size=\'50\'%3E?' + '%3C/text%3E%3C/svg%3E';" style="width:200px;height:200px;object-fit:cover;border-radius:8px">
             <div class="stock-indicator available">✓ In Stock</div>
           </div>
           <div class="product-info">
@@ -819,7 +830,9 @@
           <h2>${p.name}</h2>
           <p style="color:var(--muted);font-size:12px">📍 ${p.origin}</p>
         </div>
-        <div class="qb-image">${p.img}</div>
+        <div class="qb-image" style="text-align:center;margin:20px 0">
+          <img src="/spieces_image/${encodeURIComponent(p.image || '')}" alt="${p.name}" style="width:240px;height:240px;object-fit:cover;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,.15);border:3px solid var(--accent)" onerror="this.style.display='none'">
+        </div>
         <div class="qb-form">
           <div class="qb-form-group">
             <label>Product Details</label>
@@ -1065,9 +1078,10 @@
       setTimeout(() => t.remove(), 3000);
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      renderProducts();
-    });
+   document.addEventListener('DOMContentLoaded', async () => {
+  await initializeProducts();
+  renderProducts();
+});
   </script>
 </body>
 </html>
