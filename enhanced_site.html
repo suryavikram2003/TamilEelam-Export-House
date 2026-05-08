@@ -172,27 +172,29 @@
     /* Quick Buy Popup */
     .quick-buy-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:3000;align-items:center;justify-content:center;animation:scaleIn .3s ease;backdrop-filter:blur(4px)}
     .quick-buy-modal.show{display:flex}
-    .quick-buy-wrapper{position:relative;width:90%;max-width:520px;max-height:90vh;overflow-y:auto}
-    .quick-buy-content{background:#fff;border-radius:16px;padding:36px;box-shadow:var(--shadow-lg);position:relative}
+    .quick-buy-wrapper{position:relative;width:95%;max-width:600px;max-height:95vh;overflow-y:auto;border-radius:16px}
+    .quick-buy-content{background:#fff;border-radius:16px;padding:40px;box-shadow:var(--shadow-lg);position:relative;display:flex;flex-direction:column}
     .quick-buy-close{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.95);border:2px solid #cbd5e1;width:44px;height:44px;border-radius:50%;font-size:28px;cursor:pointer;color:var(--primary);transition:.2s ease;display:flex;align-items:center;justify-content:center}
     .quick-buy-close:hover{background:#fff;border-color:var(--accent);color:var(--accent);transform:scale(1.1)}
-    .qb-header{text-align:center;margin-bottom:24px;padding-right:20px}
-    .qb-header h2{font-size:26px;font-weight:800;color:var(--primary);margin-bottom:8px}
-    .qb-image{text-align:center;font-size:80px;margin:24px 0}
-    .qb-form{display:flex;flex-direction:column;gap:18px}
+    .qb-header{text-align:center;margin-bottom:20px;padding-right:20px}
+    .qb-header h2{font-size:28px;font-weight:800;color:var(--primary);margin-bottom:8px}
+    .qb-header p{font-size:13px !important}
+    .qb-image{text-align:center;font-size:100px;margin:20px 0;display:block}
+    .qb-form{display:flex;flex-direction:column;gap:16px;flex:1}
     .qb-form-group{display:flex;flex-direction:column;gap:8px}
-    .qb-form-group label{font-size:12px;font-weight:800;text-transform:uppercase;color:var(--primary);letter-spacing:.5px}
+    .qb-form-group label{font-size:11px;font-weight:800;text-transform:uppercase;color:var(--primary);letter-spacing:.5px}
+    .qb-form-group p{margin:0;padding:0}
     .qb-form-group input,.qb-form-group select{padding:12px 14px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:inherit;color:var(--text);transition:.2s ease}
     .qb-form-group input:focus,.qb-form-group select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(217,87,47,.1)}
     .qb-qty{display:flex;align-items:center;gap:12px}
     .qb-qty button{width:38px;height:38px;border:2px solid #e2e8f0;background:#fff;border-radius:8px;cursor:pointer;font-weight:800;color:var(--primary);transition:.2s ease;font-size:16px}
     .qb-qty button:hover{border-color:var(--accent);background:#f9fafb}
     .qb-qty input{flex:1;text-align:center;border:2px solid #e2e8f0;border-radius:8px;padding:10px;font-weight:700;color:var(--text)}
-    .qb-total{padding:18px;background:var(--bg2);border-radius:12px;text-align:center;border:2px solid #e2e8f0}
-    .qb-total-label{font-size:12px;color:var(--muted);text-transform:uppercase;font-weight:800}
-    .qb-total-amount{font-size:32px;font-weight:800;color:var(--accent);margin-top:6px}
-    .qb-buttons{display:flex;gap:12px;margin-top:24px}
-    .qb-buttons button{flex:1;padding:14px;border:none;border-radius:8px;font-weight:800;cursor:pointer;transition:.2s ease;font-size:14px}
+    .qb-total{padding:20px;background:linear-gradient(135deg,var(--bg2),#fef3c7);border-radius:12px;text-align:center;border:2px solid var(--accent);margin:12px 0}
+    .qb-total-label{font-size:11px;color:var(--muted);text-transform:uppercase;font-weight:800;letter-spacing:.5px}
+    .qb-total-amount{font-size:36px;font-weight:900;color:var(--accent);margin-top:8px}
+    .qb-buttons{display:flex;gap:12px;margin-top:16px}
+    .qb-buttons button{flex:1;padding:15px;border:none;border-radius:8px;font-weight:800;cursor:pointer;transition:.2s ease;font-size:14px;white-space:nowrap}
     .qb-buy{background:var(--accent);color:#fff;box-shadow:0 4px 12px rgba(217,87,47,.25)}
     .qb-buy:hover{background:#c24620;transform:translateY(-2px)}
     .qb-whatsapp{background:var(--green);color:#fff;box-shadow:0 4px 12px rgba(34,139,34,.25)}
@@ -418,14 +420,14 @@
             <button class="cur-btn" onclick="setCurrency('USD')">USD $</button>
             <button class="cur-btn" onclick="setCurrency('EUR')">EUR €</button>
             <button class="cur-btn" onclick="setCurrency('GBP')">GBP £</button>
+            <button class="cur-btn" onclick="setCurrency('SGD')">SGD $</button>
+            <button class="cur-btn" onclick="setCurrency('MYR')">MYR RM</button>
+            <button class="cur-btn" onclick="setCurrency('THB')">THB ฿</button>
             <button class="cur-btn" onclick="setCurrency('JPY')">JPY ¥</button>
             <button class="cur-btn" onclick="setCurrency('CNY')">CNY ¥</button>
             <button class="cur-btn" onclick="setCurrency('AED')">AED د.إ</button>
-            <button class="cur-btn" onclick="setCurrency('SGD')">SGD $</button>
             <button class="cur-btn" onclick="setCurrency('AUD')">AUD $</button>
             <button class="cur-btn" onclick="setCurrency('CAD')">CAD $</button>
-            <button class="cur-btn" onclick="setCurrency('NZD')">NZD $</button>
-            <button class="cur-btn" onclick="setCurrency('CHF')">CHF CHF</button>
           </div>
         </div>
       </div>
@@ -581,14 +583,14 @@
       USD: { symbol: '$', rate: 0.012, name: 'US Dollar' },
       EUR: { symbol: '€', rate: 0.011, name: 'Euro' },
       GBP: { symbol: '£', rate: 0.0095, name: 'British Pound' },
+      SGD: { symbol: 'S$', rate: 0.016, name: 'Singapore Dollar' },
+      MYR: { symbol: 'RM', rate: 0.052, name: 'Malaysian Ringgit' },
+      THB: { symbol: '฿', rate: 0.42, name: 'Thai Baht' },
       JPY: { symbol: '¥', rate: 1.8, name: 'Japanese Yen' },
       CNY: { symbol: '¥', rate: 0.085, name: 'Chinese Yuan' },
       AED: { symbol: 'د.إ', rate: 0.044, name: 'UAE Dirham' },
-      SGD: { symbol: 'S$', rate: 0.016, name: 'Singapore Dollar' },
       AUD: { symbol: 'A$', rate: 0.018, name: 'Australian Dollar' },
-      CAD: { symbol: 'C$', rate: 0.016, name: 'Canadian Dollar' },
-      NZD: { symbol: 'NZ$', rate: 0.02, name: 'New Zealand Dollar' },
-      CHF: { symbol: 'CHF', rate: 0.011, name: 'Swiss Franc' }
+      CAD: { symbol: 'C$', rate: 0.016, name: 'Canadian Dollar' }
     };
     let activeCurrency = 'INR';
     let selectedForCompare = [];
@@ -598,30 +600,30 @@
     const whatsappNumber = '917448361008';
 
     const products = [
-      { id: 1, name: 'Black Pepper', origin: 'Western Ghats', price: 650, unit: 'kg', badge: 'popular', discount: 10, filters: ['popular'], image: 'Black Pepper.jpeg', rating: 4.8, reviews: 142 },
-      { id: 2, name: 'White Pepper', origin: 'Kerala', price: 750, unit: 'kg', badge: 'popular', discount: 5, filters: ['popular'], image: 'White Pepper.jpeg', rating: 4.9, reviews: 98 },
-      { id: 3, name: 'Red Chilli (Whole)', origin: 'Guntur', price: 280, unit: 'kg', badge: 'sale', discount: 15, filters: ['premium'], image: 'Red Chilli (Whole).jpeg', rating: 4.7, reviews: 201 },
-      { id: 4, name: 'Kashmiri Chilli', origin: 'Kashmir', price: 420, unit: 'kg', badge: 'organic', discount: 8, filters: ['organic'], image: 'Kashmiri Chilli.jpeg', rating: 4.8, reviews: 89 },
-      { id: 5, name: 'Turmeric (Whole)', origin: 'Erode', price: 180, unit: 'kg', badge: 'organic', discount: 12, filters: ['organic'], image: 'Turmeric (Whole).jpeg', rating: 4.9, reviews: 312 },
-      { id: 6, name: 'Turmeric Powder', origin: 'Erode', price: 200, unit: 'kg', badge: 'organic', discount: 10, filters: ['organic'], image: 'Turmeric Powder.jpeg', rating: 4.8, reviews: 267 },
-      { id: 7, name: 'Cumin Seeds', origin: 'Rajasthan', price: 310, unit: 'kg', badge: 'popular', discount: 0, filters: ['popular', 'premium'], image: 'Cumin Seeds.jpeg', rating: 4.7, reviews: 156 },
-      { id: 8, name: 'Coriander Seeds', origin: 'Rajasthan', price: 220, unit: 'kg', badge: 'popular', discount: 7, filters: ['popular'], image: 'Coriander Seeds.jpeg', rating: 4.8, reviews: 178 },
-      { id: 9, name: 'Cardamom (Green)', origin: 'Idukki, Kerala', price: 1400, unit: 'kg', badge: 'popular', discount: 5, filters: ['premium'], image: 'Cardamom (Green).jpeg', rating: 4.9, reviews: 289 },
-      { id: 10, name: 'Cloves', origin: 'Kerala', price: 850, unit: 'kg', badge: 'premium', discount: 8, filters: ['premium'], image: '', rating: 4.8, reviews: 134 },
-      { id: 11, name: 'Cinnamon', origin: 'Tamil Nadu', price: 420, unit: 'kg', badge: 'premium', discount: 10, filters: ['premium'], image: '', rating: 4.7, reviews: 167 },
-      { id: 12, name: 'Saffron', origin: 'Kashmir', price: 3500, unit: 'kg', badge: 'premium', discount: 15, filters: ['premium'], image: '', rating: 4.9, reviews: 76 },
-      { id: 13, name: 'Coriander Powder', origin: 'Tamil Nadu', price: 240, unit: 'kg', badge: 'popular', discount: 6, filters: ['popular'], image: 'Coriander Powder.jpeg', rating: 4.7, reviews: 188 },
-      { id: 14, name: 'Mustard Seeds', origin: 'Tamil Nadu', price: 160, unit: 'kg', badge: 'organic', discount: 4, filters: ['organic'], image: '', rating: 4.6, reviews: 121 },
-      { id: 15, name: 'Fenugreek Seeds', origin: 'Tamil Nadu', price: 140, unit: 'kg', badge: 'organic', discount: 0, filters: ['organic'], image: '', rating: 4.6, reviews: 104 },
-      { id: 16, name: 'Fennel Seeds', origin: 'Tamil Nadu', price: 180, unit: 'kg', badge: 'organic', discount: 5, filters: ['organic'], image: '', rating: 4.8, reviews: 147 },
-      { id: 17, name: 'Bay Leaf', origin: 'Himalayas', price: 380, unit: 'kg', badge: 'premium', discount: 7, filters: ['premium'], image: '', rating: 4.7, reviews: 92 },
-      { id: 18, name: 'Nutmeg', origin: 'Kerala', price: 620, unit: 'kg', badge: 'premium', discount: 9, filters: ['premium'], image: '', rating: 4.8, reviews: 116 },
-      { id: 19, name: 'Star Anise', origin: 'Tamil Nadu', price: 350, unit: 'kg', badge: 'premium', discount: 6, filters: ['premium'], image: '', rating: 4.7, reviews: 84 },
-      { id: 20, name: 'Dry Ginger', origin: 'Tamil Nadu', price: 350, unit: 'kg', badge: 'popular', discount: 8, filters: ['popular'], image: '', rating: 4.6, reviews: 132 },
-      { id: 21, name: 'Garlic Dry', origin: 'Tamil Nadu', price: 280, unit: 'kg', badge: 'popular', discount: 5, filters: ['popular'], image: '', rating: 4.5, reviews: 118 },
-      { id: 22, name: 'Sesame Seeds', origin: 'Tamil Nadu', price: 320, unit: 'kg', badge: 'organic', discount: 7, filters: ['organic'], image: '', rating: 4.8, reviews: 173 },
-      { id: 23, name: 'Asafoetida Hing', origin: 'Uttar Pradesh', price: 1200, unit: 'kg', badge: 'premium', discount: 10, filters: ['premium'], image: '', rating: 4.9, reviews: 67 },
-      { id: 24, name: 'Tamarind', origin: 'Tamil Nadu', price: 320, unit: 'kg', badge: 'popular', discount: 3, filters: ['popular'], image: '', rating: 4.7, reviews: 155 }
+      { id: 1, name: 'Black Pepper', origin: 'Western Ghats', price: 650, unit: 'kg', badge: 'popular', discount: 10, filters: ['popular'], image: 'Black Pepper.jpeg', img: '🌶️', rating: 4.8, reviews: 142 },
+      { id: 2, name: 'White Pepper', origin: 'Kerala', price: 750, unit: 'kg', badge: 'popular', discount: 5, filters: ['popular'], image: 'White Pepper.jpeg', img: '🤍', rating: 4.9, reviews: 98 },
+      { id: 3, name: 'Red Chilli (Whole)', origin: 'Guntur', price: 280, unit: 'kg', badge: 'sale', discount: 15, filters: ['premium'], image: 'Red Chilli (Whole).jpeg', img: '🌶️', rating: 4.7, reviews: 201 },
+      { id: 4, name: 'Kashmiri Chilli', origin: 'Kashmir', price: 420, unit: 'kg', badge: 'organic', discount: 8, filters: ['organic'], image: 'Kashmiri Chilli.jpeg', img: '🌶️', rating: 4.8, reviews: 89 },
+      { id: 5, name: 'Turmeric (Whole)', origin: 'Erode', price: 180, unit: 'kg', badge: 'organic', discount: 12, filters: ['organic'], image: 'Turmeric (Whole).jpeg', img: '🟨', rating: 4.9, reviews: 312 },
+      { id: 6, name: 'Turmeric Powder', origin: 'Erode', price: 200, unit: 'kg', badge: 'organic', discount: 10, filters: ['organic'], image: 'Turmeric Powder.jpeg', img: '🟨', rating: 4.8, reviews: 267 },
+      { id: 7, name: 'Cumin Seeds', origin: 'Rajasthan', price: 310, unit: 'kg', badge: 'popular', discount: 0, filters: ['popular', 'premium'], image: 'Cumin Seeds.jpeg', img: '🟤', rating: 4.7, reviews: 156 },
+      { id: 8, name: 'Coriander Seeds', origin: 'Rajasthan', price: 220, unit: 'kg', badge: 'popular', discount: 7, filters: ['popular'], image: 'Coriander Seeds.jpeg', img: '⚪', rating: 4.8, reviews: 178 },
+      { id: 9, name: 'Cardamom (Green)', origin: 'Idukki, Kerala', price: 1400, unit: 'kg', badge: 'popular', discount: 5, filters: ['premium'], image: 'Cardamom (Green).jpeg', img: '💚', rating: 4.9, reviews: 289 },
+      { id: 10, name: 'Cloves', origin: 'Kerala', price: 850, unit: 'kg', badge: 'premium', discount: 8, filters: ['premium'], image: 'Black Pepper.jpeg', img: '🔘', rating: 4.8, reviews: 134 },
+      { id: 11, name: 'Cinnamon', origin: 'Tamil Nadu', price: 420, unit: 'kg', badge: 'premium', discount: 10, filters: ['premium'], image: 'Red Chilli (Whole).jpeg', img: '🟤', rating: 4.7, reviews: 167 },
+      { id: 12, name: 'Saffron', origin: 'Kashmir', price: 3500, unit: 'kg', badge: 'premium', discount: 15, filters: ['premium'], image: 'Turmeric Powder.jpeg', img: '✨', rating: 4.9, reviews: 76 },
+      { id: 13, name: 'Coriander Powder', origin: 'Tamil Nadu', price: 240, unit: 'kg', badge: 'popular', discount: 6, filters: ['popular'], image: 'Coriander Powder.jpeg', img: '🟤', rating: 4.7, reviews: 188 },
+      { id: 14, name: 'Mustard Seeds', origin: 'Tamil Nadu', price: 160, unit: 'kg', badge: 'organic', discount: 4, filters: ['organic'], image: 'Cumin Seeds.jpeg', img: '🟨', rating: 4.6, reviews: 121 },
+      { id: 15, name: 'Fenugreek Seeds', origin: 'Tamil Nadu', price: 140, unit: 'kg', badge: 'organic', discount: 0, filters: ['organic'], image: 'Coriander Seeds.jpeg', img: '⚪', rating: 4.6, reviews: 104 },
+      { id: 16, name: 'Fennel Seeds', origin: 'Tamil Nadu', price: 180, unit: 'kg', badge: 'organic', discount: 5, filters: ['organic'], image: 'Cumin Seeds.jpeg', img: '🟤', rating: 4.8, reviews: 147 },
+      { id: 17, name: 'Bay Leaf', origin: 'Himalayas', price: 380, unit: 'kg', badge: 'premium', discount: 7, filters: ['premium'], image: 'Coriander Seeds.jpeg', img: '🍃', rating: 4.7, reviews: 92 },
+      { id: 18, name: 'Nutmeg', origin: 'Kerala', price: 620, unit: 'kg', badge: 'premium', discount: 9, filters: ['premium'], image: 'Cumin Seeds.jpeg', img: '🟤', rating: 4.8, reviews: 116 },
+      { id: 19, name: 'Star Anise', origin: 'Tamil Nadu', price: 350, unit: 'kg', badge: 'premium', discount: 6, filters: ['premium'], image: 'Coriander Seeds.jpeg', img: '⭐', rating: 4.7, reviews: 84 },
+      { id: 20, name: 'Dry Ginger', origin: 'Tamil Nadu', price: 350, unit: 'kg', badge: 'popular', discount: 8, filters: ['popular'], image: 'Turmeric (Whole).jpeg', img: '🟨', rating: 4.6, reviews: 132 },
+      { id: 21, name: 'Garlic Dry', origin: 'Tamil Nadu', price: 280, unit: 'kg', badge: 'popular', discount: 5, filters: ['popular'], image: 'Coriander Powder.jpeg', img: '🟤', rating: 4.5, reviews: 118 },
+      { id: 22, name: 'Sesame Seeds', origin: 'Tamil Nadu', price: 320, unit: 'kg', badge: 'organic', discount: 7, filters: ['organic'], image: 'Coriander Seeds.jpeg', img: '⚪', rating: 4.8, reviews: 173 },
+      { id: 23, name: 'Asafoetida Hing', origin: 'Uttar Pradesh', price: 1200, unit: 'kg', badge: 'premium', discount: 10, filters: ['premium'], image: 'Coriander Powder.jpeg', img: '💛', rating: 4.9, reviews: 67 },
+      { id: 24, name: 'Tamarind', origin: 'Tamil Nadu', price: 320, unit: 'kg', badge: 'popular', discount: 3, filters: ['popular'], image: 'Turmeric (Whole).jpeg', img: '🟤', rating: 4.7, reviews: 155 }
     ];
 
     function money(v) {
