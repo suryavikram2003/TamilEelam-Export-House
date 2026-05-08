@@ -36,7 +36,18 @@
     header{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,.88);backdrop-filter:blur(18px);border-bottom:1px solid rgba(203,213,225,.8);box-shadow:0 10px 30px rgba(13,36,56,.08)}
     .nav{max-width:1400px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:24px}
     .logo{display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit;min-width:220px}
-    .logo-mark{width:clamp(48px,9vw,58px);height:clamp(48px,9vw,58px);border-radius:50%;border:3px solid #fff;box-shadow:0 10px 24px rgba(13,36,56,.18),0 0 0 1px rgba(13,36,56,.12);display:block;object-fit:contain;flex-shrink:0;background:#fff}
+  .logo-mark{
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  border:3px solid #fff;
+  box-shadow:0 10px 24px rgba(13,36,56,.18),0 0 0 1px rgba(13,36,56,.12);
+  display:block;
+  object-fit:contain;
+  object-position:center;
+  flex-shrink:0;
+  background:#fff;
+}
     .logo-copy{display:flex;flex-direction:column;gap:1px}
     .logo-text{font-family:'Playfair Display',serif;font-size:22px;line-height:1;font-weight:700;color:var(--primary)}
     .logo-sub{font-size:10px;letter-spacing:2.4px;text-transform:uppercase;color:var(--accent);font-weight:800}
