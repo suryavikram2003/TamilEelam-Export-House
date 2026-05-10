@@ -1185,7 +1185,6 @@
       quoteForm.reset();
       quoteForm.dataset.productId = id;
       const quoteProductInput = document.getElementById('quoteProductInput');
-      quoteProductInput.defaultValue = p.name;
       quoteProductInput.value = p.name;
       
       modal.classList.add('show');
@@ -1239,7 +1238,10 @@ Sent from TamilEelam Export House Quote System
             details: quoteData.message || ''
           })
         });
-        const result = await response.json().catch(() => ({}));
+        const result = await response.json().catch(() => ({
+          success: false,
+          message: 'Received invalid response from quote service. Please try again.'
+        }));
         if (!response.ok || !result.success) {
           throw new Error(result.message || 'Failed to submit quote request. Please try again or contact us directly.');
         }
@@ -1364,7 +1366,10 @@ Sent from TamilEelam Export House Quote System
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(quoteData)
         });
-        const result = await response.json().catch(() => ({}));
+        const result = await response.json().catch(() => ({
+          success: false,
+          message: 'Received invalid response from quote service. Please try again.'
+        }));
         if (!response.ok || !result.success) throw new Error(result.message || 'Quote API failed');
         showToast(result.message || 'Quote request sent successfully');
         form.reset();

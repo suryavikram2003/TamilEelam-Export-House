@@ -310,7 +310,9 @@ app.post(
       if (!emailSent) {
         return res.status(503).json({
           success: false,
-          message: 'Quote email delivery failed and the request may not be saved. Please contact us on WhatsApp: +91 74483 61008.'
+          message: isMongoConnected
+            ? 'Quote was saved, but email delivery failed. Please contact us on WhatsApp: +91 74483 61008.'
+            : 'Quote email delivery failed and the request could not be saved because database is disconnected. Please contact us on WhatsApp: +91 74483 61008.'
         });
       }
 
