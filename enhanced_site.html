@@ -149,6 +149,7 @@
     .product-info{padding:20px;display:flex;flex-direction:column;flex:1}
     .product-name{font-size:18px;font-weight:800;margin-bottom:4px;color:var(--primary)}
     .product-origin{font-size:12px;color:var(--muted);margin-bottom:12px;font-weight:600}
+    .product-quick-hint{font-size:11px;color:var(--muted);margin-top:-4px;margin-bottom:12px;font-weight:700}
     
     .rating-badge{display:inline-flex;align-items:center;gap:6px;background:#fef3c7;padding:7px 11px;border-radius:6px;font-size:11px;font-weight:800;color:#92400e;width:fit-content;margin-bottom:12px}
     .price-container{margin-bottom:14px}
@@ -158,10 +159,10 @@
 
     .product-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:auto}
     .btn-buy-now,.btn-whatsapp,.btn-compare,.btn-add-cart{width:100%;border:none;border-radius:8px;padding:12px 14px;font-weight:800;cursor:pointer;transition:.25s ease;font-size:13px}
-    .btn-buy-now{background:var(--accent);color:#fff;box-shadow:0 4px 12px rgba(217,87,47,.25);padding:9px 10px;font-size:12px}
+    .btn-buy-now{background:var(--accent);color:#fff;box-shadow:0 4px 12px rgba(217,87,47,.25);padding:10px 10px;font-size:12px}
     .btn-add-cart{background:var(--primary);color:#fff;box-shadow:0 4px 12px rgba(13,36,56,.2)}
     .btn-add-cart{grid-column:span 2}
-    .btn-whatsapp{background:var(--green);color:#fff;box-shadow:0 4px 12px rgba(34,139,34,.25);padding:9px 10px;font-size:12px}
+    .btn-whatsapp{background:var(--green);color:#fff;box-shadow:0 4px 12px rgba(34,139,34,.25);padding:10px 10px;font-size:12px}
     .btn-compare{background:#f1f5f9;color:var(--text);border:2px solid #cbd5e1;font-weight:700}
     .btn-buy-now:hover{background:#c24620;transform:translateY(-2px)}
     .btn-add-cart:hover{background:#183a56;transform:translateY(-2px)}
@@ -202,6 +203,8 @@
     .qb-header{text-align:center;margin-bottom:20px;padding-right:20px}
     .qb-header h2{font-size:28px;font-weight:800;color:var(--primary);margin-bottom:8px}
     .qb-header p{font-size:13px !important}
+    .qb-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:8px 0 18px}
+    .qb-step{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:10px 12px;font-size:11px;font-weight:800;color:var(--primary);text-align:center}
     .qb-image{text-align:center;margin:15px 0;display:block}
     .qb-form{display:flex;flex-direction:column;gap:16px;flex:1}
     .qb-form-group{display:flex;flex-direction:column;gap:8px}
@@ -213,6 +216,7 @@
     .qb-qty button{width:38px;height:38px;border:2px solid #e2e8f0;background:#fff;border-radius:8px;cursor:pointer;font-weight:800;color:var(--primary);transition:.2s ease;font-size:16px}
     .qb-qty button:hover{border-color:var(--accent);background:#f9fafb}
     .qb-qty input{flex:1;text-align:center;border:2px solid #e2e8f0;border-radius:8px;padding:10px;font-weight:700;color:var(--text)}
+    .qb-note{font-size:12px;color:var(--muted);line-height:1.5;background:#f8fafc;border:1px dashed #cbd5e1;border-radius:10px;padding:10px 12px}
     .qb-total{padding:20px;background:linear-gradient(135deg,var(--bg2),#fef3c7);border-radius:12px;text-align:center;border:2px solid var(--accent);margin:12px 0}
     .qb-total-label{font-size:11px;color:var(--muted);text-transform:uppercase;font-weight:800;letter-spacing:.5px}
     .qb-total-amount{font-size:36px;font-weight:900;color:var(--accent);margin-top:8px}
@@ -1029,6 +1033,7 @@
           <div class="product-info">
             <h3 class="product-name">${p.name}</h3>
             <p class="product-origin">📍 ${p.origin}</p>
+            <div class="product-quick-hint">Fast order: choose quantity, then buy now or send on WhatsApp.</div>
             <div class="rating-badge"><span class="star">⭐</span> ${p.rating} (${p.reviews})</div>
             <div class="price-container">
               ${p.discount > 0 ? `<span class="product-price-old">${money(p.price)}</span>` : ''}
@@ -1037,8 +1042,8 @@
             </div>
             <div class="product-actions">
               <button class="btn-add-cart" onclick="addToCart(${p.id}); event.stopPropagation()">🛒 Add to Cart</button>
-              <button class="btn-buy-now" onclick="openQuickBuy(${p.id}); event.stopPropagation()">🛍️ Buy Now</button>
-              <button class="btn-whatsapp" onclick="orderViaWhatsApp(${p.id}); event.stopPropagation()">💬 WhatsApp</button>
+              <button class="btn-buy-now" onclick="openQuickBuy(${p.id}); event.stopPropagation()">🛍️ Order Now</button>
+              <button class="btn-whatsapp" onclick="orderViaWhatsApp(${p.id}); event.stopPropagation()">💬 Quick WhatsApp</button>
             </div>
           </div>
         `;
@@ -1059,6 +1064,11 @@
           <h2>${p.name}</h2>
           <p style="color:var(--muted);font-size:12px">📍 ${p.origin}</p>
         </div>
+        <div class="qb-steps">
+          <div class="qb-step">1. Choose quantity</div>
+          <div class="qb-step">2. Review total</div>
+          <div class="qb-step">3. Buy or WhatsApp</div>
+        </div>
         <div class="qb-image" style="text-align:center;margin:20px 0">
           <img src="/spieces_image/${encodeURIComponent(p.image || '')}" alt="${p.name}" style="width:240px;height:240px;object-fit:cover;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,.15);border:3px solid var(--accent)" onerror="this.style.display='none'">
         </div>
@@ -1069,13 +1079,13 @@
           </div>
           <div class="qb-form-group">
             <label>Your Email</label>
-            <input type="email" placeholder="your@email.com" id="qbEmail" required>
+            <input type="email" placeholder="your@email.com" id="qbEmail" required autocomplete="email">
           </div>
           <div class="qb-form-group">
             <label>Quantity</label>
             <div class="qb-qty">
               <button type="button" onclick="decrementQty()">−</button>
-              <input type="number" id="qbQty" min="1" value="1">
+              <input type="number" id="qbQty" min="1" value="1" inputmode="numeric">
               <button type="button" onclick="incrementQty()">+</button>
             </div>
           </div>
@@ -1083,6 +1093,7 @@
             <label>Special Instructions (Optional)</label>
             <input type="text" placeholder="e.g., Bulk pricing needed" id="qbNotes">
           </div>
+          <div class="qb-note">Tip: use Order Now if you want confirmation by email. Use WhatsApp if you want the fastest reply.</div>
           <div class="qb-total">
             <div class="qb-total-label">Total Price</div>
             <div class="qb-total-amount" id="qbTotalPrice">${money(discountedPrice)}</div>
@@ -1096,6 +1107,7 @@
       `;
       document.getElementById('quickBuyModal').classList.add('show');
       document.getElementById('qbQty').addEventListener('input', updateQBTotal);
+      setTimeout(() => document.getElementById('qbQty')?.focus(), 50);
     }
 
     function closeQuickBuy() {
@@ -1124,21 +1136,28 @@
     function confirmQuickBuy() {
       const email = document.getElementById('qbEmail').value;
       const qty = document.getElementById('qbQty').value;
-      if (email) {
-        upsertOrderItem(currentQuickBuyProduct, qty);
-        showToast(`✅ Order confirmed! ${qty}kg of ${currentQuickBuyProduct.name} - Confirmation sent to ${email}`);
-        closeQuickBuy();
+      if (!email) {
+        showToast('Enter your email to place the order');
+        return;
       }
+
+      upsertOrderItem(currentQuickBuyProduct, qty);
+      showToast(`✅ Order placed! ${qty} ${currentQuickBuyProduct.unit} of ${currentQuickBuyProduct.name}`);
+      closeQuickBuy();
     }
 
     function quickBuyViaWhatsApp() {
+      const notes = document.getElementById('qbNotes').value.trim();
       const qty = document.getElementById('qbQty').value;
       const discountedPrice = currentQuickBuyProduct.price * (1 - currentQuickBuyProduct.discount / 100);
       const total = discountedPrice * qty;
       const item = { id: currentQuickBuyProduct.id, name: currentQuickBuyProduct.name, unit: currentQuickBuyProduct.unit, price: discountedPrice, qty: parseInt(qty) || 1 };
       upsertOrderItem(currentQuickBuyProduct, qty);
       openWhatsApp(buildWhatsAppMessage([item]));
-      showToast(`💬 Opening WhatsApp for ${qty}kg of ${currentQuickBuyProduct.name} - Total: ${money(total)}`);
+      if (notes) {
+        showToast(`💬 WhatsApp ready for ${currentQuickBuyProduct.name} with note: ${notes}`);
+      }
+      showToast(`💬 Opening WhatsApp for ${qty} ${currentQuickBuyProduct.unit} of ${currentQuickBuyProduct.name} - Total: ${money(total)}`);
       closeQuickBuy();
     }
 
@@ -1293,7 +1312,7 @@ Sent from TamilEelam Export House Quote System
       const item = { id: p.id, name: p.name, unit: p.unit, price: getDiscountedPrice(p), qty: 1 };
       upsertOrderItem(p, 1);
       openWhatsApp(buildWhatsAppMessage([item]));
-      showToast(`💬 Redirecting to WhatsApp for ${p.name}...`);
+      showToast(`💬 WhatsApp ready for ${p.name} - use the chat to confirm quantity`);
     }
 
     function toggleWishlist(id) {
