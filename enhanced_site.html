@@ -556,9 +556,9 @@
         <button class="btn-close-checkout" onclick="closeStickyCheckout()">Close</button>
       </div>
       <div class="checkout-payment-options" role="group" aria-label="WhatsApp payment options">
-        <button onclick="openWhatsAppPaymentOption('UPI')">💸 Pay via UPI</button>
-        <button onclick="openWhatsAppPaymentOption('Bank Transfer')">🏦 Bank Transfer</button>
-        <button onclick="openWhatsAppPaymentOption('Card Payment Link')">💳 Card Payment Link</button>
+        <button onclick="openWhatsAppPaymentOption('UPI')" aria-label="Choose UPI payment on WhatsApp">💸 Pay via UPI</button>
+        <button onclick="openWhatsAppPaymentOption('Bank Transfer')" aria-label="Choose bank transfer payment on WhatsApp">🏦 Bank Transfer</button>
+        <button onclick="openWhatsAppPaymentOption('Card Payment Link')" aria-label="Request card payment link on WhatsApp">💳 Card Payment Link</button>
       </div>
       <div class="selected-order-list" id="selectedOrderList"></div>
     </div>
@@ -1240,7 +1240,7 @@ Sent from TamilEelam Export House Quote System
         });
         const result = await response.json().catch(() => ({
           success: false,
-          message: 'Received invalid response from quote service. Please try again.'
+          message: 'Unable to process server response. Please try again or contact support.'
         }));
         if (!response.ok || !result.success) {
           throw new Error(result.message || 'Failed to submit quote request. Please try again or contact us directly.');
@@ -1368,7 +1368,7 @@ Sent from TamilEelam Export House Quote System
         });
         const result = await response.json().catch(() => ({
           success: false,
-          message: 'Received invalid response from quote service. Please try again.'
+          message: 'Unable to process server response. Please try again or contact support.'
         }));
         if (!response.ok || !result.success) throw new Error(result.message || 'Quote API failed');
         showToast(result.message || 'Quote request sent successfully');

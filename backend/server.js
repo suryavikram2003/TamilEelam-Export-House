@@ -12,6 +12,7 @@ const productRoutes = require('./routes/products');
 const livePricesRoutes = require('./routes/livePrices');
 const projectRoot = path.join(__dirname, '..');
 const adminEmail = process.env.ADMIN_EMAIL || 'vikramvikass007@gmail.com';
+const whatsappSupportNumber = '+91 74483 61008';
 
 /* =========================================================
    MIDDLEWARE
@@ -311,8 +312,8 @@ app.post(
         return res.status(503).json({
           success: false,
           message: isMongoConnected
-            ? 'Quote was saved, but email delivery failed. Please contact us on WhatsApp: +91 74483 61008.'
-            : 'Quote email delivery failed and the request could not be saved because database is disconnected. Please contact us on WhatsApp: +91 74483 61008.'
+            ? `Quote was saved, but email delivery failed. Please contact us on WhatsApp: ${whatsappSupportNumber}.`
+            : `Quote email delivery failed and the request could not be saved because database is disconnected. Please contact us on WhatsApp: ${whatsappSupportNumber}.`
         });
       }
 
