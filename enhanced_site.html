@@ -123,8 +123,8 @@
     .product-card:hover{border-color:var(--accent);transform:translateY(-8px);box-shadow:0 12px 28px rgba(0,0,0,.12)}
     
     /* Product Image Container with Zoom */
-    .product-image-container{height:280px;background:linear-gradient(135deg,#f8f1ed,#ede4dd);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-    .product-image-container img{width:260px;height:260px;object-fit:cover;border-radius:8px;filter:drop-shadow(0 8px 12px rgba(0,0,0,.12));transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
+    .product-image-container{height:280px;background:linear-gradient(135deg,#f8f1ed,#ede4dd);position:relative;overflow:hidden}
+    .product-image-container img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:0;filter:drop-shadow(0 8px 12px rgba(0,0,0,.12));transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
     .product-card:hover .product-image-container img{transform:scale(1.08)}
     
     .wishlist-btn{position:absolute;top:12px;left:12px;width:40px;height:40px;border-radius:50%;border:2px solid #e2e8f0;background:#fff;cursor:pointer;z-index:2;font-size:20px;transition:.2s ease;box-shadow:0 2px 8px rgba(0,0,0,.08)}
