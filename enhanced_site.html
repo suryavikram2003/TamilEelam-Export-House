@@ -824,6 +824,41 @@
           };
         });
 
+        const missingProducts = products.filter(product => {
+          const live = payload.data[product.name];
+          return !live || live.error;
+        });
+
+        if (missingProducts.length) {
+          const fallbackUpdates = await Promise.all(missingProducts.map(async product => {
+            try {
+              const singleResponse = await fetch(`/api/live-prices/commodity/${encodeURIComponent(product.name)}`, { headers: { Accept: 'application/json' } });
+              if (!singleResponse.ok) return null;
+
+              const singlePayload = await singleResponse.json();
+              const live = singlePayload?.data;
+              if (!singlePayload?.success || !live || live.error) return null;
+
+              return {
+                id: product.id,
+                price: Number(live.modalPrice ?? product.price) || product.price,
+                unit: live.unit || product.unit,
+                availability: live.modalPrice ? 'In Stock' : product.availability,
+                lastUpdated: singlePayload.timestamp || payload.timestamp,
+                livePriceSource: live.source || 'live-prices'
+              };
+            } catch (error) {
+              return null;
+            }
+          }));
+
+          const updateMap = new Map(fallbackUpdates.filter(Boolean).map(item => [item.id, item]));
+          products = products.map(product => {
+            const update = updateMap.get(product.id);
+            return update ? { ...product, ...update } : product;
+          });
+        }
+
         return true;
       } catch (error) {
         console.warn('Live prices API unavailable, keeping catalog prices:', error);
