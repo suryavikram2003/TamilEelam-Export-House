@@ -157,17 +157,42 @@
     .product-price-unit{font-size:12px;color:var(--muted);font-weight:600}
 
     .product-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:auto}
-    .btn-buy-now,.btn-whatsapp,.btn-compare,.btn-add-cart{width:100%;border:none;border-radius:8px;padding:12px 14px;font-weight:800;cursor:pointer;transition:.25s ease;font-size:13px}
+    .btn-buy-now,.btn-whatsapp,.btn-compare,.btn-add-cart,.btn-quote{width:100%;border:none;border-radius:8px;padding:12px 14px;font-weight:800;cursor:pointer;transition:.25s ease;font-size:13px}
     .btn-buy-now{background:var(--accent);color:#fff;box-shadow:0 4px 12px rgba(217,87,47,.25);padding:9px 10px;font-size:12px}
     .btn-add-cart{background:var(--primary);color:#fff;box-shadow:0 4px 12px rgba(13,36,56,.2)}
     .btn-add-cart{grid-column:span 2}
     .btn-whatsapp{background:var(--green);color:#fff;box-shadow:0 4px 12px rgba(34,139,34,.25);padding:9px 10px;font-size:12px}
+    .btn-quote{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#fff;box-shadow:0 4px 12px rgba(245,158,11,.25);padding:9px 10px;font-size:12px}
     .btn-compare{background:#f1f5f9;color:var(--text);border:2px solid #cbd5e1;font-weight:700}
     .btn-buy-now:hover{background:#c24620;transform:translateY(-2px)}
     .btn-add-cart:hover{background:#183a56;transform:translateY(-2px)}
     .btn-whatsapp:hover{background:#1a6b1a;transform:translateY(-2px)}
+    .btn-quote:hover{background:linear-gradient(135deg,#f59e0b,#ec4899);transform:translateY(-2px)}
     .btn-compare:hover{background:#e2e8f0;border-color:var(--accent)}
     .btn-compare.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+
+    /* Quote Modal */
+    .quote-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:3000;align-items:center;justify-content:center;animation:scaleIn .3s ease;backdrop-filter:blur(4px)}
+    .quote-modal.show{display:flex}
+    .quote-wrapper{position:relative;width:95%;max-width:500px;max-height:95vh;overflow-y:auto;border-radius:16px}
+    .quote-form-content{background:#fff;border-radius:16px;padding:40px;box-shadow:var(--shadow-lg);position:relative;display:flex;flex-direction:column}
+    .quote-close{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.95);border:2px solid #cbd5e1;width:44px;height:44px;border-radius:50%;font-size:28px;cursor:pointer;color:var(--primary);transition:.2s ease;display:flex;align-items:center;justify-content:center;z-index:10}
+    .quote-close:hover{background:#fff;border-color:var(--accent);color:var(--accent);transform:scale(1.1)}
+    .quote-form-header{text-align:center;margin-bottom:24px;padding-right:20px}
+    .quote-form-header h2{font-size:28px;font-weight:800;color:var(--primary);margin-bottom:8px}
+    .quote-form-header p{font-size:13px;color:var(--muted)}
+    .quote-form-fields{display:flex;flex-direction:column;gap:16px}
+    .quote-form-group{display:flex;flex-direction:column;gap:8px}
+    .quote-form-group label{font-size:11px;font-weight:800;text-transform:uppercase;color:var(--primary);letter-spacing:.5px}
+    .quote-form-group input,.quote-form-group select,.quote-form-group textarea{padding:12px 14px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:inherit;color:var(--text);transition:.2s ease}
+    .quote-form-group input:focus,.quote-form-group select:focus,.quote-form-group textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(217,87,47,.1)}
+    .quote-form-group textarea{resize:vertical;min-height:100px}
+    .quote-form-actions{display:flex;gap:12px;margin-top:20px}
+    .quote-form-actions button{flex:1;padding:14px 20px;border:none;border-radius:8px;font-weight:800;cursor:pointer;transition:.2s ease;font-size:14px}
+    .quote-submit-btn{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#fff;box-shadow:0 4px 12px rgba(245,158,11,.25)}
+    .quote-submit-btn:hover{background:linear-gradient(135deg,#f59e0b,#ec4899);transform:translateY(-2px)}
+    .quote-wa-btn-modal{background:var(--green);color:#fff;box-shadow:0 4px 12px rgba(34,139,34,.25)}
+    .quote-wa-btn-modal:hover{background:#1a6b1a;transform:translateY(-2px)}
 
     /* Quick Buy Popup */
     .quick-buy-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:3000;align-items:center;justify-content:center;animation:scaleIn .3s ease;backdrop-filter:blur(4px)}
@@ -553,6 +578,67 @@
     </div>
   </div>
 
+  <!-- Quote Modal -->
+  <div class="quote-modal" id="quoteModal">
+    <div class="quote-wrapper">
+      <div class="quote-form-content">
+        <button class="quote-close" onclick="closeQuoteModal()">✕</button>
+        <div class="quote-form-header">
+          <h2>Request a Quote</h2>
+          <p>Get a personalized quote for bulk orders and custom requirements</p>
+        </div>
+        <form class="quote-form-fields" id="quoteForm" onsubmit="submitQuoteForm(event)">
+          <div class="quote-form-group">
+            <label>Product *</label>
+            <input type="text" id="quoteProductInput" name="product" readonly style="background:#f1f5f9;cursor:not-allowed">
+          </div>
+          <div class="quote-form-group">
+            <label>Your Name *</label>
+            <input type="text" name="name" placeholder="John Doe" required>
+          </div>
+          <div class="quote-form-group">
+            <label>Email Address *</label>
+            <input type="email" name="email" placeholder="john@example.com" required>
+          </div>
+          <div class="quote-form-group">
+            <label>Company Name</label>
+            <input type="text" name="company" placeholder="Your Company (Optional)">
+          </div>
+          <div class="quote-form-group">
+            <label>Country *</label>
+            <select name="country" required>
+              <option value="">Select Country</option>
+              <option>India</option>
+              <option>United States</option>
+              <option>United Kingdom</option>
+              <option>Canada</option>
+              <option>Australia</option>
+              <option>Germany</option>
+              <option>France</option>
+              <option>China</option>
+              <option>Japan</option>
+              <option>Singapore</option>
+              <option>UAE</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="quote-form-group">
+            <label>Quantity (kg) *</label>
+            <input type="number" name="quantity" placeholder="e.g., 50" min="1" required>
+          </div>
+          <div class="quote-form-group">
+            <label>Special Requirements</label>
+            <textarea name="message" placeholder="Any specific requirements, packaging preferences, or timeline..."></textarea>
+          </div>
+          <div class="quote-form-actions">
+            <button type="submit" class="quote-submit-btn">📤 Send Quote Request</button>
+            <button type="button" class="quote-wa-btn-modal" onclick="openWhatsAppChat(); closeQuoteModal();">💬 Chat on WhatsApp</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <!-- Compare Modal -->
   <div class="compare-modal" id="compareModal">
     <div class="compare-content">
@@ -877,6 +963,7 @@
               <button class="btn-add-cart" onclick="addToCart(${p.id}); event.stopPropagation()">🛒 Add to Cart</button>
               <button class="btn-buy-now" onclick="openQuickBuy(${p.id}); event.stopPropagation()">🛍️ Buy Now</button>
               <button class="btn-whatsapp" onclick="orderViaWhatsApp(${p.id}); event.stopPropagation()">💬 WhatsApp</button>
+              <button class="btn-quote" onclick="openQuoteModal(${p.id}); event.stopPropagation()">📋 Get Quote</button>
             </div>
           </div>
         `;
@@ -978,6 +1065,83 @@
       openWhatsApp(buildWhatsAppMessage([item]));
       showToast(`💬 Opening WhatsApp for ${qty}kg of ${currentQuickBuyProduct.name} - Total: ${money(total)}`);
       closeQuickBuy();
+    }
+
+    let currentQuoteProduct = null;
+
+    function openQuoteModal(id) {
+      const p = products.find(x => x.id === id);
+      currentQuoteProduct = p;
+      markRecentlyVisited(id);
+      
+      const modal = document.getElementById('quoteModal');
+      document.getElementById('quoteProductInput').value = p.name;
+      document.getElementById('quoteForm').reset();
+      document.getElementById('quoteForm').dataset.productId = id;
+      
+      modal.classList.add('show');
+    }
+
+    function closeQuoteModal() {
+      document.getElementById('quoteModal').classList.remove('show');
+    }
+
+    function submitQuoteForm(e) {
+      e.preventDefault();
+      const form = e.target;
+      const data = new FormData(form);
+      
+      const quoteData = {
+        productId: form.dataset.productId,
+        productName: data.get('product'),
+        name: data.get('name'),
+        email: data.get('email'),
+        company: data.get('company'),
+        country: data.get('country'),
+        quantity: data.get('quantity'),
+        message: data.get('message')
+      };
+
+      const emailSubject = `Quote Request: ${quoteData.productName}`;
+      const emailBody = `
+Name: ${quoteData.name}
+Email: ${quoteData.email}
+Company: ${quoteData.company || 'N/A'}
+Country: ${quoteData.country}
+Product: ${quoteData.productName}
+Quantity: ${quoteData.quantity} kg
+Message: ${quoteData.message || 'N/A'}
+
+---
+Sent from TamilEelam Export House Quote System
+      `.trim();
+
+      // Try to use FormSubmit.co for email, fallback to mailto
+      try {
+        const formData = new FormData();
+        formData.append('email', quoteData.email);
+        formData.append('name', quoteData.name);
+        formData.append('subject', emailSubject);
+        formData.append('message', emailBody);
+        
+        fetch('https://formspree.io/f/xyzvojyb', {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' }
+        }).then(response => {
+          if (response.ok) {
+            showToast('✅ Quote request sent successfully!');
+            closeQuoteModal();
+          } else {
+            throw new Error('FormSubmit failed');
+          }
+        }).catch(() => {
+          window.location.href = `mailto:vikramvikass007@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+          showToast('📧 Opening email client...');
+        });
+      } catch (e) {
+        window.location.href = `mailto:vikramvikass007@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+      }
     }
 
     function toggleCompare(id) {
