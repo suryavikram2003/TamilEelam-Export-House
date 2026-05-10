@@ -1237,7 +1237,9 @@ Sent from TamilEelam Export House Quote System
           })
         });
         const result = await response.json().catch(() => ({}));
-        if (!response.ok || !result.success) throw new Error(result.message || 'Quote request failed');
+        if (!response.ok || !result.success) {
+          throw new Error(result.message || 'Failed to submit quote request. Please try again or contact us directly.');
+        }
         showToast('✅ Quote request sent successfully!');
         closeQuoteModal();
       } catch (e) {
