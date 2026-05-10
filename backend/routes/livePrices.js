@@ -21,15 +21,18 @@ const {
 router.get('/commodity/:name', async (req, res) => {
   try {
     const { name } = req.params;
-    const { apiKey } = req.query;
+    const apiKey = req.query.apiKey || process.env.DATA_GOV_API_KEY || process.env.DATA_GOV_IN_API_KEY || null;
 
     const priceData = await fetchCommodityPrice(name, apiKey);
 
     if (priceData.error) {
-      return res.status(404).json({
+      return res.status(200).json({
+        success: false,
         error: `Could not fetch price for ${name}`,
+        data: priceData,
         sources: ['CEDA API', 'data.gov.in'],
-        suggestion: 'Commodity may not be actively traded or API may be temporarily unavailable'
+        suggestion: 'Commodity may not be actively traded or API may be temporarily unavailable',
+        timestamp: new Date().toISOString()
       });
     }
 
@@ -50,6 +53,7 @@ router.get('/commodity/:name', async (req, res) => {
 router.get('/bulk', async (req, res) => {
   try {
     const { commodities, apiKey } = req.query;
+    const resolvedApiKey = apiKey || process.env.DATA_GOV_API_KEY || process.env.DATA_GOV_IN_API_KEY || null;
 
     if (!commodities) {
       return res.status(400).json({ 
@@ -59,11 +63,17 @@ router.get('/bulk', async (req, res) => {
     }
 
     const commodityList = commodities.split(',').map(c => c.trim());
-    const prices = await fetchBulkPrices(commodityList, apiKey);
+    const prices = await fetchBulkPrices(commodityList, resolvedApiKey);
+    const successCount = Object.values(prices).filter(price => !price.error).length;
+    const failureCount = Object.values(prices).filter(price => price.error).length;
 
     res.json({
       success: true,
       count: commodityList.length,
+      summary: {
+        fetched: successCount,
+        failed: failureCount
+      },
       data: prices,
       timestamp: new Date().toISOString()
     });
@@ -78,7 +88,7 @@ router.get('/bulk', async (req, res) => {
  */
 router.get('/spices', async (req, res) => {
   try {
-    const { apiKey } = req.query;
+    const apiKey = req.query.apiKey || process.env.DATA_GOV_API_KEY || process.env.DATA_GOV_IN_API_KEY || null;
 
     // All spices from the product catalog
     const spiceNames = Object.keys(SPICE_MAPPING);

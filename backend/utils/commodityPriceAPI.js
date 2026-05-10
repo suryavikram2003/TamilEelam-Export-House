@@ -9,6 +9,113 @@
 
 const axios = require('axios');
 
+const REQUEST_TIMEOUT_MS = 5000;
+
+function normalizeText(value) {
+  return String(value || '').trim().replace(/\s+/g, ' ');
+}
+
+function toFiniteNumber(...values) {
+  for (const value of values) {
+    if (value === null || value === undefined || value === '') continue;
+    const parsed = typeof value === 'number' ? value : Number(String(value).replace(/[^0-9.-]/g, ''));
+    if (Number.isFinite(parsed)) return parsed;
+  }
+  return null;
+}
+
+function pickFirstDefined(record, keys) {
+  for (const key of keys) {
+    if (record && Object.prototype.hasOwnProperty.call(record, key) && record[key] !== undefined && record[key] !== null && record[key] !== '') {
+      return record[key];
+    }
+  }
+  return undefined;
+}
+
+function uniqueValues(values) {
+  return [...new Set(values.filter(Boolean))];
+}
+
+function buildCommodityCandidates(commodityName) {
+  const normalized = normalizeText(commodityName);
+  const mappedCommodity = SPICE_MAPPING[normalized];
+  const lowerNormalized = normalized.toLowerCase();
+
+  const reverseMatch = Object.entries(SPICE_MAPPING).find(([productName, commodity]) => {
+    return productName.toLowerCase() === lowerNormalized || commodity.toLowerCase() === lowerNormalized;
+  });
+
+  return uniqueValues([
+    normalized,
+    mappedCommodity,
+    reverseMatch?.[0],
+    reverseMatch?.[1]
+  ]);
+}
+
+function extractFirstRecord(payload) {
+  if (!payload) return null;
+
+  if (Array.isArray(payload)) {
+    return payload[0] || null;
+  }
+
+  if (Array.isArray(payload.records)) {
+    return payload.records[0] || null;
+  }
+
+  if (payload.result) {
+    const resultRecord = extractFirstRecord(payload.result);
+    if (resultRecord) return resultRecord;
+  }
+
+  if (payload.data) {
+    const dataRecord = extractFirstRecord(payload.data);
+    if (dataRecord) return dataRecord;
+  }
+
+  return typeof payload === 'object' ? payload : null;
+}
+
+function normalizePriceRecord(source, commodityName, record) {
+  const modalPrice = toFiniteNumber(
+    pickFirstDefined(record, ['modal_price', 'modalPrice', 'modal price', 'price', 'rate', 'value'])
+  );
+  const minPrice = toFiniteNumber(
+    pickFirstDefined(record, ['min_price', 'minPrice', 'minimum_price', 'minimumPrice'])
+  );
+  const maxPrice = toFiniteNumber(
+    pickFirstDefined(record, ['max_price', 'maxPrice', 'maximum_price', 'maximumPrice'])
+  );
+
+  return {
+    source,
+    commodity: normalizeText(commodityName),
+    mappedCommodity: SPICE_MAPPING[normalizeText(commodityName)] || normalizeText(commodityName),
+    modalPrice,
+    minPrice,
+    maxPrice,
+    unit: pickFirstDefined(record, ['unit', 'units', 'uom']) || 'kg',
+    date: pickFirstDefined(record, ['date', 'date_of_price', 'price_date', 'updated_at']),
+    market: pickFirstDefined(record, ['market', 'mandi', 'market_name', 'location']),
+    state: pickFirstDefined(record, ['state', 'state_name']),
+    variety: pickFirstDefined(record, ['variety', 'commodity_variety', 'grade']),
+    rawData: record
+  };
+}
+
+async function requestJson(url, options = {}) {
+  const response = await axios.get(url, {
+    timeout: REQUEST_TIMEOUT_MS,
+    headers: { 'User-Agent': 'Mozilla/5.0' },
+    validateStatus: status => status >= 200 && status < 500,
+    ...options
+  });
+
+  return response;
+}
+
 // Mapping of spice names to API commodity codes
 const SPICE_MAPPING = {
   'Black Pepper': 'Black Pepper',
@@ -47,35 +154,25 @@ const SPICE_MAPPING = {
  */
 async function fetchCEDAPrice(commodityName) {
   try {
-    const commodity = SPICE_MAPPING[commodityName] || commodityName;
-    
-    // Try CEDA API endpoint
-    const cedaEndpoints = [
-      `https://api.ceda.ashoka.edu.in/api/v1/prices?commodity=${encodeURIComponent(commodity)}`,
-      `https://api.ceda.ashoka.edu.in/api/prices?commodity=${encodeURIComponent(commodity)}`,
-      `https://ashoka.edu.in/api/v1/prices?commodity=${encodeURIComponent(commodity)}`,
-    ];
+    const commodityCandidates = buildCommodityCandidates(commodityName);
+    const cedaEndpoints = commodityCandidates.flatMap(candidate => [
+      `https://api.ceda.ashoka.edu.in/api/v1/prices?commodity=${encodeURIComponent(candidate)}`,
+      `https://api.ceda.ashoka.edu.in/api/prices?commodity=${encodeURIComponent(candidate)}`,
+      `https://ashoka.edu.in/api/v1/prices?commodity=${encodeURIComponent(candidate)}`
+    ]);
 
     for (const endpoint of cedaEndpoints) {
       try {
-        const response = await axios.get(endpoint, { 
-          timeout: 5000,
-          headers: { 'User-Agent': 'Mozilla/5.0' }
-        });
+        const response = await requestJson(endpoint);
+        if (response.status >= 200 && response.status < 300 && response.data) {
+          const record = extractFirstRecord(response.data);
+          if (!record) continue;
 
-        if (response.status === 200 && response.data) {
-          console.log(`[CEDA] Found price for ${commodityName}:`, response.data);
-          return {
-            source: 'CEDA',
-            commodity: commodityName,
-            modalPrice: response.data.modal_price || response.data.price,
-            minPrice: response.data.min_price,
-            maxPrice: response.data.max_price,
-            unit: response.data.unit || 'kg',
-            date: response.data.date,
-            market: response.data.market,
-            rawData: response.data
-          };
+          const normalized = normalizePriceRecord('CEDA', commodityName, record);
+          if (normalized.modalPrice || normalized.minPrice || normalized.maxPrice) {
+            console.log(`[CEDA] Found price for ${commodityName}:`, normalized.rawData);
+            return normalized;
+          }
         }
       } catch (e) {
         // Try next endpoint
@@ -109,38 +206,26 @@ async function fetchDataGovPrice(commodityName, apiKey) {
         const endpoint = `https://data.gov.in/api/datastore_search`;
         const params = {
           resource_id: resourceId,
-          filters: { commodity: commodityName },
+          filters: { commodity: normalizeText(commodityName) },
           limit: 5,
           sort: '_id desc'
         };
 
         if (apiKey) {
           params['api-key'] = apiKey;
+          params.api_key = apiKey;
         }
 
-        const response = await axios.get(endpoint, { 
-          params,
-          timeout: 5000,
-          headers: { 'User-Agent': 'Mozilla/5.0' }
-        });
+        const response = await requestJson(endpoint, { params });
+        if (response.status >= 200 && response.status < 300 && response.data) {
+          const latestRecord = extractFirstRecord(response.data);
+          if (!latestRecord) continue;
 
-        if (response.status === 200 && response.data.records && response.data.records.length > 0) {
-          const latestRecord = response.data.records[0];
-          console.log(`[DataGov] Found price for ${commodityName}:`, latestRecord);
-          
-          return {
-            source: 'DataGov',
-            commodity: commodityName,
-            modalPrice: latestRecord.modal_price || latestRecord.price,
-            minPrice: latestRecord.min_price,
-            maxPrice: latestRecord.max_price,
-            unit: latestRecord.unit || 'kg',
-            date: latestRecord.date,
-            market: latestRecord.market || latestRecord.mandi,
-            state: latestRecord.state,
-            variety: latestRecord.variety,
-            rawData: latestRecord
-          };
+          const normalized = normalizePriceRecord('DataGov', commodityName, latestRecord);
+          if (normalized.modalPrice || normalized.minPrice || normalized.maxPrice) {
+            console.log(`[DataGov] Found price for ${commodityName}:`, normalized.rawData);
+            return normalized;
+          }
         }
       } catch (e) {
         // Try next resource ID
@@ -162,26 +247,28 @@ async function fetchDataGovPrice(commodityName, apiKey) {
  */
 async function fetchCommodityPrice(commodityName, apiKey = null) {
   try {
+    const normalizedName = normalizeText(commodityName);
+
     // Try CEDA first (faster, more structured)
-    const cedaPrice = await fetchCEDAPrice(commodityName);
+    const cedaPrice = await fetchCEDAPrice(normalizedName);
     if (cedaPrice) return cedaPrice;
 
     // Fallback to data.gov.in
     if (apiKey) {
-      const govPrice = await fetchDataGovPrice(commodityName, apiKey);
+      const govPrice = await fetchDataGovPrice(normalizedName, apiKey);
       if (govPrice) return govPrice;
     }
 
     return {
-      error: `Could not fetch price for ${commodityName}`,
-      commodity: commodityName,
+      error: `Could not fetch price for ${normalizedName}`,
+      commodity: normalizedName,
       source: 'none'
     };
   } catch (error) {
     console.error(`Error fetching price for ${commodityName}:`, error);
     return {
       error: error.message,
-      commodity: commodityName
+      commodity: normalizeText(commodityName)
     };
   }
 }
@@ -194,12 +281,10 @@ async function fetchCommodityPrice(commodityName, apiKey = null) {
  */
 async function fetchBulkPrices(commodityNames, apiKey = null) {
   const prices = {};
-  const promises = commodityNames.map(async (name) => {
-    const price = await fetchCommodityPrice(name, apiKey);
-    prices[name] = price;
-  });
-
-  await Promise.all(promises);
+  const queue = [...new Set((commodityNames || []).map(name => normalizeText(name)).filter(Boolean))];
+  await Promise.all(queue.map(async (name) => {
+    prices[name] = await fetchCommodityPrice(name, apiKey);
+  }));
   return prices;
 }
 
@@ -217,9 +302,16 @@ async function getAvailableCommodities() {
 
     for (const endpoint of endpoints) {
       try {
-        const response = await axios.get(endpoint, { timeout: 5000 });
-        if (response.status === 200 && response.data) {
-          return Array.isArray(response.data) ? response.data : response.data.commodities || [];
+        const response = await requestJson(endpoint);
+        if (response.status >= 200 && response.status < 300 && response.data) {
+          const commodities = response.data.commodities || response.data.data || response.data.result || response.data;
+          if (Array.isArray(commodities)) {
+            return commodities;
+          }
+
+          if (commodities && Array.isArray(commodities.records)) {
+            return commodities.records;
+          }
         }
       } catch (e) {
         continue;
