@@ -12,6 +12,7 @@ const productRoutes = require('./routes/products');
 const livePricesRoutes = require('./routes/livePrices');
 const projectRoot = path.join(__dirname, '..');
 const adminEmail = process.env.ADMIN_EMAIL || 'vikramvikass007@gmail.com';
+const whatsappSupportNumber = '+91 74483 61008';
 
 /* =========================================================
    MIDDLEWARE
@@ -143,6 +144,11 @@ const transporter = nodemailer.createTransport({
    HELPER FUNCTIONS
 ========================================================= */
 async function sendEmail(to, subject, html) {
+  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD) {
+    console.error('❌ Email credentials are not configured');
+    return false;
+  }
+
   try {
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
@@ -152,8 +158,10 @@ async function sendEmail(to, subject, html) {
     });
 
     console.log(`✅ Email sent to ${to}`);
+    return true;
   } catch (error) {
     console.error('❌ Email Error:', error);
+    return false;
   }
 }
 
@@ -287,7 +295,7 @@ app.post(
         await quote.save();
       }
 
-      await sendEmail(
+      const emailSent = await sendEmail(
         adminEmail,
         '💼 New Quote Request',
         `<h2>New Quote Request</h2>
@@ -299,6 +307,15 @@ app.post(
          <p><strong>Quantity:</strong> ${req.body.quantity} kg</p>
          <p><strong>Details:</strong> ${req.body.details || '-'}</p>`
       );
+
+      if (!emailSent) {
+        return res.status(503).json({
+          success: false,
+          message: isMongoConnected
+            ? `Quote was saved, but email delivery failed. Please contact us on WhatsApp: ${whatsappSupportNumber}.`
+            : `Quote email delivery failed and the request could not be saved because database is disconnected. Please contact us on WhatsApp: ${whatsappSupportNumber}.`
+        });
+      }
 
       res.json({
         success: true,

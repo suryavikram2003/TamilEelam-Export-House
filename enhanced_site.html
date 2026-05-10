@@ -243,6 +243,9 @@
     .btn-checkout-wa:hover{background:#1a6b1a;transform:translateY(-2px)}
     .btn-close-checkout{background:#f1f5f9;color:var(--text);border:2px solid #cbd5e1;font-weight:700}
     .btn-close-checkout:hover{background:#e2e8f0}
+    .checkout-payment-options{display:flex;gap:10px;flex-wrap:wrap}
+    .checkout-payment-options button{padding:10px 14px;border-radius:8px;background:#ecfdf5;color:#166534;font-weight:800;cursor:pointer;transition:.2s ease;font-size:12px;border:1px solid #86efac}
+    .checkout-payment-options button:hover{background:#dcfce7;transform:translateY(-1px)}
     .selected-order-list{width:100%;border-top:1px solid #e2e8f0;margin-top:14px;padding-top:12px;display:flex;gap:10px;flex-wrap:wrap}
     .selected-order-pill{background:#f8fafc;border:1px solid #cbd5e1;border-radius:999px;padding:7px 11px;font-size:12px;font-weight:800;color:var(--primary)}
 
@@ -518,7 +521,7 @@
           <div class="form-field"><label>Required Quantity (kg) *</label><input name="quantity" type="number" placeholder="e.g., 100" min="1" required></div>
         </div>
         <div class="form-field"><label>Additional Details</label><textarea name="details" placeholder="Tell us about your requirements..." style="height:120px;resize:vertical"></textarea></div>
-        <div class="form-actions"><button type="submit" class="quote-btn">📤 Send Quote Request</button><button type="button" class="quote-wa-btn" onclick="openWhatsAppChat()">💬 Chat on WhatsApp</button></div>
+        <div class="form-actions"><button type="submit" class="quote-btn" aria-label="Send quote request by email">📤 Send Quote Request</button><button type="button" class="quote-wa-btn" onclick="openWhatsAppChat()" aria-label="Open WhatsApp chat">💬 Chat on WhatsApp</button></div>
       </form>
     </div>
   </section>
@@ -551,6 +554,11 @@
         <button class="btn-checkout" onclick="proceedToCheckout()">💳 Proceed to Checkout</button>
         <button class="btn-checkout-wa" onclick="checkoutViaWhatsApp()">💬 Order via WhatsApp</button>
         <button class="btn-close-checkout" onclick="closeStickyCheckout()">Close</button>
+      </div>
+      <div class="checkout-payment-options" role="group" aria-label="WhatsApp payment options">
+        <button onclick="openWhatsAppPaymentOption('UPI')" aria-label="Choose UPI payment on WhatsApp">💸 Pay via UPI</button>
+        <button onclick="openWhatsAppPaymentOption('Bank Transfer')" aria-label="Choose bank transfer payment on WhatsApp">🏦 Bank Transfer</button>
+        <button onclick="openWhatsAppPaymentOption('Card Payment Link')" aria-label="Request card payment link on WhatsApp">💳 Card Payment Link</button>
       </div>
       <div class="selected-order-list" id="selectedOrderList"></div>
     </div>
@@ -662,7 +670,7 @@
     <div class="wa-tooltip">
       <strong>Need help?</strong><br>Chat with our team on WhatsApp for instant support and orders.
     </div>
-    <button class="wa-bubble" onclick="openWhatsAppChat()">WA</button>
+    <button class="wa-bubble" onclick="openWhatsAppChat()" aria-label="Open WhatsApp chat support">WA</button>
   </div>
 
   <script>
@@ -986,20 +994,24 @@
       summaryEl.innerHTML = `<div class="cart-total"><span>Total</span><span>${money(total)}</span></div>`;
     }
 
-    function buildWhatsAppMessage(items = selectedOrderItems) {
-      const orderItems = items.length ? items : selectedForCompare.map(product => ({
+    function getCheckoutItems(items = selectedOrderItems) {
+      return items.length ? items : selectedForCompare.map(product => ({
         id: product.id,
         name: product.name,
         unit: product.unit,
         price: getDiscountedPrice(product),
         qty: 1
       }));
+    }
+
+    function buildWhatsAppMessage(items = selectedOrderItems, paymentOption = 'To be discussed on chat') {
+      const orderItems = getCheckoutItems(items);
       if (!orderItems.length) {
         return 'Hi TamilEelam Export House, I would like to know more about your products.';
       }
       const lines = orderItems.map((item, index) => `${index + 1}. ${item.name} - ${item.qty} ${item.unit} - ${money(item.price * item.qty)}`).join('\n');
       const total = orderItems.reduce((sum, item) => sum + item.price * item.qty, 0);
-      return `Hi TamilEelam Export House,\n\nI want to place an order for:\n${lines}\n\nTotal: ${money(total)}\n\nPlease confirm availability, delivery time, and payment details.`;
+      return `Hi TamilEelam Export House,\n\nI want to place an order for:\n${lines}\n\nTotal: ${money(total)}\nPreferred payment option: ${paymentOption}\n\nPlease confirm availability, delivery time, and payment details.`;
     }
 
     function openWhatsApp(message) {
@@ -1169,9 +1181,11 @@
       markRecentlyVisited(id);
       
       const modal = document.getElementById('quoteModal');
-      document.getElementById('quoteProductInput').value = p.name;
-      document.getElementById('quoteForm').reset();
-      document.getElementById('quoteForm').dataset.productId = id;
+      const quoteForm = document.getElementById('quoteForm');
+      quoteForm.reset();
+      quoteForm.dataset.productId = id;
+      const quoteProductInput = document.getElementById('quoteProductInput');
+      quoteProductInput.value = p.name;
       
       modal.classList.add('show');
     }
@@ -1180,7 +1194,7 @@
       document.getElementById('quoteModal').classList.remove('show');
     }
 
-    function submitQuoteForm(e) {
+    async function submitQuoteForm(e) {
       e.preventDefault();
       const form = e.target;
       const data = new FormData(form);
@@ -1210,31 +1224,32 @@ Message: ${quoteData.message || 'N/A'}
 Sent from TamilEelam Export House Quote System
       `.trim();
 
-      // Try to use FormSubmit.co for email, fallback to mailto
       try {
-        const formData = new FormData();
-        formData.append('email', quoteData.email);
-        formData.append('name', quoteData.name);
-        formData.append('subject', emailSubject);
-        formData.append('message', emailBody);
-        
-        fetch('https://formspree.io/f/xyzvojyb', {
+        const response = await fetch('/api/quotes', {
           method: 'POST',
-          body: formData,
-          headers: { 'Accept': 'application/json' }
-        }).then(response => {
-          if (response.ok) {
-            showToast('✅ Quote request sent successfully!');
-            closeQuoteModal();
-          } else {
-            throw new Error('FormSubmit failed');
-          }
-        }).catch(() => {
-          window.location.href = `mailto:vikramvikass007@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-          showToast('📧 Opening email client...');
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: quoteData.name,
+            email: quoteData.email,
+            company: quoteData.company || '',
+            country: quoteData.country,
+            productType: quoteData.productName,
+            quantity: quoteData.quantity,
+            details: quoteData.message || ''
+          })
         });
+        const result = await response.json().catch(() => ({
+          success: false,
+          message: 'Unable to process server response. Please try again or contact support.'
+        }));
+        if (!response.ok || !result.success) {
+          throw new Error(result.message || 'Failed to submit quote request. Please try again or contact us directly.');
+        }
+        showToast('✅ Quote request sent successfully!');
+        closeQuoteModal();
       } catch (e) {
         window.location.href = `mailto:vikramvikass007@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+        showToast('📧 Opening email client...');
       }
     }
 
@@ -1351,8 +1366,12 @@ Sent from TamilEelam Export House Quote System
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(quoteData)
         });
-        if (!response.ok) throw new Error('Quote API failed');
-        showToast('Quote request sent to vikramvikass007@gmail.com');
+        const result = await response.json().catch(() => ({
+          success: false,
+          message: 'Unable to process server response. Please try again or contact support.'
+        }));
+        if (!response.ok || !result.success) throw new Error(result.message || 'Quote API failed');
+        showToast(result.message || 'Quote request sent successfully');
         form.reset();
       } catch (error) {
         window.location.href = `mailto:vikramvikass007@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
@@ -1363,13 +1382,7 @@ Sent from TamilEelam Export House Quote System
     function showCheckoutBar() {
       const bar = document.getElementById('stickyCheckout');
       bar.classList.add('show');
-      const orderItems = selectedOrderItems.length ? selectedOrderItems : selectedForCompare.map(product => ({
-        id: product.id,
-        name: product.name,
-        unit: product.unit,
-        price: getDiscountedPrice(product),
-        qty: 1
-      }));
+      const orderItems = getCheckoutItems();
       document.getElementById('checkoutItemCount').textContent = orderItems.reduce((sum, item) => sum + item.qty, 0);
       document.getElementById('checkoutTotal').textContent = money(orderItems.reduce((sum, item) => sum + item.price * item.qty, 0));
       document.getElementById('selectedOrderList').innerHTML = orderItems.length
@@ -1386,13 +1399,23 @@ Sent from TamilEelam Export House Quote System
     }
 
     function checkoutViaWhatsApp() {
-      const hasItems = selectedOrderItems.length || selectedForCompare.length;
-      if (!hasItems) {
+      const orderItems = getCheckoutItems();
+      if (!orderItems.length) {
         showToast('Select a product before ordering on WhatsApp');
         return;
       }
-      openWhatsApp(buildWhatsAppMessage());
+      openWhatsApp(buildWhatsAppMessage(orderItems));
       showToast('💬 Opening WhatsApp with selected products...');
+    }
+
+    function openWhatsAppPaymentOption(option) {
+      const orderItems = getCheckoutItems();
+      if (!orderItems.length) {
+        showToast('Select a product before choosing payment option');
+        return;
+      }
+      openWhatsApp(buildWhatsAppMessage(orderItems, option));
+      showToast(`💬 Opening WhatsApp with payment option: ${option}`);
     }
 
     function showToast(msg) {
@@ -1404,9 +1427,11 @@ Sent from TamilEelam Export House Quote System
     }
 
    document.addEventListener('DOMContentLoaded', async () => {
-  await loadProductsFromAPI();
-  await applyLivePricesFromAPI();
-  renderProducts();
+  renderProducts(products);
+  const loaded = await loadProductsFromAPI();
+  if (loaded) renderProducts(getFilteredProducts());
+  const liveUpdated = await applyLivePricesFromAPI();
+  if (liveUpdated) renderProducts(getFilteredProducts());
 });
   </script>
 </body>
