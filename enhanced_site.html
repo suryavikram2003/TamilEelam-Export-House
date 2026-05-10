@@ -157,17 +157,15 @@
     .product-price-unit{font-size:12px;color:var(--muted);font-weight:600}
 
     .product-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:auto}
-    .btn-buy-now,.btn-whatsapp,.btn-compare,.btn-add-cart,.btn-quote{width:100%;border:none;border-radius:8px;padding:12px 14px;font-weight:800;cursor:pointer;transition:.25s ease;font-size:13px}
+    .btn-buy-now,.btn-whatsapp,.btn-compare,.btn-add-cart{width:100%;border:none;border-radius:8px;padding:12px 14px;font-weight:800;cursor:pointer;transition:.25s ease;font-size:13px}
     .btn-buy-now{background:var(--accent);color:#fff;box-shadow:0 4px 12px rgba(217,87,47,.25);padding:9px 10px;font-size:12px}
     .btn-add-cart{background:var(--primary);color:#fff;box-shadow:0 4px 12px rgba(13,36,56,.2)}
     .btn-add-cart{grid-column:span 2}
     .btn-whatsapp{background:var(--green);color:#fff;box-shadow:0 4px 12px rgba(34,139,34,.25);padding:9px 10px;font-size:12px}
-    .btn-quote{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#fff;box-shadow:0 4px 12px rgba(245,158,11,.25);padding:9px 10px;font-size:12px}
     .btn-compare{background:#f1f5f9;color:var(--text);border:2px solid #cbd5e1;font-weight:700}
     .btn-buy-now:hover{background:#c24620;transform:translateY(-2px)}
     .btn-add-cart:hover{background:#183a56;transform:translateY(-2px)}
     .btn-whatsapp:hover{background:#1a6b1a;transform:translateY(-2px)}
-    .btn-quote:hover{background:linear-gradient(135deg,#f59e0b,#ec4899);transform:translateY(-2px)}
     .btn-compare:hover{background:#e2e8f0;border-color:var(--accent)}
     .btn-compare.active{background:var(--primary);color:#fff;border-color:var(--primary)}
 
@@ -723,6 +721,50 @@
       { id: 35, name: 'Kokum', origin: 'Karnataka', price: 480, unit: 'kg', badge: 'organic', discount: 5, filters: ['organic'], image: 'Turmeric (Whole).jpeg', rating: 4.7, reviews: 87 }
     ];
 
+    function normalizeProductRecord(product, fallback = {}, index = 0) {
+      const merged = { ...fallback, ...(product || {}) };
+      return {
+        id: Number(merged.id) || fallback.id || index + 1,
+        name: merged.name || fallback.name || `Product ${index + 1}`,
+        origin: merged.origin || fallback.origin || '',
+        price: Number(merged.price ?? fallback.price) || 0,
+        unit: merged.unit || fallback.unit || 'kg',
+        badge: merged.badge || fallback.badge || '',
+        discount: Number(merged.discount ?? fallback.discount) || 0,
+        filters: Array.isArray(merged.filters) && merged.filters.length ? merged.filters : (fallback.filters || []),
+        image: merged.image || fallback.image || '',
+        rating: Number(merged.rating ?? fallback.rating) || 0,
+        reviews: Number(merged.reviews ?? fallback.reviews) || 0,
+        stock: Number(merged.stock ?? fallback.stock) || 0,
+        availability: merged.availability || fallback.availability || 'In Stock',
+        lastUpdated: merged.lastUpdated || fallback.lastUpdated,
+        livePriceSource: merged.livePriceSource || fallback.livePriceSource || ''
+      };
+    }
+
+    function mergeCatalogProducts(sourceProducts) {
+      const apiProducts = Array.isArray(sourceProducts) ? sourceProducts : [];
+      const merged = fallbackProducts.map((fallback, index) => {
+        const apiProduct = apiProducts.find(product =>
+          Number(product.id) === Number(fallback.id) ||
+          String(product.name || '').toLowerCase() === fallback.name.toLowerCase()
+        );
+        return normalizeProductRecord(apiProduct, fallback, index);
+      });
+
+      apiProducts.forEach((product, index) => {
+        const exists = fallbackProducts.some(fallback =>
+          Number(fallback.id) === Number(product.id) ||
+          String(fallback.name || '').toLowerCase() === String(product.name || '').toLowerCase()
+        );
+        if (!exists) {
+          merged.push(normalizeProductRecord(product, {}, fallbackProducts.length + index));
+        }
+      });
+
+      return merged;
+    }
+
     let products = [...fallbackProducts];
 
     async function loadProductsFromAPI() {
@@ -732,22 +774,7 @@
 
         const apiProducts = await response.json();
         if (Array.isArray(apiProducts) && apiProducts.length) {
-          products = apiProducts.map((product, index) => ({
-            id: product.id ?? index + 1,
-            name: product.name,
-            origin: product.origin,
-            price: Number(product.price) || 0,
-            unit: product.unit || 'kg',
-            badge: product.badge || '',
-            discount: Number(product.discount) || 0,
-            filters: Array.isArray(product.filters) ? product.filters : [],
-            image: product.image || '',
-            rating: Number(product.rating) || 0,
-            reviews: Number(product.reviews) || 0,
-            stock: Number(product.stock) || 0,
-            availability: product.availability || 'In Stock',
-            lastUpdated: product.lastUpdated
-          }));
+          products = mergeCatalogProducts(apiProducts);
           return true;
         }
 
@@ -761,22 +788,7 @@
           if (seeded.ok) {
             const seededProducts = await seeded.json();
             if (Array.isArray(seededProducts) && seededProducts.length) {
-              products = seededProducts.map((product, index) => ({
-                id: product.id ?? index + 1,
-                name: product.name,
-                origin: product.origin,
-                price: Number(product.price) || 0,
-                unit: product.unit || 'kg',
-                badge: product.badge || '',
-                discount: Number(product.discount) || 0,
-                filters: Array.isArray(product.filters) ? product.filters : [],
-                image: product.image || '',
-                rating: Number(product.rating) || 0,
-                reviews: Number(product.reviews) || 0,
-                stock: Number(product.stock) || 0,
-                availability: product.availability || 'In Stock',
-                lastUpdated: product.lastUpdated
-              }));
+              products = mergeCatalogProducts(seededProducts);
               return true;
             }
           }
@@ -786,6 +798,35 @@
       } catch (error) {
         console.warn('Loading products from API failed, using fallback data:', error);
         products = [...fallbackProducts];
+        return false;
+      }
+    }
+
+    async function applyLivePricesFromAPI() {
+      try {
+        const response = await fetch('/api/live-prices/spices', { headers: { Accept: 'application/json' } });
+        if (!response.ok) return false;
+
+        const payload = await response.json();
+        if (!payload.success || !payload.data || typeof payload.data !== 'object') return false;
+
+        products = products.map(product => {
+          const live = payload.data[product.name];
+          if (!live || live.error) return product;
+
+          return {
+            ...product,
+            price: Number(live.modalPrice ?? product.price) || product.price,
+            unit: live.unit || product.unit,
+            availability: live.modalPrice ? 'In Stock' : product.availability,
+            lastUpdated: payload.timestamp,
+            livePriceSource: live.source || 'live-prices'
+          };
+        });
+
+        return true;
+      } catch (error) {
+        console.warn('Live prices API unavailable, keeping catalog prices:', error);
         return false;
       }
     }
@@ -963,7 +1004,6 @@
               <button class="btn-add-cart" onclick="addToCart(${p.id}); event.stopPropagation()">🛒 Add to Cart</button>
               <button class="btn-buy-now" onclick="openQuickBuy(${p.id}); event.stopPropagation()">🛍️ Buy Now</button>
               <button class="btn-whatsapp" onclick="orderViaWhatsApp(${p.id}); event.stopPropagation()">💬 WhatsApp</button>
-              <button class="btn-quote" onclick="openQuoteModal(${p.id}); event.stopPropagation()">📋 Get Quote</button>
             </div>
           </div>
         `;
@@ -1311,6 +1351,7 @@ Sent from TamilEelam Export House Quote System
 
    document.addEventListener('DOMContentLoaded', async () => {
   await loadProductsFromAPI();
+  await applyLivePricesFromAPI();
   renderProducts();
 });
   </script>
