@@ -1181,9 +1181,12 @@
       markRecentlyVisited(id);
       
       const modal = document.getElementById('quoteModal');
-      document.getElementById('quoteForm').reset();
-      document.getElementById('quoteProductInput').value = p.name;
-      document.getElementById('quoteForm').dataset.productId = id;
+      const quoteForm = document.getElementById('quoteForm');
+      quoteForm.reset();
+      quoteForm.dataset.productId = id;
+      const quoteProductInput = document.getElementById('quoteProductInput');
+      quoteProductInput.defaultValue = p.name;
+      quoteProductInput.value = p.name;
       
       modal.classList.add('show');
     }

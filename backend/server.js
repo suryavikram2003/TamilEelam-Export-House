@@ -310,7 +310,7 @@ app.post(
       if (!emailSent) {
         return res.status(503).json({
           success: false,
-          message: 'Quote was received, but email delivery failed. Please contact us on WhatsApp: +91 74483 61008.'
+          message: 'Quote email delivery failed and the request may not be saved. Please contact us on WhatsApp: +91 74483 61008.'
         });
       }
 
