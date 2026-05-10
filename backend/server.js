@@ -143,6 +143,11 @@ const transporter = nodemailer.createTransport({
    HELPER FUNCTIONS
 ========================================================= */
 async function sendEmail(to, subject, html) {
+  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD) {
+    console.error('❌ Email credentials are not configured');
+    return false;
+  }
+
   try {
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
@@ -152,8 +157,10 @@ async function sendEmail(to, subject, html) {
     });
 
     console.log(`✅ Email sent to ${to}`);
+    return true;
   } catch (error) {
     console.error('❌ Email Error:', error);
+    return false;
   }
 }
 
@@ -287,7 +294,7 @@ app.post(
         await quote.save();
       }
 
-      await sendEmail(
+      const emailSent = await sendEmail(
         adminEmail,
         '💼 New Quote Request',
         `<h2>New Quote Request</h2>
@@ -299,6 +306,13 @@ app.post(
          <p><strong>Quantity:</strong> ${req.body.quantity} kg</p>
          <p><strong>Details:</strong> ${req.body.details || '-'}</p>`
       );
+
+      if (!emailSent) {
+        return res.status(502).json({
+          success: false,
+          message: 'Quote was received, but email delivery failed. Please contact us on WhatsApp: +91 74483 61008.'
+        });
+      }
 
       res.json({
         success: true,
